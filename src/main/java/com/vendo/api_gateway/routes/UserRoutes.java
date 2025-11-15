@@ -15,7 +15,7 @@ public class UserRoutes {
     public RouteLocator userRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(USER_SERVICE.getName(), r -> r
-                        .path("/auth/**", "/password/**")
+                        .path("/auth/**", "/password/**", "/verification/**")
                         .uri("lb://%s".formatted(USER_SERVICE.getName())))
                 .build();
     }
