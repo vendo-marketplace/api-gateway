@@ -1,5 +1,7 @@
 spring:
   application:
     name: api-gateway
+  profiles:
+    active: ${APP_PROFILE}
   config:
     import: "configserver:${CONFIG_SERVER_URL}"
