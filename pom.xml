@@ -31,6 +31,9 @@
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
+
+        <!-- spring starter dependencies -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -56,15 +59,19 @@
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.vendo-marketplace-be</groupId>
-			<artifactId>common</artifactId>
-			<version>1.0.8</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+        <!-- vendo libs dependencies -->
+
+		<dependency>
+			<groupId>io.github.vendo-marketplace-be</groupId>
+			<artifactId>core-lib</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

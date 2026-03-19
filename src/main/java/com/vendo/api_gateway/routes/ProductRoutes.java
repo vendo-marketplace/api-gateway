@@ -5,18 +5,18 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static com.vendo.common.type.Service.USER_SERVICE;
-
+import static com.vendo.core_lib.type.ServiceName.PRODUCT_SERVICE;
 
 @Configuration
-public class UserRoutes {
+public class ProductRoutes {
 
     @Bean
-    public RouteLocator userRouteLocator(RouteLocatorBuilder builder) {
+    public RouteLocator authRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(USER_SERVICE.getName(), r -> r
-                        .path("/auth/**", "/password/**")
-                        .uri("lb://%s".formatted(USER_SERVICE.getName())))
+                .route(PRODUCT_SERVICE.getServiceName(), r -> r
+                        .path("/categories/**", "/products/**")
+                        .uri("lb://%s".formatted(PRODUCT_SERVICE.getServiceName())))
                 .build();
     }
+
 }
