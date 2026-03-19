@@ -14,7 +14,7 @@ public class AuthRoutes {
     public RouteLocator authRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(AUTH_SERVICE.getServiceName(), r -> r
-                        .path("/auth/**", "/password/**")
+                        .path("/auth/**", "/password/**", "/verification/**")
                         .uri("lb://%s".formatted(AUTH_SERVICE.getServiceName())))
                 .build();
     }
