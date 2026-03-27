@@ -14,8 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${server.url}")
     private String SERVER_URL;
 
-    @Value("${client.urls}")
-    private Set<String> CLIENT_URLS;
+    @Value("${client.url}")
+    private String CLIENT_URL;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -23,11 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns(
                         "https://*.vercel.app"
                 )
-                .allowedOrigins(
-                        Stream.concat(
-                                Stream.of(SERVER_URL),
-                                CLIENT_URLS.stream()
-                        ).toArray(String[]::new))
+                .allowedOrigins(SERVER_URL, CLIENT_URL, "http://localhost:8000")
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
