@@ -1,4 +1,4 @@
-package com.vendo.api_gateway.routes;
+package com.vendo.api_gateway.adapter;
 
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
