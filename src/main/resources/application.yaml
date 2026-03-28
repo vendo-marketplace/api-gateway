@@ -5,3 +5,23 @@ spring:
     active: ${APP_PROFILE}
   config:
     import: "optional:configserver:${CONFIG_SERVER_URL}"
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOriginPatterns:
+                  - "http://localhost:8000"
+                  - "https://*.vercel.app"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - PATCH
+                  - DELETE
+                  - OPTIONS
+                allowedHeaders: "*"
+                allowCredentials: true
