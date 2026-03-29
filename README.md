@@ -15,7 +15,7 @@ It is responsible for routing requests to the appropriate backend microservices,
 * Zipkin
 * Lombok
 * Maven
-
+* Gateway Server Webflux
 ---
 
 # Architecture
