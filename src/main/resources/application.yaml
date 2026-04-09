@@ -5,3 +5,7 @@ spring:
     active: ${APP_PROFILE}
   config:
     import: "optional:configserver:${CONFIG_SERVER_URL}"
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${HOSTNAME}
