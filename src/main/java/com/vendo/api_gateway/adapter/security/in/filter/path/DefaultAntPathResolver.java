@@ -13,12 +13,11 @@ import java.util.Arrays;
 public class DefaultAntPathResolver implements AntPathResolver {
 
     private final GatewayProps props;
-
-    private final String[] PERMITTED_PATHS = props.allPaths().toArray(String[]::new);
-    private static final AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
     public boolean isPermittedPath(String path) {
-        return Arrays.stream(PERMITTED_PATHS).anyMatch(pr -> antPathMatcher.match(pr, path));
+        String[] paths = props.allPaths().toArray(String[]::new);
+        return Arrays.stream(paths).anyMatch(pr -> antPathMatcher.match(pr, path));
     }
 }
