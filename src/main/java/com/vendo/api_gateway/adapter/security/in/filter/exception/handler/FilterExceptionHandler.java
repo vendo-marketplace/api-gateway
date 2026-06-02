@@ -1,6 +1,8 @@
 package com.vendo.api_gateway.adapter.security.in.filter.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vendo.api_gateway.adapter.security.in.filter.FilterUtils;
+import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthenticationException;
 import com.vendo.security_lib.exception.response.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
@@ -37,10 +39,7 @@ final class FilterExceptionHandler implements ErrorWebExceptionHandler {
         httpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
         try {
-            DataBuffer buffer = httpResponse
-                    .bufferFactory()
-                    .wrap(objectMapper.writeValueAsBytes(exResponse));
-
+            DataBuffer buffer = httpResponse.bufferFactory().wrap(objectMapper.writeValueAsBytes(exResponse));
             return httpResponse.writeWith(Mono.just(buffer));
         } catch (Exception e) {
             log.error("Unexpected error while writing response: {}.", e.getMessage());
@@ -57,6 +56,11 @@ final class FilterExceptionHandler implements ErrorWebExceptionHandler {
                     .code(HttpStatus.UNAUTHORIZED.value())
                     .message("Unauthorized.")
                     .build();
+        } else if (ex instanceof AccessDeniedException) {
+            return exBuilder
+                    .code(HttpStatus.FORBIDDEN.value())
+                    .message("Forbidden.")
+                    .build();
         }
 
         return exBuilder
@@ -66,12 +70,12 @@ final class FilterExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     private String failMessage(String path) {
-        return """
-                "message": "Internal server error.",
-                "path": "%s",
-                "code": "%d",
-                "timestamp": "%s"
-                """.formatted(path, HttpStatus.INTERNAL_SERVER_ERROR.value(), Instant.now().toString());
+        return FilterUtils.ERROR_MESSAGE_TEMPLATE.formatted(
+                "Internal server error.",
+                path,
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                Instant.now().toString()
+        );
     }
 
 }
