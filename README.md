@@ -2,7 +2,7 @@
 
 The **API Gateway** serves as the single entry point for all client requests to the Vendo platform.
 
-It is responsible for routing requests to the appropriate backend microservices, load balancing, and handling cross-cutting concerns such as distributed tracing and centralized configuration.
+It is responsible for routing requests to the appropriate backend microservices, load balancing, JWT validation, and handling cross-cutting concerns such as distributed tracing and centralized configuration.
 
 ---
 
@@ -10,6 +10,7 @@ It is responsible for routing requests to the appropriate backend microservices,
 
 * Java 17
 * Spring Boot
+* JWT
 * Docker
 * Eureka
 * Zipkin
@@ -28,8 +29,8 @@ The core business logic is isolated from external systems such as databases, RES
 
 **adapter**
 
-External integrations and routing rules.
-* Contains programmatic route definitions that map incoming request paths to specific downstream microservices.
+JWT and routing rules.
+* Contains programmatic route definitions that map incoming request paths to specific downstream microservices with JWT validation filters.
 
 **infrastructure**
 
