@@ -1,5 +1,6 @@
 package com.vendo.api_gateway.adapter.route.in;
 
+import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import static com.vendo.core_lib.type.ServiceName.*;
 
 @Configuration
-public class RouteLocator {
+public class Router {
 
     @Bean
-    public org.springframework.cloud.gateway.route.RouteLocator authRouteLocator(RouteLocatorBuilder builder) {
+    public RouteLocator authRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(AUTH_SERVICE.getServiceName(), r -> r
                         .path("/auth/**", "/password/**", "/verification/**")
