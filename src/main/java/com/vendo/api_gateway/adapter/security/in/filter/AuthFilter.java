@@ -1,90 +1,78 @@
 package com.vendo.api_gateway.adapter.security.in.filter;
 
-import com.vendo.api_gateway.adapter.security.in.filter.path.AntPathResolver;
+import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthenticationServiceException;
+import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentialsException;
 import com.vendo.api_gateway.adapter.security.out.jwt.parser.AuthenticationParser;
-import com.vendo.api_gateway.domain.user.user.User;
-import com.vendo.user_lib.type.UserStatus;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.vendo.api_gateway.domain.user.User;
+import com.vendo.security_lib.resolver.AntPathResolver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
-import java.io.IOException;
-import java.util.List;
-
+import static com.vendo.core_lib.constants.Delimiters.COMMA_DELIMITER;
 import static com.vendo.security_lib.constants.AuthConstants.AUTHORIZATION_HEADER;
 import static com.vendo.security_lib.constants.AuthConstants.BEARER_PREFIX;
+import static com.vendo.security_lib.type.UserHeaders.*;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AuthFilter extends OncePerRequestFilter {
+public class AuthFilter implements GlobalFilter {
 
     private final AuthenticationParser claimsParser;
 
     private final AntPathResolver antPathResolver;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
+        String path = request.getURI().getPath();
 
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        if (securityContext.getAuthentication() != null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        if (shouldNotFilter(path)) return chain.filter(exchange);
 
         try {
-            String authorization = getTokenFromRequest(request.getHeader(AUTHORIZATION_HEADER));
+            String authorization = getTokenFromRequest(request.getHeaders().getFirst(AUTHORIZATION_HEADER));
             User authUser = claimsParser.extract(authorization);
-            throwIfBlocked(authUser);
-            addAuthToContext(authUser, User.toNames(authUser.roles()));
-        } catch (AuthenticationException e) {
-            SecurityContextHolder.clearContext();
-            throw e;
+            authUser.throwIfBlocked();
+
+            ServerHttpRequest requestWithHeaders = applyHeaders(authUser, request);
+            return chain.filter(exchange
+                    .mutate()
+                    .request(requestWithHeaders)
+                    .build()
+            );
+
         } catch (Exception e) {
-            SecurityContextHolder.clearContext();
+            log.error("Authentication exception occurred while filter: {}.", e.getMessage());
             throw new AuthenticationServiceException("Internal authentication error.");
         }
-
-        filterChain.doFilter(request, response);
     }
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
-        return antPathResolver.isPermittedPath(requestURI);
+    private boolean shouldNotFilter(String path) {
+        return antPathResolver.isPermittedPath(path);
     }
 
     private String getTokenFromRequest(String authorization) {
-        if (authorization == null) {
-            throw new AuthenticationCredentialsNotFoundException("Unauthorized.");
-        } else if (!authorization.startsWith(BEARER_PREFIX)) {
-            throw new BadCredentialsException("Invalid token.");
+        if (authorization == null || !authorization.startsWith(BEARER_PREFIX)) {
+            throw new BadCredentialsException("Unauthorized.");
         }
 
         return authorization.substring(BEARER_PREFIX.length());
     }
 
-    private void throwIfBlocked(User user) {
-        if (user.status() == UserStatus.BLOCKED) throw new AccessDeniedException("User is blocked.");
-    }
-
-    private void addAuthToContext(Object principal, List<String> roles) {
-        List<SimpleGrantedAuthority> authorities = roles.stream().map(SimpleGrantedAuthority::new).toList();
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(principal, null, authorities);
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+    private ServerHttpRequest applyHeaders(User user, ServerHttpRequest request) {
+        return request
+                .mutate()
+                .header(USER_ID.getHeader(), user.id())
+                .header(USER_EMAIL.getHeader(), user.email())
+                .header(STATUS.getHeader(), user.status().name())
+                .header(ROLES.getHeader(), String.join(COMMA_DELIMITER, user.roles()))
+                .header(EMAIL_VERIFIED.getHeader(), String.valueOf(user.emailVerified()))
+                .build();
     }
 }

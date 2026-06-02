@@ -1,15 +1,15 @@
 package com.vendo.api_gateway.adapter.security.out.jwt.parser;
 
+import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthenticationException;
+import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentialsException;
 import com.vendo.api_gateway.adapter.security.out.jwt.JwtService;
 import com.vendo.api_gateway.adapter.security.out.props.JwtProperties;
-import com.vendo.api_gateway.domain.user.user.User;
-import com.vendo.security_lib.type.UserTokenClaim;
+import com.vendo.api_gateway.domain.user.User;
+import com.vendo.security_lib.type.UserClaims;
 import com.vendo.user_lib.type.UserStatus;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,15 +28,16 @@ public class JwtAuthenticationParser implements AuthenticationParser {
         Claims claims = jwtService.extractAllClaims(token, jwtProperties.getSecret().key());
 
         String id = extractId(claims);
-        List<String> roles = extractRoles(claims, UserTokenClaim.ROLES.getClaim());
+        List<String> roles = extractRoles(claims, UserClaims.ROLES.getClaim());
+        String email = extractEmail(claims);
         Boolean verified = extractEmailVerified(claims);
         UserStatus status = extractStatus(claims);
 
-        return new User(id, status, User.toRoles(roles), verified);
+        return new User(id, email, status, roles, verified);
     }
 
     private String extractId(Claims claims) {
-        String id = claims.get(UserTokenClaim.ID.getClaim(), String.class);
+        String id = claims.get(UserClaims.ID.getClaim(), String.class);
 
         if (id == null || id.isBlank()) {
             log.error("Id claim is not present.");
@@ -44,6 +45,10 @@ public class JwtAuthenticationParser implements AuthenticationParser {
         }
 
         return id;
+    }
+
+    private String extractEmail(Claims claims) {
+        return claims.get(UserClaims.EMAIL.getClaim(), String.class);
     }
 
     private List<String> extractRoles(Claims claims, String rolesClaim) {
@@ -64,11 +69,11 @@ public class JwtAuthenticationParser implements AuthenticationParser {
     }
 
     private Boolean extractEmailVerified(Claims claims) {
-        return claims.get(UserTokenClaim.VERIFIED.getClaim(), Boolean.class);
+        return claims.get(UserClaims.VERIFIED.getClaim(), Boolean.class);
     }
 
     private UserStatus extractStatus(Claims claims) {
-        String status = claims.get(UserTokenClaim.STATUS.getClaim(), String.class);
+        String status = claims.get(UserClaims.STATUS.getClaim(), String.class);
 
         try {
             return UserStatus.valueOf(status);

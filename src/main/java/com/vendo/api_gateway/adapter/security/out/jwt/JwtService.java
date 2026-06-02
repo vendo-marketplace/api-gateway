@@ -4,7 +4,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -21,10 +20,10 @@ public class JwtService {
             return parseSignedClaims(token, secret).getPayload();
         } catch (ExpiredJwtException e) {
             log.error(e.getMessage());
-            throw new BadCredentialsException("Token expired.");
+            throw new RuntimeException("Token expired.");
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new BadCredentialsException("Invalid token.");
+            throw new RuntimeException("Invalid token.");
         }
     }
 
@@ -33,7 +32,7 @@ public class JwtService {
             return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         } catch (NullPointerException e) {
             log.error("Error while signing secret key: {}.", e.getMessage());
-            throw new BadCredentialsException("Invalid token.");
+            throw new RuntimeException("Invalid token.");
         }
     }
 
