@@ -1,6 +1,5 @@
 package com.vendo.api_gateway.adapter.security.in.filter;
 
-import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthenticationServiceException;
 import com.vendo.api_gateway.adapter.security.in.filter.header.UserHeadersExtractor;
 import com.vendo.api_gateway.adapter.security.out.jwt.parser.AuthenticationParser;
 import com.vendo.api_gateway.domain.user.User;
@@ -24,7 +23,7 @@ import static com.vendo.security_lib.constants.AuthConstants.AUTHORIZATION_HEADE
 @Order(1)
 @Component
 @RequiredArgsConstructor
-class UserAuthFilter implements GlobalFilter {
+public class UserAuthFilter implements GlobalFilter {
 
     private final AuthenticationParser claimsParser;
     private final AntPathResolver antPathResolver;
@@ -37,22 +36,16 @@ class UserAuthFilter implements GlobalFilter {
 
         if (antPathResolver.isPermittedPath(path)) return chain.filter(exchange);
 
-        try {
-            String authorization = FilterUtils.getTokenFromRequest(headers.getFirst(AUTHORIZATION_HEADER));
-            User authUser = claimsParser.extract(authorization);
-            addUserToContext(authUser, request.getAttributes());
+        String authorization = FilterUtils.getTokenFromRequest(headers.getFirst(AUTHORIZATION_HEADER));
+        User authUser = claimsParser.extract(authorization);
+        addUserToContext(authUser, exchange.getAttributes());
 
-            ServerHttpRequest requestWithHeaders = applyHeaders(authUser, request);
-            return chain.filter(exchange
-                    .mutate()
-                    .request(requestWithHeaders)
-                    .build()
-            );
-
-        } catch (Exception e) {
-            log.error("Authentication exception occurred while filter: {}.", e.getMessage());
-            throw new AuthenticationServiceException("Internal authentication error.");
-        }
+        ServerHttpRequest requestWithHeaders = applyHeaders(authUser, request);
+        return chain.filter(exchange
+                .mutate()
+                .request(requestWithHeaders)
+                .build()
+        );
     }
 
     private ServerHttpRequest applyHeaders(User user, ServerHttpRequest request) {

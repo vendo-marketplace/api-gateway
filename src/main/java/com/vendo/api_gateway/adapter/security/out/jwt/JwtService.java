@@ -1,5 +1,6 @@
 package com.vendo.api_gateway.adapter.security.out.jwt;
 
+import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentialsException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +21,10 @@ public class JwtService {
             return parseSignedClaims(token, secret).getPayload();
         } catch (ExpiredJwtException e) {
             log.error(e.getMessage());
-            throw new RuntimeException("Token expired.");
+            throw new BadCredentialsException("Token expired.");
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new RuntimeException("Invalid token.");
+            throw new BadCredentialsException("Invalid token.");
         }
     }
 
@@ -32,7 +33,7 @@ public class JwtService {
             return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         } catch (NullPointerException e) {
             log.error("Error while signing secret key: {}.", e.getMessage());
-            throw new RuntimeException("Invalid token.");
+            throw new BadCredentialsException("Invalid token.");
         }
     }
 

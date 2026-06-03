@@ -11,8 +11,8 @@ public final class UserHeadersExtractor {
     public static HttpHeaders from(User user) {
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        httpHeaders.add(USER_ID.getHeader(), user.id());
-        httpHeaders.add(USER_EMAIL.getHeader(), user.email());
+        httpHeaders.add(ID.getHeader(), user.id());
+        httpHeaders.add(EMAIL.getHeader(), user.email());
         httpHeaders.add(STATUS.getHeader(), user.status().name());
         httpHeaders.add(ROLES.getHeader(), String.join(COMMA_DELIMITER, user.roles()));
         httpHeaders.add(EMAIL_VERIFIED.getHeader(), String.valueOf(user.emailVerified()));
