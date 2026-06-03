@@ -9,12 +9,6 @@ import static com.vendo.security_lib.constants.AuthConstants.BEARER_PREFIX;
 public final class FilterUtils {
 
     public static final String CONTEXT_ATTRIBUTE = "context";
-    public static final String ERROR_MESSAGE_TEMPLATE = """
-            "message": "%s",
-            "path": "%s",
-            "code": "%d",
-            "timestamp": "%s"
-            """;
 
     static <T> T getValueFromContext(Class<T> type, Map<String, Object> attributes) {
         Object value = attributes.get(CONTEXT_ATTRIBUTE);
