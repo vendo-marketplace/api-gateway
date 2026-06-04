@@ -34,7 +34,7 @@ final class FilterExceptionHandler implements ErrorWebExceptionHandler {
         httpResponse.setStatusCode(HttpStatusCode.valueOf(exResponse.getCode()));
         httpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
-        DataBuffer buffer = httpResponse.bufferFactory().wrap(extractJsonBytes(ex));
+        DataBuffer buffer = httpResponse.bufferFactory().wrap(extractJsonBytes(exResponse));
         return httpResponse.writeWith(Mono.just(buffer));
     }
 
