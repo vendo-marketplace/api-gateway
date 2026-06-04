@@ -8,7 +8,6 @@ import com.vendo.security_lib.exception.response.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -20,22 +19,22 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-final class FilterExceptionHandler implements ErrorWebExceptionHandler {
+public final class FilterExceptionHandler implements ErrorWebExceptionHandler {
 
     private final ObjectMapper objectMapper;
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-        log.error("Handling filter exception: {}.", ex.getMessage());
+        log.error("Handling filter exception: {}", ex.getMessage());
 
         ServerHttpResponse httpResponse = exchange.getResponse();
         ExceptionResponse exResponse = resolve(exchange.getRequest().getURI().getPath(), ex);
 
         httpResponse.setStatusCode(HttpStatusCode.valueOf(exResponse.getCode()));
         httpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        byte[] responseBytes = extractJsonBytes(exResponse);
 
-        DataBuffer buffer = httpResponse.bufferFactory().wrap(extractJsonBytes(exResponse));
-        return httpResponse.writeWith(Mono.just(buffer));
+        return httpResponse.writeWith(Mono.just(httpResponse.bufferFactory().wrap(responseBytes)));
     }
 
     private ExceptionResponse resolve(String path, Throwable ex) {
@@ -66,5 +65,4 @@ final class FilterExceptionHandler implements ErrorWebExceptionHandler {
             throw new IllegalArgumentException("Unable to extract bytes from %s.".formatted(target.getClass().getSimpleName()));
         }
     }
-
 }

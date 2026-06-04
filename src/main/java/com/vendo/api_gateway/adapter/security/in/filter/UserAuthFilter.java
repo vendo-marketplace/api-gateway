@@ -30,8 +30,6 @@ public class UserAuthFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("First filter.");
-        log.info("{} - {}", exchange.getAttributes(), exchange.getRequest().getHeaders());
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
 

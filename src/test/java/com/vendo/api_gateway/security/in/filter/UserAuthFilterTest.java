@@ -1,4 +1,4 @@
-package com.vendo.api_gateway.security.in;
+package com.vendo.api_gateway.security.in.filter;
 
 import com.vendo.api_gateway.adapter.security.in.filter.FilterUtils;
 import com.vendo.api_gateway.adapter.security.in.filter.UserAuthFilter;
