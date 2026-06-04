@@ -30,10 +30,12 @@ public class UserAuthFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        log.info("First filter.");
+        log.info("{} - {}", exchange.getAttributes(), exchange.getRequest().getHeaders());
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
-        String path = request.getURI().getPath();
 
+        String path = request.getURI().getPath();
         if (antPathResolver.isPermittedPath(path)) return chain.filter(exchange);
 
         String authorization = FilterUtils.getTokenFromRequest(headers.getFirst(AUTHORIZATION_HEADER));
