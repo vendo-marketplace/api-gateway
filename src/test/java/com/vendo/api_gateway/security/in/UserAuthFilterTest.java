@@ -48,7 +48,7 @@ public class UserAuthFilterTest {
     private UserAuthFilter filter;
 
     @Test
-    void filter_shouldSuccessFilter() {
+    void filter_shouldSuccessfullyFilter() {
         String token = "token";
         User user = UserDataBuilder.withAllFields().build();
 

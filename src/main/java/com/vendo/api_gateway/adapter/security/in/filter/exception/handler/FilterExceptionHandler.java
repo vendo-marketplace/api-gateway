@@ -1,5 +1,7 @@
 package com.vendo.api_gateway.adapter.security.in.filter.exception.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthenticationException;
 import com.vendo.security_lib.exception.response.ExceptionResponse;
@@ -12,30 +14,27 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.util.SerializationUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.Objects;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 final class FilterExceptionHandler implements ErrorWebExceptionHandler {
 
+    private final ObjectMapper objectMapper;
+
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         log.error("Handling filter exception: {}.", ex.getMessage());
 
-        String path = exchange.getRequest().getPath().contextPath().value();
         ServerHttpResponse httpResponse = exchange.getResponse();
-        ExceptionResponse exResponse = resolve(path, ex);
+        ExceptionResponse exResponse = resolve(exchange.getRequest().getURI().getPath(), ex);
 
         httpResponse.setStatusCode(HttpStatusCode.valueOf(exResponse.getCode()));
         httpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
-        byte[] body = Objects.requireNonNull(SerializationUtils.serialize(exResponse));
-        DataBuffer buffer = httpResponse.bufferFactory().wrap(body);
+        DataBuffer buffer = httpResponse.bufferFactory().wrap(extractJsonBytes(ex));
         return httpResponse.writeWith(Mono.just(buffer));
     }
 
@@ -59,4 +58,13 @@ final class FilterExceptionHandler implements ErrorWebExceptionHandler {
                 .message("Internal server error.")
                 .build();
     }
+
+    private byte[] extractJsonBytes(Object target) {
+        try {
+            return objectMapper.writeValueAsBytes(target);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Unable to extract bytes from %s.".formatted(target.getClass().getSimpleName()));
+        }
+    }
+
 }

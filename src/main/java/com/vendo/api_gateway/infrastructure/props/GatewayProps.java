@@ -6,7 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @Setter
@@ -23,6 +25,7 @@ public class GatewayProps {
 
     public List<String> allPaths() {
         return Stream.of(common, internal, product, auth, search)
+                .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .toList();
     }

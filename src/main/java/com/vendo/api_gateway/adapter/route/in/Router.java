@@ -22,7 +22,7 @@ public class Router {
                         .uri("lb://%s".formatted(PRODUCT_SERVICE.getServiceName())))
 
                 .route(SEARCH_SERVICE.getServiceName(), r -> r
-                        .path("/products/**")
+                        .path("/search/**")
                         .uri("lb://%s".formatted(SEARCH_SERVICE.getServiceName())))
 
                 .route(AWS_SERVICE.getServiceName(), r -> r

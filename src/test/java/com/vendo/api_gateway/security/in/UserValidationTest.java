@@ -53,7 +53,7 @@ public class UserValidationTest {
                 .get("/auth")
                 .build();
         MockServerWebExchange exchange = MockServerWebExchange.from(request);
-        exchange.getRequest().getAttributes().put(CONTEXT_ATTRIBUTE, user);
+        exchange.getAttributes().put(CONTEXT_ATTRIBUTE, user);
 
         assertThatThrownBy(() -> filter.filter(exchange, chain).block())
                 .isInstanceOf(AccessDeniedException.class)
