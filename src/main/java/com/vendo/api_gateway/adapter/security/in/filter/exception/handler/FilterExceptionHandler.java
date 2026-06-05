@@ -3,6 +3,7 @@ package com.vendo.api_gateway.adapter.security.in.filter.exception.handler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;
+import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthNotVerifiedException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthenticationException;
 import com.vendo.security_lib.exception.response.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,19 @@ public final class FilterExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     private ExceptionResponse resolve(String path, Throwable ex) {
+        ExceptionResponse.Builder exBuilder = ExceptionResponse.builder().path(path);
+
+        if (ex instanceof AuthNotVerifiedException) {
+            return exBuilder
+                    .code(HttpStatus.UNAUTHORIZED.value())
+                    .message("User email is not verified.")
+                    .build();
+        }
+
+       return resolveDefault(path, ex);
+    }
+
+    private ExceptionResponse resolveDefault(String path, Throwable ex) {
         ExceptionResponse.Builder exBuilder = ExceptionResponse.builder().path(path);
 
         if (ex instanceof AuthenticationException) {

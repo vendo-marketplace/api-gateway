@@ -1,9 +1,9 @@
 package com.vendo.api_gateway.adapter.security.in.filter;
 
 import com.vendo.api_gateway.adapter.security.in.filter.header.UserHeadersExtractor;
+import com.vendo.api_gateway.adapter.security.in.filter.path.SecuredAntPathResolver;
 import com.vendo.api_gateway.adapter.security.out.jwt.parser.AuthenticationParser;
 import com.vendo.api_gateway.domain.user.User;
-import com.vendo.security_lib.resolver.AntPathResolver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -25,8 +25,8 @@ import static com.vendo.security_lib.constants.AuthConstants.AUTHORIZATION_HEADE
 @RequiredArgsConstructor
 public class UserAuthFilter implements GlobalFilter {
 
+    private final SecuredAntPathResolver antPathResolver;
     private final AuthenticationParser claimsParser;
-    private final AntPathResolver antPathResolver;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

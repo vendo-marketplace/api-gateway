@@ -3,10 +3,10 @@ package com.vendo.api_gateway.security.in.filter;
 import com.vendo.api_gateway.adapter.security.in.filter.FilterUtils;
 import com.vendo.api_gateway.adapter.security.in.filter.UserAuthFilter;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentialsException;
+import com.vendo.api_gateway.adapter.security.in.filter.path.SecuredAntPathResolver;
 import com.vendo.api_gateway.adapter.security.out.jwt.parser.AuthenticationParser;
 import com.vendo.api_gateway.domain.user.User;
 import com.vendo.api_gateway.test_utils.builder.UserDataBuilder;
-import com.vendo.security_lib.resolver.AntPathResolver;
 import com.vendo.security_lib.type.UserHeaders;
 import com.vendo.utils_lib.AssertionUtils;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class UserAuthFilterTest {
     private AuthenticationParser claimsParser;
 
     @Mock
-    private AntPathResolver antPathResolver;
+    private SecuredAntPathResolver antPathResolver;
 
     @Mock
     private GatewayFilterChain chain;

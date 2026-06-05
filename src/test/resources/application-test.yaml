@@ -1,0 +1,16 @@
+gateway:
+  paths:
+    unauthenticated:
+      general:
+        - /general/**
+      internal:
+        - /internal/**
+      product:
+        - /product/**
+      auth:
+        - /auth/**
+      search:
+        - /search/**
+    verified:
+      aws:
+        - /aws/**

@@ -10,14 +10,14 @@ import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
-public class DefaultAntPathResolver implements AntPathResolver {
+public class SecuredAntPathResolver implements AntPathResolver {
 
     private final GatewayProps props;
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
     public boolean isPermittedPath(String path) {
-        String[] paths = props.allPaths().toArray(String[]::new);
+        String[] paths = props.getUnauthenticated().allPaths().toArray(String[]::new);
         return Arrays.stream(paths).anyMatch(pr -> antPathMatcher.match(pr, path));
     }
 }
