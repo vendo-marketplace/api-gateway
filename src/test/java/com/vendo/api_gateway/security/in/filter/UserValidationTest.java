@@ -18,7 +18,7 @@ import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.mock.web.server.MockServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import static com.vendo.api_gateway.adapter.security.in.filter.FilterUtils.CONTEXT_ATTRIBUTE;
+import static com.vendo.api_gateway.adapter.security.in.filter.GlobalFilterUtils.CONTEXT_ATTRIBUTE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

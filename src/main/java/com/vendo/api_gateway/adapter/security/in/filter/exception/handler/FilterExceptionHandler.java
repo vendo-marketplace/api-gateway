@@ -1,6 +1,5 @@
 package com.vendo.api_gateway.adapter.security.in.filter.exception.handler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthNotVerifiedException;
@@ -17,6 +16,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -24,21 +26,40 @@ public final class FilterExceptionHandler implements ErrorWebExceptionHandler {
 
     private final ObjectMapper objectMapper;
 
+    private static final int INTERNAL_CODE = 500;
+
+    private static final String RESPONSE_MESSAGE_TEMPLATE = """
+        {
+            "message": "%s",
+            "code": %d,
+            "timestamp": "%s"
+        }
+        """;
+
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         log.error("Handling filter exception: {}", ex.getMessage());
-
         ServerHttpResponse httpResponse = exchange.getResponse();
-        ExceptionResponse exResponse = resolve(exchange.getRequest().getURI().getPath(), ex);
-
-        httpResponse.setStatusCode(HttpStatusCode.valueOf(exResponse.getCode()));
         httpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        byte[] responseBytes = extractJsonBytes(exResponse);
 
-        return httpResponse.writeWith(Mono.just(httpResponse.bufferFactory().wrap(responseBytes)));
+        try {
+            ExceptionResponse exResponse = resolveResponse(exchange.getRequest().getURI().getPath(), ex);
+            byte[] responseBytes = objectMapper.writeValueAsBytes(exResponse);
+
+            httpResponse.setStatusCode(HttpStatusCode.valueOf(exResponse.getCode()));
+            return httpResponse.writeWith(Mono.just(httpResponse.bufferFactory().wrap(responseBytes)));
+        } catch (Exception e) {
+            log.error("Internal error while handling exception: {}", e.getMessage());
+
+            httpResponse.setStatusCode(HttpStatusCode.valueOf(INTERNAL_CODE));
+            String response = RESPONSE_MESSAGE_TEMPLATE.formatted("Internal server error.", INTERNAL_CODE, Instant.now().toString());
+
+            return httpResponse.writeWith(Mono.just(httpResponse.bufferFactory().wrap(response.getBytes(StandardCharsets.UTF_8))));
+        }
     }
 
-    private ExceptionResponse resolve(String path, Throwable ex) {
+
+    private ExceptionResponse resolveResponse(String path, Throwable ex) {
         ExceptionResponse.Builder exBuilder = ExceptionResponse.builder().path(path);
 
         if (ex instanceof AuthNotVerifiedException) {
@@ -46,15 +67,7 @@ public final class FilterExceptionHandler implements ErrorWebExceptionHandler {
                     .code(HttpStatus.UNAUTHORIZED.value())
                     .message("User email is not verified.")
                     .build();
-        }
-
-       return resolveDefault(path, ex);
-    }
-
-    private ExceptionResponse resolveDefault(String path, Throwable ex) {
-        ExceptionResponse.Builder exBuilder = ExceptionResponse.builder().path(path);
-
-        if (ex instanceof AuthenticationException) {
+        } else if (ex instanceof AuthenticationException) {
             return exBuilder
                     .code(HttpStatus.UNAUTHORIZED.value())
                     .message("Unauthorized.")
@@ -64,19 +77,11 @@ public final class FilterExceptionHandler implements ErrorWebExceptionHandler {
                     .code(HttpStatus.FORBIDDEN.value())
                     .message("Forbidden.")
                     .build();
-        }
-
-        return exBuilder
-                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .message("Internal server error.")
-                .build();
-    }
-
-    private byte[] extractJsonBytes(Object target) {
-        try {
-            return objectMapper.writeValueAsBytes(target);
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Unable to extract bytes from %s.".formatted(target.getClass().getSimpleName()));
+        } else {
+            return exBuilder
+                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .message("Internal server error.")
+                    .build();
         }
     }
 }

@@ -31,7 +31,7 @@ public class UserValidationFilter implements GlobalFilter {
         String path = request.getURI().getPath();
         if (securedAntPathResolver.isPermittedPath(path)) return chain.filter(exchange);
 
-        User authUser = FilterUtils.getValueFromContext(User.class, exchange.getAttributes());
+        User authUser = GlobalFilterUtils.getValueFromContext(User.class, exchange.getAttributes());
         if (authUser.isBlocked()) {
             throw new AccessDeniedException("User is blocked.");
         }

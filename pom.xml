@@ -114,7 +114,6 @@
             <scope>test</scope>
         </dependency>
 
-
         <!-- vendo dependencies-->
 
         <dependency>
@@ -132,11 +131,11 @@
             <artifactId>utils-lib</artifactId>
             <version>3.1.0</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.vendo-marketplace-be</groupId>
-            <artifactId>security-lib</artifactId>
-            <version>6.3.2</version>
-        </dependency>
+		<dependency>
+			<groupId>io.github.vendo-marketplace-be</groupId>
+			<artifactId>security-lib</artifactId>
+			<version>7.3.2</version>
+		</dependency>
 
 	</dependencies>
 	<dependencyManagement>

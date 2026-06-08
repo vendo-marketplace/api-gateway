@@ -1,13 +1,13 @@
 package com.vendo.api_gateway.security.in.filter;
 
-import com.vendo.api_gateway.adapter.security.in.filter.FilterUtils;
+import com.vendo.api_gateway.adapter.security.in.filter.GlobalFilterUtils;
 import com.vendo.api_gateway.adapter.security.in.filter.UserAuthFilter;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentialsException;
 import com.vendo.api_gateway.adapter.security.in.filter.path.SecuredAntPathResolver;
 import com.vendo.api_gateway.adapter.security.out.jwt.parser.AuthenticationParser;
 import com.vendo.api_gateway.domain.user.User;
 import com.vendo.api_gateway.test_utils.builder.UserDataBuilder;
-import com.vendo.security_lib.type.UserHeaders;
+import com.vendo.security_lib.type.UserHeader;
 import com.vendo.utils_lib.AssertionUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,8 +25,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.vendo.core_lib.constants.Delimiters.COMMA_DELIMITER;
-import static com.vendo.security_lib.constants.AuthConstants.AUTHORIZATION_HEADER;
-import static com.vendo.security_lib.constants.AuthConstants.BEARER_PREFIX;
+import static com.vendo.security_lib.http.HttpUtils.AUTHORIZATION_HEADER;
+import static com.vendo.security_lib.http.HttpUtils.BEARER_PREFIX;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -68,18 +68,18 @@ public class UserAuthFilterTest {
         verify(claimsParser).extract("token");
         verify(chain).filter(captor.capture());
 
-        Object contextUser = exchange.getAttribute(FilterUtils.CONTEXT_ATTRIBUTE);
+        Object contextUser = exchange.getAttribute(GlobalFilterUtils.CONTEXT_ATTRIBUTE);
         AssertionUtils.assertFrom(Objects.requireNonNull(contextUser), user);
 
         ServerWebExchange captorValue = captor.getValue();
         assertThat(captorValue).isNotNull();
         Map<String, String> headers = captorValue.getRequest().getHeaders().asSingleValueMap();
         assertThat(headers).isNotNull();
-        assertThat(headers.get(UserHeaders.ID.getHeader())).isEqualTo(user.id());
-        assertThat(headers.get(UserHeaders.EMAIL.getHeader())).isEqualTo(user.email());
-        assertThat(headers.get(UserHeaders.STATUS.getHeader())).isEqualTo(user.status().name());
-        assertThat(headers.get(UserHeaders.EMAIL_VERIFIED.getHeader())).isEqualTo(String.valueOf(user.emailVerified()));
-        assertThat(headers.get(UserHeaders.ROLES.getHeader())).isEqualTo(String.join(COMMA_DELIMITER, user.roles()));
+        assertThat(headers.get(UserHeader.ID.getHeader())).isEqualTo(user.id());
+        assertThat(headers.get(UserHeader.EMAIL.getHeader())).isEqualTo(user.email());
+        assertThat(headers.get(UserHeader.STATUS.getHeader())).isEqualTo(user.status().name());
+        assertThat(headers.get(UserHeader.EMAIL_VERIFIED.getHeader())).isEqualTo(String.valueOf(user.emailVerified()));
+        assertThat(headers.get(UserHeader.ROLES.getHeader())).isEqualTo(String.join(COMMA_DELIMITER, user.roles()));
     }
 
     @Test

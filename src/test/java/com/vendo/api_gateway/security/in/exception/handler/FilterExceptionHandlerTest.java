@@ -18,9 +18,10 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.mock.web.server.MockServerWebExchange;
 
-import static com.vendo.security_lib.constants.AuthConstants.AUTHORIZATION_HEADER;
-import static com.vendo.security_lib.constants.AuthConstants.BEARER_PREFIX;
+import static com.vendo.security_lib.http.HttpUtils.AUTHORIZATION_HEADER;
+import static com.vendo.security_lib.http.HttpUtils.BEARER_PREFIX;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class FilterExceptionHandlerTest {
@@ -109,5 +110,29 @@ public class FilterExceptionHandlerTest {
         assertThat(exceptionResponse.getMessage()).isEqualTo("Internal server error.");
         assertThat(exceptionResponse.getCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
         assertThat(exceptionResponse.getPath()).isEqualTo("/auth");
+    }
+
+    @Test
+    void handle_shouldReturnFallbackResponse_whenJsonProcessingExceptionThrown() throws JsonProcessingException {
+        MockServerHttpRequest request = MockServerHttpRequest
+                .get("/auth")
+                .header(AUTHORIZATION_HEADER, BEARER_PREFIX + "token")
+                .build();
+        MockServerWebExchange exchange = MockServerWebExchange.from(request);
+
+        doThrow(JsonProcessingException.class).when(objectMapper).writeValueAsBytes(any());
+
+        filterExceptionHandler
+                .handle(exchange, new AccessDeniedException("Forbidden."))
+                .block();
+
+        assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        assertThat(exchange.getResponse().getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
+
+        String response = exchange.getResponse().getBodyAsString().block();
+        assertThat(response).isNotBlank();
+
+        assertThat(response).contains("Internal server error.");
+        assertThat(response).contains("500");
     }
 }

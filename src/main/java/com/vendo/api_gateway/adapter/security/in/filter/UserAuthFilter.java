@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
-import static com.vendo.security_lib.constants.AuthConstants.AUTHORIZATION_HEADER;
+import static com.vendo.security_lib.http.HttpUtils.AUTHORIZATION_HEADER;
 
 @Slf4j
 @Order(1)
@@ -36,7 +36,7 @@ public class UserAuthFilter implements GlobalFilter {
         String path = request.getURI().getPath();
         if (antPathResolver.isPermittedPath(path)) return chain.filter(exchange);
 
-        String authorization = FilterUtils.getTokenFromRequest(headers.getFirst(AUTHORIZATION_HEADER));
+        String authorization = GlobalFilterUtils.getTokenFromRequest(headers.getFirst(AUTHORIZATION_HEADER));
         User authUser = claimsParser.extract(authorization);
         addUserToContext(authUser, exchange.getAttributes());
 
@@ -55,6 +55,6 @@ public class UserAuthFilter implements GlobalFilter {
     }
 
     private void addUserToContext(User user, Map<String, Object> attributes) {
-        attributes.put(FilterUtils.CONTEXT_ATTRIBUTE, user);
+        attributes.put(GlobalFilterUtils.CONTEXT_ATTRIBUTE, user);
     }
 }

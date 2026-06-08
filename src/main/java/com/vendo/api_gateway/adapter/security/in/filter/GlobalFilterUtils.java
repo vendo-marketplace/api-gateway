@@ -4,9 +4,9 @@ import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentials
 
 import java.util.Map;
 
-import static com.vendo.security_lib.constants.AuthConstants.BEARER_PREFIX;
+import static com.vendo.security_lib.http.HttpUtils.BEARER_PREFIX;
 
-public final class FilterUtils {
+public final class GlobalFilterUtils {
 
     public static final String CONTEXT_ATTRIBUTE = "context";
 
