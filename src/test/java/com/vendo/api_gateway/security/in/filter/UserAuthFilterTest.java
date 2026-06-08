@@ -7,8 +7,8 @@ import com.vendo.api_gateway.adapter.security.in.filter.path.SecuredAntPathResol
 import com.vendo.api_gateway.adapter.security.out.jwt.parser.AuthenticationParser;
 import com.vendo.api_gateway.domain.user.User;
 import com.vendo.api_gateway.test_utils.builder.UserDataBuilder;
+import com.vendo.core_lib.utils.AssertionUtils;
 import com.vendo.security_lib.type.UserHeader;
-import com.vendo.utils_lib.AssertionUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
