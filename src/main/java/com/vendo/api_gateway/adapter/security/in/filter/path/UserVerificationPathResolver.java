@@ -17,7 +17,7 @@ public class UserVerificationPathResolver implements AntPathResolver {
 
     @Override
     public boolean isPermittedPath(String path) {
-        String[] paths = props.getVerified().allPaths().toArray(String[]::new);
+        String[] paths = props.getVerified().paths().toArray(String[]::new);
         return Arrays.stream(paths).noneMatch(pr -> antPathMatcher.match(pr, path));
     }
 }

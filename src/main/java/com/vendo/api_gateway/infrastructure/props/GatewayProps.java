@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @Configuration
-@ConfigurationProperties(prefix = "gateway.paths")
+@ConfigurationProperties(prefix = "endpoints")
 public class GatewayProps {
 
     private Unauthenticated unauthenticated;
@@ -35,10 +35,8 @@ public class GatewayProps {
         }
     }
 
-    public record Verified(Set<String> aws) {
-        public Set<String> allPaths() {
-            return flatLists(List.of(aws));
-        }
+    public record Verified(Set<String> paths) {
+
     }
 
     private static Set<String> flatLists(List<Set<String>> lists) {
