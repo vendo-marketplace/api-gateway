@@ -5,13 +5,15 @@ import com.vendo.api_gateway.adapter.security.out.jwt.JwtService;
 import com.vendo.api_gateway.adapter.security.out.props.JwtProperties;
 import com.vendo.api_gateway.domain.user.User;
 import com.vendo.security_lib.type.UserClaim;
+import com.vendo.user_lib.type.UserRole;
 import com.vendo.user_lib.type.UserStatus;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -26,7 +28,7 @@ public class JwtAuthenticationParser implements AuthenticationParser {
             Claims claims = JwtService.extractAllClaims(token, jwtProperties.getSecret().key());
 
             String id = extractId(claims);
-            List<String> roles = extractRoles(claims, UserClaim.ROLES.getClaim());
+            Set<UserRole> roles = extractRoles(claims, UserClaim.ROLES.getClaim());
             String email = extractEmail(claims);
             Boolean verified = extractEmailVerified(claims);
             UserStatus status = extractStatus(claims);
@@ -52,15 +54,16 @@ public class JwtAuthenticationParser implements AuthenticationParser {
         return claims.get(UserClaim.EMAIL.getClaim(), String.class);
     }
 
-    private List<String> extractRoles(Claims claims, String rolesClaim) {
+    private Set<UserRole> extractRoles(Claims claims, String rolesClaim) {
         Object rawRoles = claims.get(rolesClaim);
 
-        if (rawRoles instanceof List<?> list && !list.isEmpty()) {
+        if (rawRoles instanceof Set<?> list && !list.isEmpty()) {
             if (list.stream().allMatch(String.class::isInstance)) {
 
                 return list.stream()
                         .map(String.class::cast)
-                        .toList();
+                        .map(UserRole::valueOf)
+                        .collect(Collectors.toSet());
             }
         }
 

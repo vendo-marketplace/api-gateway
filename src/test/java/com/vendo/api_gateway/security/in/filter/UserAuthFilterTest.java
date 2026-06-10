@@ -79,7 +79,7 @@ public class UserAuthFilterTest {
         assertThat(headers.get(UserHeader.EMAIL.getHeader())).isEqualTo(user.email());
         assertThat(headers.get(UserHeader.STATUS.getHeader())).isEqualTo(user.status().name());
         assertThat(headers.get(UserHeader.EMAIL_VERIFIED.getHeader())).isEqualTo(String.valueOf(user.emailVerified()));
-        assertThat(headers.get(UserHeader.ROLES.getHeader())).isEqualTo(String.join(COMMA_DELIMITER, user.roles()));
+        assertThat(headers.get(UserHeader.ROLES.getHeader())).isEqualTo(String.join(COMMA_DELIMITER, user.toRoleNames()));
     }
 
     @Test
