@@ -4,7 +4,7 @@ import com.vendo.api_gateway.domain.user.User;
 import org.springframework.http.HttpHeaders;
 
 import static com.vendo.core_lib.constants.Delimiters.COMMA_DELIMITER;
-import static com.vendo.security_lib.type.UserHeader.*;
+import static com.vendo.security_lib.type.AuthHeader.*;
 
 public final class UserHeadersExtractor {
 

@@ -4,7 +4,7 @@ import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentials
 import com.vendo.api_gateway.adapter.security.out.jwt.JwtService;
 import com.vendo.api_gateway.adapter.security.out.props.JwtProperties;
 import com.vendo.api_gateway.domain.user.User;
-import com.vendo.security_lib.type.UserClaim;
+import com.vendo.core_lib.utils.StringUtils;
 import com.vendo.user_lib.type.UserRole;
 import com.vendo.user_lib.type.UserStatus;
 import io.jsonwebtoken.Claims;
@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.vendo.core_lib.constants.Delimiters.COMMA_DELIMITER;
+import static com.vendo.security_lib.type.TokenClaim.*;
 
 @Slf4j
 @Service
@@ -44,7 +45,7 @@ public class JwtAuthenticationParser implements AuthenticationParser {
     }
 
     private String extractId(Claims claims) {
-        String id = claims.get(UserClaim.ID.getClaim(), String.class);
+        String id = claims.get(ID.getClaim(), String.class);
 
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("Id is required.");
@@ -54,22 +55,27 @@ public class JwtAuthenticationParser implements AuthenticationParser {
     }
 
     private String extractEmail(Claims claims) {
-        return claims.get(UserClaim.EMAIL.getClaim(), String.class);
+        return claims.get(EMAIL.getClaim(), String.class);
     }
 
     private Set<UserRole> extractRoles(Claims claims) {
-        String rawRoles = claims.get(UserClaim.ROLES.getClaim(), String.class);
-        return Arrays.stream(rawRoles.split(COMMA_DELIMITER))
+        String roles = claims.get(ROLES.getClaim(), String.class);
+
+        if (StringUtils.isEmpty(roles)) {
+            return Set.of();
+        }
+
+        return Arrays.stream(roles.split(COMMA_DELIMITER))
                 .map(UserRole::valueOf)
                 .collect(Collectors.toSet());
     }
 
     private Boolean extractEmailVerified(Claims claims) {
-        return claims.get(UserClaim.VERIFIED.getClaim(), Boolean.class);
+        return claims.get(VERIFIED.getClaim(), Boolean.class);
     }
 
     private UserStatus extractStatus(Claims claims) {
-        String status = claims.get(UserClaim.STATUS.getClaim(), String.class);
+        String status = claims.get(STATUS.getClaim(), String.class);
         return UserStatus.valueOf(status);
     }
 }
