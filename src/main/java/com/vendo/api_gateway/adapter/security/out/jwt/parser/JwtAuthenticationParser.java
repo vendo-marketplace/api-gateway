@@ -12,8 +12,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.vendo.core_lib.constants.Delimiters.COMMA_DELIMITER;
 
 @Slf4j
 @Service
@@ -28,7 +31,7 @@ public class JwtAuthenticationParser implements AuthenticationParser {
             Claims claims = JwtService.extractAllClaims(token, jwtProperties.getSecret().key());
 
             String id = extractId(claims);
-            Set<UserRole> roles = extractRoles(claims, UserClaim.ROLES.getClaim());
+            Set<UserRole> roles = extractRoles(claims);
             String email = extractEmail(claims);
             Boolean verified = extractEmailVerified(claims);
             UserStatus status = extractStatus(claims);
@@ -54,21 +57,11 @@ public class JwtAuthenticationParser implements AuthenticationParser {
         return claims.get(UserClaim.EMAIL.getClaim(), String.class);
     }
 
-    private Set<UserRole> extractRoles(Claims claims, String rolesClaim) {
-        Object rawRoles = claims.get(rolesClaim);
-
-        if (rawRoles instanceof Set<?> list && !list.isEmpty()) {
-            if (list.stream().allMatch(String.class::isInstance)) {
-
-                return list.stream()
-                        .map(String.class::cast)
-                        .map(UserRole::valueOf)
-                        .collect(Collectors.toSet());
-            }
-        }
-
-        log.error("Invalid roles claim.");
-        throw new IllegalArgumentException("Invalid roles claim.");
+    private Set<UserRole> extractRoles(Claims claims) {
+        String rawRoles = claims.get(UserClaim.ROLES.getClaim(), String.class);
+        return Arrays.stream(rawRoles.split(COMMA_DELIMITER))
+                .map(UserRole::valueOf)
+                .collect(Collectors.toSet());
     }
 
     private Boolean extractEmailVerified(Claims claims) {
