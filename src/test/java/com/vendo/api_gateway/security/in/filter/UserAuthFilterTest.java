@@ -8,7 +8,7 @@ import com.vendo.api_gateway.adapter.security.out.jwt.parser.AuthenticationParse
 import com.vendo.api_gateway.domain.user.User;
 import com.vendo.api_gateway.test_utils.builder.UserDataBuilder;
 import com.vendo.core_lib.utils.AssertionUtils;
-import com.vendo.security_lib.type.UserHeader;
+import com.vendo.security_lib.type.AuthHeader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -75,11 +75,11 @@ public class UserAuthFilterTest {
         assertThat(captorValue).isNotNull();
         Map<String, String> headers = captorValue.getRequest().getHeaders().asSingleValueMap();
         assertThat(headers).isNotNull();
-        assertThat(headers.get(UserHeader.ID.getHeader())).isEqualTo(user.id());
-        assertThat(headers.get(UserHeader.EMAIL.getHeader())).isEqualTo(user.email());
-        assertThat(headers.get(UserHeader.STATUS.getHeader())).isEqualTo(user.status().name());
-        assertThat(headers.get(UserHeader.EMAIL_VERIFIED.getHeader())).isEqualTo(String.valueOf(user.emailVerified()));
-        assertThat(headers.get(UserHeader.ROLES.getHeader())).isEqualTo(String.join(COMMA_DELIMITER, user.toRoleNames()));
+        assertThat(headers.get(AuthHeader.ID.getHeader())).isEqualTo(user.id());
+        assertThat(headers.get(AuthHeader.EMAIL.getHeader())).isEqualTo(user.email());
+        assertThat(headers.get(AuthHeader.STATUS.getHeader())).isEqualTo(user.status().name());
+        assertThat(headers.get(AuthHeader.EMAIL_VERIFIED.getHeader())).isEqualTo(String.valueOf(user.emailVerified()));
+        assertThat(headers.get(AuthHeader.ROLES.getHeader())).isEqualTo(String.join(COMMA_DELIMITER, user.toRoleNames()));
     }
 
     @Test
