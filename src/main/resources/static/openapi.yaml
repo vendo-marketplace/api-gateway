@@ -1,0 +1,508 @@
+openapi: 3.0.3
+info:
+  title: Vendo API
+  version: 1.0.0
+  description: Vendo Marketplace API
+
+servers:
+  - url: http://localhost:8080
+    description: Local
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    SignUpRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          example: user@gmail.com
+        password:
+          type: string
+          example: Qwerty1234@
+
+    SignInRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          example: user@gmail.com
+        password:
+          type: string
+          example: Qwerty1234@
+
+    RefreshRequest:
+      type: object
+      required: [refreshToken]
+      properties:
+        refreshToken:
+          type: string
+
+    GoogleAuthRequest:
+      type: object
+      required: [idToken]
+      properties:
+        idToken:
+          type: string
+
+    ResetPasswordRequest:
+      type: object
+      required: [password]
+      properties:
+        password:
+          type: string
+          example: Qwerty1234@
+
+    SearchRequest:
+      type: object
+      properties:
+        categoryId:
+          type: string
+        active:
+          type: boolean
+        sort:
+          type: object
+          properties:
+            sortBy:
+              type: string
+              enum: [PRICE, TITLE]
+            direction:
+              type: string
+              enum: [ASC, DESC]
+        attributeFilter:
+          type: object
+          properties:
+            attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  values:
+                    type: array
+                    items:
+                      type: string
+        priceRangeFilter:
+          type: object
+          properties:
+            minPrice:
+              type: number
+            maxPrice:
+              type: number
+        size:
+          type: integer
+          example: 10
+        page:
+          type: integer
+          example: 0
+
+    CategoryRequest:
+      type: object
+      required: [title, code]
+      properties:
+        title:
+          type: string
+          example: Аерогриль
+        code:
+          type: string
+          example: air-grill
+        parentId:
+          type: string
+        attributes:
+          type: array
+          items:
+            type: string
+
+    ProductRequest:
+      type: object
+      required: [title, price, quantity, categoryId]
+      properties:
+        title:
+          type: string
+          example: Аерогриль Cecotec Q8
+        description:
+          type: string
+        price:
+          type: number
+          example: 100
+        quantity:
+          type: integer
+          example: 1
+        categoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              values:
+                type: array
+                items:
+                  type: string
+
+    PresignedRequest:
+      type: object
+      required: [type, files]
+      properties:
+        type:
+          type: string
+          enum: [PRODUCT]
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              size:
+                type: integer
+              contentType:
+                type: string
+                example: image/png
+
+paths:
+
+  # ─── AUTH ───────────────────────────────────────────────────────────────────
+
+  /auth/sign-up:
+    post:
+      tags: [Auth]
+      summary: Sign up
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+      responses:
+        '200':
+          description: Success
+
+  /auth/sign-in:
+    post:
+      tags: [Auth]
+      summary: Sign in
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+      responses:
+        '200':
+          description: Returns access and refresh tokens
+
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Refresh token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: Returns new tokens
+
+  /auth/google:
+    post:
+      tags: [Auth]
+      summary: Google OAuth
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleAuthRequest'
+      responses:
+        '200':
+          description: Returns tokens
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Get current user
+      responses:
+        '200':
+          description: Current user info
+        '401':
+          description: Unauthorized
+
+  # ─── PASSWORD ───────────────────────────────────────────────────────────────
+
+  /password/forgot:
+    post:
+      tags: [Password]
+      summary: Forgot password — send OTP to email
+      security: []
+      parameters:
+        - in: query
+          name: email
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OTP sent
+
+  /password/reset:
+    put:
+      tags: [Password]
+      summary: Reset password using OTP
+      security: []
+      parameters:
+        - in: query
+          name: otp
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+      responses:
+        '200':
+          description: Password reset
+
+  /password/resend:
+    put:
+      tags: [Password]
+      summary: Resend password reset OTP
+      security: []
+      parameters:
+        - in: query
+          name: email
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OTP resent
+
+  # ─── VERIFICATION ────────────────────────────────────────────────────────────
+
+  /verification/send-otp:
+    post:
+      tags: [Verification]
+      summary: Send verification OTP
+      security: []
+      parameters:
+        - in: query
+          name: email
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OTP sent
+
+  /verification/validate:
+    post:
+      tags: [Verification]
+      summary: Validate OTP
+      parameters:
+        - in: query
+          name: otp
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Verified
+        '401':
+          description: Unauthorized
+
+  /verification/resend-otp:
+    post:
+      tags: [Verification]
+      summary: Resend verification OTP
+      security: []
+      parameters:
+        - in: query
+          name: email
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OTP resent
+
+  # ─── SEARCH ─────────────────────────────────────────────────────────────────
+
+  /search:
+    post:
+      tags: [Search]
+      summary: Search products
+      security: []
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Search results
+
+  # ─── CATEGORIES ─────────────────────────────────────────────────────────────
+
+  /categories:
+    post:
+      tags: [Categories]
+      summary: Create category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+      responses:
+        '200':
+          description: Created
+        '401':
+          description: Unauthorized
+
+  /categories/tree:
+    get:
+      tags: [Categories]
+      summary: Get category tree
+      security: []
+      responses:
+        '200':
+          description: Category tree
+
+  /categories/{id}:
+    get:
+      tags: [Categories]
+      summary: Get category by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Category
+        '404':
+          description: Not found
+
+  # ─── PRODUCTS ───────────────────────────────────────────────────────────────
+
+  /products:
+    post:
+      tags: [Products]
+      summary: Create product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: Created
+        '401':
+          description: Unauthorized
+
+  /products/{id}:
+    get:
+      tags: [Products]
+      summary: Get product by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product
+        '404':
+          description: Not found
+    put:
+      tags: [Products]
+      summary: Update product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: Updated
+        '401':
+          description: Unauthorized
+
+  # ─── ATTRIBUTES ─────────────────────────────────────────────────────────────
+
+  /attributes:
+    post:
+      tags: [Attributes]
+      summary: Save attribute
+      responses:
+        '200':
+          description: Saved
+
+  # ─── STORAGE ─────────────────────────────────────────────────────────────────
+
+  /storage/presigned:
+    post:
+      tags: [Storage]
+      summary: Get presigned URLs for file upload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PresignedRequest'
+      responses:
+        '200':
+          description: Presigned URLs
+        '401':
+          description: Unauthorized
+
+  # ─── INDEXER ─────────────────────────────────────────────────────────────────
+
+  /indices/reindex:
+    post:
+      tags: [Indexer]
+      summary: Reindex all products
+      responses:
+        '200':
+          description: Reindexed
+        '401':
+          description: Unauthorized
