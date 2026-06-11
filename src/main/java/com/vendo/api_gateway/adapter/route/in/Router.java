@@ -28,6 +28,10 @@ public class Router {
                 .route(AWS_SERVICE.getServiceName(), r -> r
                         .path("/storage/**")
                         .uri("lb://%s".formatted(AWS_SERVICE.getServiceName())))
+
+                .route(INDEXER_SERVICE.getServiceName(), r -> r
+                        .path("/indices/**")
+                        .uri("lb://%s".formatted(INDEXER_SERVICE.getServiceName())))
                 .build();
     }
 }
