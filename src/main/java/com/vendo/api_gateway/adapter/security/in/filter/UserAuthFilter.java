@@ -32,7 +32,10 @@ public class UserAuthFilter implements GlobalFilter {
         HttpHeaders headers = request.getHeaders();
 
         String path = request.getURI().getPath();
+
+        System.out.println("Before filter");
         if (antPathResolver.isPermittedPath(path)) return chain.filter(exchange);
+        System.out.println("After filter");
 
         String authorization = GlobalFilterUtils.getTokenFromRequest(headers.getFirst(AUTHORIZATION_HEADER));
         User authUser = claimsParser.extract(authorization);
