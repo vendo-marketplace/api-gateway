@@ -1,6 +1,7 @@
 package com.vendo.api_gateway.adapter.security.in.filter;
 
 import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentialsException;
+import com.vendo.api_gateway.domain.user.User;
 
 import java.util.Map;
 
@@ -33,6 +34,10 @@ public final class GlobalFilterUtils {
             throw new BadCredentialsException("Unauthorized.");
         }
         return authorization.substring(BEARER_PREFIX.length());
+    }
+
+    static void addUserToContext(User user, Map<String, Object> attributes) {
+        attributes.put(GlobalFilterUtils.CONTEXT_ATTRIBUTE, user);
     }
 
 }

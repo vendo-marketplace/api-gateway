@@ -15,8 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Map;
-
 import static com.vendo.security_lib.http.HttpUtils.AUTHORIZATION_HEADER;
 
 @Slf4j
@@ -38,7 +36,7 @@ public class UserAuthFilter implements GlobalFilter {
 
         String authorization = GlobalFilterUtils.getTokenFromRequest(headers.getFirst(AUTHORIZATION_HEADER));
         User authUser = claimsParser.extract(authorization);
-        addUserToContext(authUser, exchange.getAttributes());
+        GlobalFilterUtils.addUserToContext(authUser, exchange.getAttributes());
 
         ServerHttpRequest requestWithHeaders = applyHeaders(authUser, request);
         return chain.filter(exchange
@@ -52,9 +50,5 @@ public class UserAuthFilter implements GlobalFilter {
         return request.mutate()
                 .headers(headers -> headers.addAll(UserHeadersExtractor.from(user)))
                 .build();
-    }
-
-    private void addUserToContext(User user, Map<String, Object> attributes) {
-        attributes.put(GlobalFilterUtils.CONTEXT_ATTRIBUTE, user);
     }
 }
