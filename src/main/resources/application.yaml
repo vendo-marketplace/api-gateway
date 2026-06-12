@@ -5,9 +5,3 @@ spring:
     active: ${APP_PROFILE}
   config:
     import: "optional:configserver:${CONFIG_SERVER_URL}"
-
-springdoc:
-  swagger-ui:
-    url: /openapi.yaml
-  api-docs:
-    enabled: false
