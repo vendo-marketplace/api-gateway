@@ -1,0 +1,42 @@
+type: object
+properties:
+  categoryId:
+    type: string
+  active:
+    type: boolean
+  sort:
+    type: object
+    properties:
+      sortBy:
+        type: string
+        enum: [PRICE, TITLE]
+      direction:
+        type: string
+        enum: [ASC, DESC]
+  attributeFilter:
+    type: object
+    properties:
+      attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+            values:
+              type: array
+              items:
+                type: string
+  priceRangeFilter:
+    type: object
+    properties:
+      minPrice:
+        type: number
+      maxPrice:
+        type: number
+  size:
+    type: integer
+    example: 10
+  page:
+    type: integer
+    example: 0

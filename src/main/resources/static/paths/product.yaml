@@ -1,0 +1,92 @@
+products:
+  post:
+    tags: [ Products ]
+    summary: Create product
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/product/ProductRequest.yaml'
+    responses:
+      '200':
+        description: Created
+      '401':
+        description: Unauthorized
+
+product:
+  get:
+    tags: [ Products ]
+    summary: Get product by ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Product
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/ProductResponse.yaml'
+      '404':
+        description: Not found
+
+attributes:
+  post:
+    tags: [ Attributes ]
+    summary: Save attribute
+    responses:
+      '200':
+        description: Saved
+
+categories:
+  post:
+    tags: [ Categories ]
+    summary: Create category
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/product/CreateCategoryRequest.yaml'
+    responses:
+      '200':
+        description: Created
+      '401':
+        description: Unauthorized
+
+tree:
+  get:
+    tags: [ Categories ]
+    summary: Get category tree
+    security: [ ]
+    responses:
+      '200':
+        description: Category tree
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/CategoryTreeResponse.yaml'
+
+category:
+  get:
+    tags: [ Categories ]
+    summary: Get category by ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Category
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/CategoryResponse.yaml'
+      '404':
+        description: Not found

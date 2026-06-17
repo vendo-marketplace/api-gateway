@@ -1,0 +1,7 @@
+type: string
+enum:
+  - STRING
+  - NUMBER
+  - BOOLEAN
+  - ENUM
+  - RANGE

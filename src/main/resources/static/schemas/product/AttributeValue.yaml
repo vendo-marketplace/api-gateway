@@ -1,0 +1,9 @@
+type: object
+properties:
+  id:
+    type: string
+  values:
+    type: array
+    items:
+      type: string
+      example: Cecotec

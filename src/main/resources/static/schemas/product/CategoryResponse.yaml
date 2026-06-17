@@ -1,0 +1,19 @@
+type: object
+properties:
+  id:
+    type: string
+  title:
+    type: string
+    example: Electronics
+  parentId:
+    type: string
+  type:
+    $ref: "./CategoryType.yaml"
+  attributes:
+    type: array
+    items:
+      type: string
+  path:
+    type: array
+    items:
+      type: string

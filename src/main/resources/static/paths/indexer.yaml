@@ -1,0 +1,9 @@
+reindex:
+  post:
+    tags: [ Indexer ]
+    summary: Reindex all products
+    responses:
+      '200':
+        description: Reindexed
+      '401':
+        description: Unauthorized
