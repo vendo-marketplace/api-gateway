@@ -1,0 +1,42 @@
+type: object
+properties:
+  id:
+    type: string
+    example: 6a2ab30529631760e0d3588a
+  title:
+    type: string
+    example: Electronics
+  code:
+    type: string
+    example: electronics
+  attributes:
+    type: array
+    items:
+      $ref: "./Attribute.yaml"
+  path:
+    type: array
+    items:
+      type: string
+  children:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 6a2ab54b29631760e0d3588c
+      title:
+        type: string
+        example: Videocards
+      code:
+        type: string
+        example: videocards
+      attributes:
+        type: array
+        items:
+          $ref: "./Attribute.yaml"
+      path:
+        type: array
+        items:
+          type: string
+          example:
+            - 6a2ab30529631760e0d3588a
+            - 6a2ab54b29631760e0d3588c

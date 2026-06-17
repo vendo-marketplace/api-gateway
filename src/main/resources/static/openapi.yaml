@@ -18,7 +18,7 @@ components:
 
 paths:
 
-  # ─── AUTH ───────────────────────────────────────────────────────────────────
+  # ─── AUTH ────
 
   /auth/sign-up:
     $ref: "./paths/auth.yaml#/signUp"
@@ -35,8 +35,6 @@ paths:
   /auth/me:
     $ref: "./paths/auth.yaml#/me"
 
-  # ─── PASSWORD ───────────────────────────────────────────────────────────────
-
   /password/forgot:
     $ref: "./paths/auth.yaml#/password"
 
@@ -45,8 +43,6 @@ paths:
 
   /password/resend:
     $ref: "./paths/auth.yaml#/resend"
-
-  # ─── VERIFICATION ────────────────────────────────────────────────────────────
 
   /verification/send-otp:
     $ref: "./paths/auth.yaml#/send-otp"
@@ -57,12 +53,12 @@ paths:
   /verification/resend-otp:
     $ref: "./paths/auth.yaml#/resent-otp"
 
-  # ─── SEARCH ─────────────────────────────────────────────────────────────────
+  # ─── SEARCH ───
 
   /search:
     $ref: "./paths/search.yaml#/search"
 
-  # ─── CATEGORIES ─────────────────────────────────────────────────────────────
+  # ─── PRODUCTS ───
 
   /categories:
     $ref: "./paths/product.yaml#/categories"
@@ -73,25 +69,21 @@ paths:
   /categories/{id}:
     $ref: "./paths/product.yaml#/category"
 
-  # ─── PRODUCTS ───────────────────────────────────────────────────────────────
-
   /products:
     $ref: "./paths/product.yaml#/products"
 
   /products/{id}:
     $ref: "./paths/product.yaml#/product"
 
-  # ─── ATTRIBUTES ─────────────────────────────────────────────────────────────
-
   /attributes:
     $ref: "./paths/product.yaml#/attributes"
 
-  # ─── STORAGE ─────────────────────────────────────────────────────────────────
+  # ─── STORAGE ───
 
   /storage/presigned:
     $ref: "./paths/storage.yaml#/presigned"
 
-  # ─── INDEXER ─────────────────────────────────────────────────────────────────
+  # ─── INDEXER ───
 
   /indices/reindex:
     $ref: "./paths/indexer.yaml#/reindex"

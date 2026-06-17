@@ -27,6 +27,10 @@ product:
     responses:
       '200':
         description: Product
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/ProductResponse.yaml'
       '404':
         description: Not found
 
@@ -47,7 +51,7 @@ categories:
       content:
         application/json:
           schema:
-            $ref: '../schemas/product/CategoryRequest.yaml'
+            $ref: '../schemas/product/CreateCategoryRequest.yaml'
     responses:
       '200':
         description: Created
@@ -62,6 +66,10 @@ tree:
     responses:
       '200':
         description: Category tree
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/CategoryTreeResponse.yaml'
 
 category:
   get:
@@ -76,5 +84,9 @@ category:
     responses:
       '200':
         description: Category
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/CategoryResponse.yaml'
       '404':
         description: Not found

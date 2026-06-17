@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: string
+  title:
+    type: string
+    example: Memory
+  type:
+    $ref: "./AttributeType.yaml"
+  required:
+    type: boolean
+    example: true
+  allowedValues:
+    type: array
+    items:
+      type: string
+      example: GDDR5
