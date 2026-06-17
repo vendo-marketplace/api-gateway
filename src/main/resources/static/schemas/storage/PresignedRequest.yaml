@@ -1,0 +1,18 @@
+type: object
+required: [type, files]
+properties:
+  type:
+    type: string
+    enum: [PRODUCT]
+  files:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+        size:
+          type: integer
+        contentType:
+          type: string
+          example: image/png

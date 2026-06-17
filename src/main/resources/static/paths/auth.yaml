@@ -1,0 +1,166 @@
+signIn:
+  post:
+    tags: [ Auth ]
+    summary: Sign in
+    security: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/auth/SignInRequest.yaml'
+    responses:
+      '200':
+        description: Returns access and refresh tokens
+
+signUp:
+  post:
+    tags: [ Auth ]
+    summary: Sign up
+    security: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/auth/SignUpRequest.yaml'
+    responses:
+      '200':
+        description: Success
+
+refresh:
+  post:
+    tags: [ Auth ]
+    summary: Refresh token
+    security: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/auth/RefreshRequest.yaml'
+    responses:
+      '200':
+        description: Returns new tokens
+
+google:
+  post:
+    tags: [ Auth ]
+    summary: Google OAuth
+    security: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/auth/GoogleAuthRequest.yaml'
+    responses:
+      '200':
+        description: Returns tokens
+
+me:
+  get:
+    tags: [ Auth ]
+    summary: Get current user
+    responses:
+      '200':
+        description: Current user info
+      '401':
+        description: Unauthorized
+
+password:
+  post:
+    tags: [ Password ]
+    summary: Forgot password — send OTP to email
+    security: [ ]
+    parameters:
+      - in: query
+        name: email
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: OTP sent
+
+reset:
+  put:
+    tags: [ Password ]
+    summary: Reset password using OTP
+    security: [ ]
+    parameters:
+      - in: query
+        name: otp
+        required: true
+        schema:
+          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/auth/ResetPasswordRequest.yaml'
+    responses:
+      '200':
+        description: Password reset
+
+resend:
+  put:
+    tags: [ Password ]
+    summary: Resend password reset OTP
+    security: [ ]
+    parameters:
+      - in: query
+        name: email
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: OTP resent
+
+send-otp:
+  post:
+    tags: [ Verification ]
+    summary: Send verification OTP
+    security: [ ]
+    parameters:
+      - in: query
+        name: email
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: OTP sent
+
+validate:
+  post:
+    tags: [ Verification ]
+    summary: Validate OTP
+    parameters:
+      - in: query
+        name: otp
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Verified
+      '401':
+        description: Unauthorized
+
+resent-otp:
+  post:
+    tags: [ Verification ]
+    summary: Resend verification OTP
+    security: [ ]
+    parameters:
+      - in: query
+        name: email
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: OTP resent

@@ -1,0 +1,15 @@
+type: object
+required: [title, code]
+properties:
+  title:
+    type: string
+    example: Аерогриль
+  code:
+    type: string
+    example: air-grill
+  parentId:
+    type: string
+  attributes:
+    type: array
+    items:
+      type: string

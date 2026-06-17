@@ -1,0 +1,27 @@
+type: object
+required: [title, price, quantity, categoryId]
+properties:
+  title:
+    type: string
+    example: Аерогриль Cecotec Q8
+  description:
+    type: string
+  price:
+    type: number
+    example: 100
+  quantity:
+    type: integer
+    example: 1
+  categoryId:
+    type: string
+  attributes:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+        values:
+          type: array
+          items:
+            type: string

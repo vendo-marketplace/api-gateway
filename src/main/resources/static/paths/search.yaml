@@ -1,0 +1,19 @@
+search:
+  post:
+    tags: [ Search ]
+    summary: Search products
+    security: [ ]
+    parameters:
+      - in: query
+        name: q
+        schema:
+          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/search/SearchRequest.yaml'
+    responses:
+      '200':
+        description: Search results

@@ -1,0 +1,15 @@
+presigned:
+  post:
+    tags: [ Storage ]
+    summary: Get presigned URLs for file upload
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/storage/PresignedRequest.yaml'
+    responses:
+      '200':
+        description: Presigned URLs
+      '401':
+        description: Unauthorized
