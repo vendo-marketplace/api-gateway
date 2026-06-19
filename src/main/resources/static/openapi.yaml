@@ -78,6 +78,9 @@ paths:
   /attributes:
     $ref: "./paths/product.yaml#/attributes"
 
+  /favorite/{productId}:
+    $ref: "./paths/product.yaml#/favorite"
+
   # ─── STORAGE ───
 
   /storage/presigned:

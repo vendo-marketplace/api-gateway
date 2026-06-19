@@ -90,3 +90,51 @@ category:
               $ref: '../schemas/product/CategoryResponse.yaml'
       '404':
         description: Not found
+
+favorite:
+  post:
+    tags: [ Favorite ]
+    summary: Add to favorite by Product Id
+    parameters:
+      - in: path
+        name: productId
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Created
+      '401':
+        description: Unauthorized
+      '404':
+        description: Not found
+
+  delete:
+    tags: [ Favorite ]
+    summary: Delete favorite by Product Id
+    parameters:
+      - in: path
+        name: productId
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Deleted
+      '401':
+        description: Unauthorized
+      '409':
+        description: Conflict
+
+  get:
+    tags: [ Favorite ]
+    summary: Get favorites
+    responses:
+      '200':
+        description: Favorite
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/FavoriteResponse.yaml'
+      401:
+        description: Unauthorized
