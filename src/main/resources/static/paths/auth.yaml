@@ -28,6 +28,11 @@ signUp:
         application/json:
           schema:
             $ref: '../schemas/auth/AuthRequest.yaml'
+    responses:
+      '200':
+        description: Create user
+      '409':
+        description: User already exists
 
 refresh:
   post:
