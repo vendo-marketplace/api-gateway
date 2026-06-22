@@ -2,9 +2,16 @@ type: object
 properties:
   message:
     type: string
+  errors:
+    type: object
+    additionalProperties:
+      type: string
+    example:
+      email: Invalid email
+      password: Invalid password
   code:
     type: integer
-    example: 409
+    example: 400
   path:
     type: string
   timestamp:

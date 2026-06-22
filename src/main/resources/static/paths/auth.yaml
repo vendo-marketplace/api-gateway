@@ -42,7 +42,7 @@ signUp:
         content:
           application/json:
             schema:
-              $ref: "../schemas/exception/ValidationResponse.yaml"
+              $ref: "../schemas/exception/ExceptionResponse.yaml"
 
 refresh:
   post:
@@ -120,7 +120,7 @@ complete:
         content:
           application/json:
             schema:
-              $ref: "../schemas/exception/ValidationResponse.yaml"
+              $ref: "../schemas/exception/ExceptionResponse.yaml"
 
 password:
   post:
