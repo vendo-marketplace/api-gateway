@@ -1,0 +1,12 @@
+type: object
+properties:
+  message:
+    type: string
+  code:
+    type: integer
+    example: 409
+  path:
+    type: string
+  timestamp:
+    type: string
+
