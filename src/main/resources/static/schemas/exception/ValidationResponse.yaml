@@ -2,7 +2,6 @@ type: object
 properties:
   message:
     type: string
-    example: Validation failed.
   errors:
     type: object
     additionalProperties:
@@ -15,5 +14,4 @@ properties:
     example: 400
   path:
     type: string
-    example: /auth/sign-up
 

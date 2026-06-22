@@ -1,0 +1,9 @@
+type: object
+properties:
+  fullName:
+    type: string
+    example: Альберт Эйнштейн
+  birthDate:
+    type: string
+    format: date
+    example: 1879-03-14

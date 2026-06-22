@@ -38,7 +38,7 @@ signUp:
             schema:
               $ref: "../schemas/exception/ExceptionResponse.yaml"
       '400':
-        description: Validation failed.
+        description: Validation failed
         content:
           application/json:
             schema:
@@ -95,6 +95,32 @@ me:
               $ref: '../schemas/auth/UserResponse.yaml'
       '401':
         description: Unauthorized
+
+complete:
+  post:
+    tags: [ Auth ]
+    summary: Complete user authorization
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/auth/CompleteRequest.yaml"
+    responses:
+      '200':
+        description: User authorization successfully completed
+      '409':
+        description: User is already completed
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/exception/ExceptionResponse.yaml"
+      '400':
+        description: Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/exception/ValidationResponse.yaml"
 
 password:
   post:
