@@ -97,7 +97,7 @@ me:
         description: Unauthorized
 
 complete:
-  post:
+  patch:
     tags: [ Auth ]
     summary: Complete user authorization
     requestBody:
