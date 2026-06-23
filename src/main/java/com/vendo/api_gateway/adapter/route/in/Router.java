@@ -18,7 +18,7 @@ public class Router {
                         .uri("lb://%s".formatted(AUTH_SERVICE.getServiceName())))
 
                 .route(PRODUCT_SERVICE.getServiceName(), r -> r
-                        .path("/categories/**", "/products/**", "/attributes/**")
+                        .path("/categories/**", "/products/**", "/attributes/**", "/favorites/**")
                         .uri("lb://%s".formatted(PRODUCT_SERVICE.getServiceName())))
 
                 .route(SEARCH_SERVICE.getServiceName(), r -> r
