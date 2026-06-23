@@ -93,7 +93,7 @@ category:
 
 favorite:
   post:
-    tags: [ Favorite ]
+    tags: [ Favorites ]
     summary: Add to favorite by Product Id
     parameters:
       - in: path
@@ -110,7 +110,7 @@ favorite:
         description: Not found
 
   delete:
-    tags: [ Favorite ]
+    tags: [ Favorites ]
     summary: Delete favorite by Product Id
     parameters:
       - in: path
@@ -126,12 +126,13 @@ favorite:
       '409':
         description: Conflict
 
+favorites:
   get:
-    tags: [ Favorite ]
+    tags: [ Favorites ]
     summary: Get favorites
     responses:
       '200':
-        description: Favorite
+        description: Favorites
         content:
           application/json:
             schema:

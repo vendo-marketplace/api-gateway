@@ -78,8 +78,11 @@ paths:
   /attributes:
     $ref: "./paths/product.yaml#/attributes"
 
-  /favorite/{productId}:
+  /favorites/{productId}:
     $ref: "./paths/product.yaml#/favorite"
+
+  /favorites:
+    $ref: "./paths/product.yaml#/favorites"
 
   # ─── STORAGE ───
 
