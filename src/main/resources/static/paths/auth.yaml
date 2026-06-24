@@ -28,6 +28,13 @@ signUp:
         application/json:
           schema:
             $ref: '../schemas/auth/AuthRequest.yaml'
+    responses:
+      '200':
+        description: Create user
+      '409':
+        description: User already exists
+      '400':
+        description: Validation failed
 
 refresh:
   post:
@@ -80,6 +87,24 @@ me:
               $ref: '../schemas/auth/UserResponse.yaml'
       '401':
         description: Unauthorized
+
+complete:
+  patch:
+    tags: [ Auth ]
+    summary: Complete user authorization
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/auth/CompleteRequest.yaml"
+    responses:
+      '200':
+        description: User authorization successfully completed
+      '409':
+        description: User is already completed
+      '400':
+        description: Validation failed
 
 password:
   post:

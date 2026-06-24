@@ -15,6 +15,65 @@ components:
   securitySchemes:
     bearerAuth:
       $ref: "./components/security.yaml"
+  schemas:
+    # ─── AUTH ────
+
+    AuthRequest:
+      $ref: "./schemas/auth/AuthRequest.yaml"
+    AuthResponse:
+      $ref: "./schemas/auth/AuthResponse.yaml"
+    CompleteRequest:
+      $ref: "./schemas/auth/CompleteRequest.yaml"
+    GoogleAuthRequest:
+      $ref: "./schemas/auth/GoogleAuthRequest.yaml"
+    ProviderType:
+      $ref: "./schemas/auth/ProviderType.yaml"
+    RefreshRequest:
+      $ref: "./schemas/auth/RefreshRequest.yaml"
+    ResetPasswordRequest:
+      $ref: "./schemas/auth/ResetPasswordRequest.yaml"
+    UserResponse:
+      $ref: "./schemas/auth/UserResponse.yaml"
+    UserRole:
+      $ref: "./schemas/auth/UserRole.yaml"
+
+    # ─── EXCEPTION ─────
+
+    ExceptionResponse:
+      $ref: "./schemas/exception/ExceptionResponse.yaml"
+
+    # ─── PRODUCT ─────
+
+    Attribute:
+      $ref: "./schemas/product/Attribute.yaml"
+    AttributeType:
+      $ref: "./schemas/product/AttributeType.yaml"
+    AttributeValue:
+      $ref: "./schemas/product/AttributeValue.yaml"
+    CategoryResponse:
+      $ref: "./schemas/product/CategoryResponse.yaml"
+    CategoryTree:
+      $ref: "./schemas/product/CategoryTree.yaml"
+    CategoryTreeResponse:
+      $ref: "./schemas/product/CategoryTreeResponse.yaml"
+    CategoryType:
+      $ref: "./schemas/product/CategoryType.yaml"
+    CreateCategoryRequest:
+      $ref: "./schemas/product/CreateCategoryRequest.yaml"
+    ProductRequest:
+      $ref: "./schemas/product/ProductRequest.yaml"
+    ProductResponse:
+      $ref: "./schemas/product/ProductResponse.yaml"
+
+    # ─── SEARCH ─────
+
+    SearchRequest:
+      $ref: "./schemas/search/SearchRequest.yaml"
+
+    # ─── STORAGE ─────
+
+    PresignedRequest:
+      $ref: "./schemas/storage/PresignedRequest.yaml"
 
 paths:
 
@@ -31,6 +90,9 @@ paths:
 
   /auth/google:
     $ref: "./paths/auth.yaml#/google"
+
+  /auth/complete:
+    $ref: "./paths/auth.yaml#/complete"
 
   /auth/me:
     $ref: "./paths/auth.yaml#/me"
