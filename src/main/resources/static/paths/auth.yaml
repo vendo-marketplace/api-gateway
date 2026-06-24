@@ -33,16 +33,8 @@ signUp:
         description: Create user
       '409':
         description: User already exists
-        content:
-          application/json:
-            schema:
-              $ref: "../schemas/exception/ExceptionResponse.yaml"
       '400':
         description: Validation failed
-        content:
-          application/json:
-            schema:
-              $ref: "../schemas/exception/ExceptionResponse.yaml"
 
 refresh:
   post:
@@ -111,16 +103,8 @@ complete:
         description: User authorization successfully completed
       '409':
         description: User is already completed
-        content:
-          application/json:
-            schema:
-              $ref: "../schemas/exception/ExceptionResponse.yaml"
       '400':
         description: Validation failed
-        content:
-          application/json:
-            schema:
-              $ref: "../schemas/exception/ExceptionResponse.yaml"
 
 password:
   post:

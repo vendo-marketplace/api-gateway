@@ -16,7 +16,6 @@ components:
     bearerAuth:
       $ref: "./components/security.yaml"
   schemas:
-
     # ─── AUTH ────
 
     AuthRequest:
