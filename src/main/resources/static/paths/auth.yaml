@@ -11,7 +11,7 @@ signIn:
             $ref: '../schemas/auth/AuthRequest.yaml'
     responses:
       '200':
-        description: Returns access and refresh tokens
+        description: Returns pair of tokens
         content:
           application/json:
             schema:
@@ -49,7 +49,7 @@ refresh:
             $ref: '../schemas/auth/RefreshRequest.yaml'
     responses:
       '200':
-        description: Returns access and refresh tokens
+        description: Returns pair of tokens
         content:
           application/json:
             schema:
@@ -68,7 +68,7 @@ google:
             $ref: '../schemas/auth/GoogleAuthRequest.yaml'
     responses:
       '200':
-        description: Returns tokens
+        description: Returns pair of tokens
         content:
           application/json:
             schema:
