@@ -80,40 +80,40 @@ paths:
   # ─── AUTH ────
 
   /auth/sign-up:
-    $ref: "./paths/auth.yaml#/signUp"
+    $ref: "./paths/auth.yaml#/auth-signUp"
 
   /auth/sign-in:
-    $ref: "./paths/auth.yaml#/signIn"
+    $ref: "./paths/auth.yaml#/auth-signIn"
 
   /auth/refresh:
-    $ref: "./paths/auth.yaml#/refresh"
+    $ref: "./paths/auth.yaml#/auth-refresh"
 
   /auth/google:
-    $ref: "./paths/auth.yaml#/google"
+    $ref: "./paths/auth.yaml#/auth-google"
 
   /auth/complete:
-    $ref: "./paths/auth.yaml#/complete"
+    $ref: "./paths/auth.yaml#/auth-complete"
 
   /auth/me:
-    $ref: "./paths/auth.yaml#/me"
+    $ref: "./paths/auth.yaml#/auth-me"
 
   /password/forgot:
     $ref: "./paths/auth.yaml#/password"
 
   /password/reset:
-    $ref: "./paths/auth.yaml#/reset"
+    $ref: "./paths/auth.yaml#/password-reset"
 
-  /password/resend:
-    $ref: "./paths/auth.yaml#/resend"
+  /password/resend-otp:
+    $ref: "./paths/auth.yaml#/password-resend-otp"
 
   /verification/send-otp:
-    $ref: "./paths/auth.yaml#/send-otp"
+    $ref: "./paths/auth.yaml#/verification-send-otp"
 
   /verification/validate:
-    $ref: "./paths/auth.yaml#/validate"
+    $ref: "./paths/auth.yaml#/verification-validate"
 
   /verification/resend-otp:
-    $ref: "./paths/auth.yaml#/resent-otp"
+    $ref: "./paths/auth.yaml#/verification-resent-otp"
 
   # ─── SEARCH ───
 
@@ -126,7 +126,7 @@ paths:
     $ref: "./paths/product.yaml#/categories"
 
   /categories/tree:
-    $ref: "./paths/product.yaml#/tree"
+    $ref: "./paths/product.yaml#/categories-tree"
 
   /categories/{id}:
     $ref: "./paths/product.yaml#/category"

@@ -1,4 +1,4 @@
-signIn:
+auth-signIn:
   post:
     tags: [ Auth ]
     summary: Sign in
@@ -17,7 +17,7 @@ signIn:
             schema:
               $ref: '../schemas/auth/AuthResponse.yaml'
 
-signUp:
+auth-signUp:
   post:
     tags: [ Auth ]
     summary: Sign up
@@ -36,7 +36,7 @@ signUp:
       '400':
         description: Validation failed
 
-refresh:
+auth-refresh:
   post:
     tags: [ Auth ]
     summary: Refresh token
@@ -55,7 +55,7 @@ refresh:
             schema:
               $ref: '../schemas/auth/AuthResponse.yaml'
 
-google:
+auth-google:
   post:
     tags: [ Auth ]
     summary: Google OAuth
@@ -74,7 +74,7 @@ google:
             schema:
               $ref: '../schemas/auth/AuthResponse.yaml'
 
-me:
+auth-me:
   get:
     tags: [ Auth ]
     summary: Get current user
@@ -88,7 +88,7 @@ me:
       '401':
         description: Unauthorized
 
-complete:
+auth-complete:
   patch:
     tags: [ Auth ]
     summary: Complete user authorization
@@ -121,7 +121,7 @@ password:
       '200':
         description: OTP sent
 
-reset:
+password-reset:
   put:
     tags: [ Password ]
     summary: Reset password using OTP
@@ -142,7 +142,7 @@ reset:
       '200':
         description: Password reset
 
-resend:
+password-resend-otp:
   put:
     tags: [ Password ]
     summary: Resend password reset OTP
@@ -157,7 +157,7 @@ resend:
       '200':
         description: OTP resent
 
-send-otp:
+verification-send-otp:
   post:
     tags: [ Verification ]
     summary: Send verification OTP
@@ -172,7 +172,7 @@ send-otp:
       '200':
         description: OTP sent
 
-validate:
+verification-validate:
   post:
     tags: [ Verification ]
     summary: Validate OTP
@@ -188,7 +188,7 @@ validate:
       '401':
         description: Unauthorized
 
-resent-otp:
+verification-resent-otp:
   post:
     tags: [ Verification ]
     summary: Resend verification OTP
