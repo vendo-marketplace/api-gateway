@@ -58,7 +58,7 @@ categories:
       '401':
         description: Unauthorized
 
-tree:
+categories-tree:
   get:
     tags: [ Categories ]
     summary: Get category tree
