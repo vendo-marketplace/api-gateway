@@ -17,9 +17,10 @@ import java.util.stream.Collectors;
 @ConfigurationProperties(prefix = "endpoints")
 public class GatewayProps {
 
+    private Verified verified;
     private Unauthenticated unauthenticated;
 
-    private Verified verified;
+    private static final String AUTH_COMPLETE_PATH = "/auth/complete";
 
     public record Unauthenticated(
 
@@ -36,6 +37,14 @@ public class GatewayProps {
     }
 
     public record Verified(Set<String> paths) {
+
+        public String getCompletePath() {
+            if (paths.contains(AUTH_COMPLETE_PATH)) {
+                return AUTH_COMPLETE_PATH;
+            }
+
+            throw new IllegalStateException("Complete path not found in configuration.");
+        }
 
     }
 

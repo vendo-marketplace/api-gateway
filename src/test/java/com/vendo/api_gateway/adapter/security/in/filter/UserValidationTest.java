@@ -1,4 +1,4 @@
-package com.vendo.api_gateway.security.in.filter;
+package com.vendo.api_gateway.adapter.security.in.filter;
 
 import com.vendo.api_gateway.adapter.security.in.filter.UserValidationFilter;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;

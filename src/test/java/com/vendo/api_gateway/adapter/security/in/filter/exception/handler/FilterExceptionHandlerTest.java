@@ -1,4 +1,4 @@
-package com.vendo.api_gateway.security.in.exception.handler;
+package com.vendo.api_gateway.adapter.security.in.filter.exception.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,11 +6,11 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthenticationServiceException;
-import com.vendo.api_gateway.adapter.security.in.filter.exception.handler.FilterExceptionHandler;
 import com.vendo.security_lib.exception.response.ExceptionResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
@@ -34,6 +34,9 @@ public class FilterExceptionHandlerTest {
             .addModule(new JavaTimeModule())
             .build();
 
+    @Mock
+    private ExceptionResponseFactory exceptionResponseFactory;
+
     @Test
     void handle_shouldReturnUnauthorized_whenAuthenticationExceptionThrown() throws JsonProcessingException {
         MockServerHttpRequest request = MockServerHttpRequest
@@ -41,10 +44,16 @@ public class FilterExceptionHandlerTest {
                 .header(AUTHORIZATION_HEADER, BEARER_PREFIX + "token")
                 .build();
         MockServerWebExchange exchange = MockServerWebExchange.from(request);
+        AuthenticationServiceException authenticationServiceException = new AuthenticationServiceException("Unauthorized.");
+        ExceptionResponse er = ExceptionResponse.builder()
+                .path("/auth")
+                .code(HttpStatus.UNAUTHORIZED.value())
+                .message("Unauthorized.")
+                .build();
 
-        filterExceptionHandler
-                .handle(exchange, new AuthenticationServiceException("Unauthorized."))
-                .block();
+        when(exceptionResponseFactory.getExceptionResponse("/auth", authenticationServiceException)).thenReturn(er);
+
+        filterExceptionHandler.handle(exchange, authenticationServiceException).block();
 
         assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
         assertThat(exchange.getResponse().getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
@@ -55,9 +64,9 @@ public class FilterExceptionHandlerTest {
 
         assertThat(body).isNotBlank();
         ExceptionResponse exceptionResponse = objectMapper.readValue(body, ExceptionResponse.class);
-        assertThat(exceptionResponse.getMessage()).isEqualTo("Unauthorized.");
-        assertThat(exceptionResponse.getCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
-        assertThat(exceptionResponse.getPath()).isEqualTo("/auth");
+        assertThat(exceptionResponse.getMessage()).isEqualTo(er.getMessage());
+        assertThat(exceptionResponse.getCode()).isEqualTo(er.getCode());
+        assertThat(exceptionResponse.getPath()).isEqualTo(er.getPath());
     }
 
     @Test
@@ -67,10 +76,16 @@ public class FilterExceptionHandlerTest {
                 .header(AUTHORIZATION_HEADER, BEARER_PREFIX + "token")
                 .build();
         MockServerWebExchange exchange = MockServerWebExchange.from(request);
+        ExceptionResponse er = ExceptionResponse.builder()
+                .path("/auth")
+                .code(HttpStatus.FORBIDDEN.value())
+                .message("Forbidden.")
+                .build();
+        AccessDeniedException accessDeniedException = new AccessDeniedException("Forbidden.");
 
-        filterExceptionHandler
-                .handle(exchange, new AccessDeniedException("Forbidden."))
-                .block();
+        when(exceptionResponseFactory.getExceptionResponse("/auth", accessDeniedException)).thenReturn(er);
+
+        filterExceptionHandler.handle(exchange, accessDeniedException).block();
 
         assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
         assertThat(exchange.getResponse().getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
@@ -82,9 +97,9 @@ public class FilterExceptionHandlerTest {
 
         ExceptionResponse exceptionResponse = objectMapper.readValue(response, ExceptionResponse.class);
         assertThat(exceptionResponse).isNotNull();
-        assertThat(exceptionResponse.getMessage()).isEqualTo("Forbidden.");
-        assertThat(exceptionResponse.getCode()).isEqualTo(HttpStatus.FORBIDDEN.value());
-        assertThat(exceptionResponse.getPath()).isEqualTo("/auth");
+        assertThat(exceptionResponse.getMessage()).isEqualTo(er.getMessage());
+        assertThat(exceptionResponse.getCode()).isEqualTo(er.getCode());
+        assertThat(exceptionResponse.getPath()).isEqualTo(er.getPath());
     }
 
     @Test
@@ -94,10 +109,16 @@ public class FilterExceptionHandlerTest {
                 .header(AUTHORIZATION_HEADER, BEARER_PREFIX + "token")
                 .build();
         MockServerWebExchange exchange = MockServerWebExchange.from(request);
+        ExceptionResponse er = ExceptionResponse.builder()
+                .path("/auth")
+                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .message("Internal server error..")
+                .build();
+        Exception exception = new Exception("Something went wrong.");
 
-        filterExceptionHandler
-                .handle(exchange, new Exception("Something went wrong."))
-                .block();
+        when(exceptionResponseFactory.getExceptionResponse("/auth", exception)).thenReturn(er);
+
+        filterExceptionHandler.handle(exchange, exception).block();
 
         assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
         assertThat(exchange.getResponse().getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
@@ -107,9 +128,9 @@ public class FilterExceptionHandlerTest {
 
         ExceptionResponse exceptionResponse = objectMapper.readValue(response, ExceptionResponse.class);
         assertThat(exceptionResponse).isNotNull();
-        assertThat(exceptionResponse.getMessage()).isEqualTo("Internal server error.");
-        assertThat(exceptionResponse.getCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        assertThat(exceptionResponse.getPath()).isEqualTo("/auth");
+        assertThat(exceptionResponse.getMessage()).isEqualTo(er.getMessage());
+        assertThat(exceptionResponse.getCode()).isEqualTo(er.getCode());
+        assertThat(exceptionResponse.getPath()).isEqualTo(er.getPath());
     }
 
     @Test
