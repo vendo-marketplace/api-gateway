@@ -13,3 +13,5 @@ endpoints:
   verified:
     paths:
       - /aws/**
+    excluded:
+      - /auth/complete

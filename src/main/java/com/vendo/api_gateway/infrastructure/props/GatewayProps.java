@@ -35,7 +35,7 @@ public class GatewayProps {
         }
     }
 
-    public record Verified(Set<String> paths) {
+    public record Verified(Set<String> paths, Set<String> excluded) {
 
     }
 
