@@ -104,7 +104,7 @@ paths:
     $ref: "./paths/auth.yaml#/auth-me"
 
   /password/forgot:
-    $ref: "./paths/auth.yaml#/password"
+    $ref: "./paths/auth.yaml#/password-forgot"
 
   /password/reset:
     $ref: "./paths/auth.yaml#/password-reset"

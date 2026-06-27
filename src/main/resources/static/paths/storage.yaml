@@ -11,5 +11,7 @@ presigned:
     responses:
       '200':
         description: Presigned URLs
+      '400':
+        description: Validation failed
       '401':
         description: Unauthorized

@@ -16,6 +16,11 @@ auth-signIn:
           application/json:
             schema:
               $ref: '../schemas/auth/AuthResponse.yaml'
+      '400':
+        description: Validation failed
+      '401':
+        description: Wrong credentials
+
 
 auth-signUp:
   post:
@@ -54,6 +59,8 @@ auth-refresh:
           application/json:
             schema:
               $ref: '../schemas/auth/AuthResponse.yaml'
+      '401':
+        description: Unauthorized
 
 auth-google:
   post:
@@ -101,12 +108,12 @@ auth-complete:
     responses:
       '200':
         description: User authorization successfully completed
-      '409':
-        description: User is already completed
       '400':
         description: Validation failed
+      '409':
+        description: User is already completed
 
-password:
+password-forgot:
   post:
     tags: [ Password ]
     summary: Forgot password — send OTP to email
@@ -120,6 +127,8 @@ password:
     responses:
       '200':
         description: OTP sent
+      '409':
+        description: Otp already sent
 
 password-reset:
   put:
@@ -141,6 +150,8 @@ password-reset:
     responses:
       '200':
         description: Password reset
+      '410':
+        description: Otp session expired
 
 password-resend-otp:
   put:
@@ -156,6 +167,8 @@ password-resend-otp:
     responses:
       '200':
         description: OTP resent
+      '429':
+        description: Reached maximum attempts
 
 verification-send-otp:
   post:
@@ -171,6 +184,8 @@ verification-send-otp:
     responses:
       '200':
         description: OTP sent
+      '409':
+        description: Otp already sent
 
 verification-validate:
   post:
@@ -187,6 +202,8 @@ verification-validate:
         description: Verified
       '401':
         description: Unauthorized
+      '410':
+        description: Otp session expired
 
 verification-resent-otp:
   post:
@@ -202,3 +219,5 @@ verification-resent-otp:
     responses:
       '200':
         description: OTP resent
+      '429':
+        description: Reached maximum attempts

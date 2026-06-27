@@ -6,6 +6,10 @@ properties:
     pattern: ^[A-ZА-ЯІЇЄ][a-zа-яіїє]*(?:(?:[ -][A-Za-zА-ЯІЇЄа\-zа-яіїє]+)|(?:, [A-Za-zА-ЯІЇЄa-zа-яіїє]+))*$
   type:
     $ref: "./AttributeType.yaml"
+  slug:
+    type: string
+    pattern: ^[a-z0-9]+(?:_[a-z0-9]+)*$
+    example: laptop_memory
   required:
     type: boolean
     example: true
