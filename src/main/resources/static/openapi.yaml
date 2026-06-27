@@ -50,6 +50,8 @@ components:
       $ref: "./schemas/product/AttributeType.yaml"
     AttributeValue:
       $ref: "./schemas/product/AttributeValue.yaml"
+    CreateAttributeRequest:
+      $ref: "./schemas/product/CreateAttributeRequest.yaml"
     CategoryResponse:
       $ref: "./schemas/product/CategoryResponse.yaml"
     CategoryTree:
@@ -64,6 +66,10 @@ components:
       $ref: "./schemas/product/ProductRequest.yaml"
     ProductResponse:
       $ref: "./schemas/product/ProductResponse.yaml"
+    FavoriteResponse:
+      $ref: "./schemas/product/FavoriteResponse.yaml"
+    FavoritesResponse:
+      $ref: "./schemas/product/FavoritesResponse.yaml"
 
     # ─── SEARCH ─────
 

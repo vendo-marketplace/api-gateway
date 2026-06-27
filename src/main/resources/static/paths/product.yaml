@@ -38,6 +38,12 @@ attributes:
   post:
     tags: [ Attributes ]
     summary: Save attribute
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/product/CreateAttributeRequest.yaml'
     responses:
       '200':
         description: Saved
