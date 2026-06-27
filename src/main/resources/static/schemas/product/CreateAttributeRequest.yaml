@@ -2,7 +2,7 @@ type: object
 properties:
   title:
     type: string
-    example: Brand
+    example: Memory
     pattern: ^[A-ZА-ЯІЇЄ][a-zа-яіїє]*(?:(?:[ -][A-Za-zА-ЯІЇЄа\-zа-яіїє]+)|(?:, [A-Za-zА-ЯІЇЄa-zа-яіїє]+))*$
   type:
     $ref: "./AttributeType.yaml"
@@ -11,4 +11,6 @@ properties:
     example: true
   allowedValues:
     type: array
-    example: Lenovo, Acer, HP
+    items:
+      type: string
+      example: DDR4, DDR5
