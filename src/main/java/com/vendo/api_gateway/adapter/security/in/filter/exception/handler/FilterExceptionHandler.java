@@ -1,9 +1,7 @@
 package com.vendo.api_gateway.adapter.security.in.filter.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;
-import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthNotVerifiedException;
-import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthenticationException;
+import com.vendo.api_gateway.adapter.security.out.filter.FilterUtils;
 import com.vendo.security_lib.exception.response.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +23,7 @@ import java.time.Instant;
 public final class FilterExceptionHandler implements ErrorWebExceptionHandler {
 
     private final ObjectMapper objectMapper;
-
-    private static final int INTERNAL_CODE = 500;
-
-    private static final String RESPONSE_MESSAGE_TEMPLATE = """
-        {
-            "message": "%s",
-            "code": %d,
-            "timestamp": "%s"
-        }
-        """;
+    private final ExceptionResponseFactory exceptionResponseFactory;
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
@@ -43,45 +32,26 @@ public final class FilterExceptionHandler implements ErrorWebExceptionHandler {
         httpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
         try {
-            ExceptionResponse exResponse = resolveResponse(exchange.getRequest().getURI().getPath(), ex);
+            ExceptionResponse exResponse = exceptionResponseFactory.getExceptionResponse(exchange.getRequest().getURI().getPath(), ex);
             byte[] responseBytes = objectMapper.writeValueAsBytes(exResponse);
 
             httpResponse.setStatusCode(HttpStatusCode.valueOf(exResponse.getCode()));
             return httpResponse.writeWith(Mono.just(httpResponse.bufferFactory().wrap(responseBytes)));
         } catch (Exception e) {
             log.error("Internal error while handling exception: {}", e.getMessage());
-
-            httpResponse.setStatusCode(HttpStatusCode.valueOf(INTERNAL_CODE));
-            String response = RESPONSE_MESSAGE_TEMPLATE.formatted("Internal server error.", INTERNAL_CODE, Instant.now().toString());
-
-            return httpResponse.writeWith(Mono.just(httpResponse.bufferFactory().wrap(response.getBytes(StandardCharsets.UTF_8))));
+            return writeInternalException(httpResponse);
         }
     }
 
+    private Mono<Void> writeInternalException(ServerHttpResponse httpResponse) {
+        httpResponse.setStatusCode(HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
 
-    private ExceptionResponse resolveResponse(String path, Throwable ex) {
-        ExceptionResponse.Builder exBuilder = ExceptionResponse.builder().path(path);
+        String response = FilterUtils.RESPONSE_MESSAGE_TEMPLATE.formatted(
+                "Internal server error.",
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                Instant.now().toString()
+        );
 
-        if (ex instanceof AuthNotVerifiedException) {
-            return exBuilder
-                    .code(HttpStatus.UNAUTHORIZED.value())
-                    .message("User email is not verified.")
-                    .build();
-        } else if (ex instanceof AuthenticationException) {
-            return exBuilder
-                    .code(HttpStatus.UNAUTHORIZED.value())
-                    .message("Unauthorized.")
-                    .build();
-        } else if (ex instanceof AccessDeniedException) {
-            return exBuilder
-                    .code(HttpStatus.FORBIDDEN.value())
-                    .message("Forbidden.")
-                    .build();
-        } else {
-            return exBuilder
-                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message("Internal server error.")
-                    .build();
-        }
+        return httpResponse.writeWith(Mono.just(httpResponse.bufferFactory().wrap(response.getBytes(StandardCharsets.UTF_8))));
     }
 }

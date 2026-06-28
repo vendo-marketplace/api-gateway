@@ -8,6 +8,7 @@ import com.vendo.core_lib.utils.StringUtils;
 import com.vendo.user_lib.type.UserRole;
 import com.vendo.user_lib.type.UserStatus;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,9 @@ public class JwtAuthenticationParser implements AuthenticationParser {
             UserStatus status = extractStatus(claims);
 
             return new User(id, email, status, roles, verified);
-        } catch (Exception e) {
+        } catch (JwtException e) {
             log.error("Token extraction error: {}.", e.getMessage());
-            throw new BadCredentialsException("Invalid token.");
+            throw new BadCredentialsException("Invalid or expired token.");
         }
     }
 

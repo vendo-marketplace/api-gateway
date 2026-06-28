@@ -31,7 +31,7 @@ public final class GlobalFilterUtils {
 
     static String getTokenFromRequest(String authorization) {
         if (authorization == null || !authorization.startsWith(BEARER_PREFIX)) {
-            throw new BadCredentialsException("Unauthorized.");
+            throw new BadCredentialsException("Invalid or expired token.");
         }
         return authorization.substring(BEARER_PREFIX.length());
     }
