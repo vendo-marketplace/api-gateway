@@ -1,4 +1,4 @@
-package com.vendo.api_gateway.security.in.filter;
+package com.vendo.api_gateway.adapter.security.in.filter.filter;
 
 import com.vendo.api_gateway.adapter.security.in.filter.GlobalFilterUtils;
 import com.vendo.api_gateway.adapter.security.in.filter.UserAuthFilter;
@@ -113,7 +113,7 @@ public class UserAuthFilterTest {
 
         assertThatThrownBy(() -> filter.filter(exchange, chain).block())
                 .isInstanceOf(BadCredentialsException.class)
-                .hasMessage("Unauthorized.");
+                .hasMessage("Invalid or expired token.");
 
         verifyNoInteractions(claimsParser, chain);
     }
@@ -133,7 +133,7 @@ public class UserAuthFilterTest {
 
         assertThatThrownBy(() -> filter.filter(exchange, chain).block())
                 .isInstanceOf(BadCredentialsException.class)
-                .hasMessage("Unauthorized.");
+                .hasMessage("Invalid or expired token.");
 
         verifyNoInteractions(claimsParser, chain);
     }
@@ -150,11 +150,11 @@ public class UserAuthFilterTest {
         MockServerWebExchange exchange = MockServerWebExchange.from(request);
 
         when(antPathResolver.isPermittedPath("/auth")).thenReturn(false);
-        when(claimsParser.extract("token")).thenThrow(new BadCredentialsException("Token expired."));
+        when(claimsParser.extract("token")).thenThrow(new BadCredentialsException("Invalid or expired token."));
 
         assertThatThrownBy(() -> filter.filter(exchange, chain).block())
                 .isInstanceOf(BadCredentialsException.class)
-                .hasMessage("Token expired.");
+                .hasMessage("Invalid or expired token.");
 
         verify(claimsParser).extract(expiredToken);
         verifyNoInteractions(chain);
