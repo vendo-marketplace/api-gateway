@@ -6,7 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-class AccessDeniedExceptionResponseStrategy implements ExceptionResponseStrategy {
+public class AccessDeniedExceptionResponseStrategy implements ExceptionResponseStrategy {
+
     @Override
     public Class<? extends Exception> getException() {
         return AccessDeniedException.class;

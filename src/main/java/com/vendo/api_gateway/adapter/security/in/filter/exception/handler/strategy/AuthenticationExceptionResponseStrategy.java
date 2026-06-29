@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-class AuthenticationExceptionResponseStrategy implements ExceptionResponseStrategy {
+public class AuthenticationExceptionResponseStrategy implements ExceptionResponseStrategy {
 
     @Override
     public Class<? extends Exception> getException() {

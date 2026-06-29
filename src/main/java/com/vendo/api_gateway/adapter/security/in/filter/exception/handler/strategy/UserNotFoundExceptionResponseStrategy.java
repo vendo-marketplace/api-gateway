@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-class UserNotFoundExceptionResponseStrategy implements ExceptionResponseStrategy {
+public class UserNotFoundExceptionResponseStrategy implements ExceptionResponseStrategy {
 
     @Override
     public Class<? extends Exception> getException() {
