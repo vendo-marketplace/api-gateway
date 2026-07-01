@@ -7,10 +7,7 @@ properties:
   emailVerified:
     type: boolean
   status:
-    type: string
-    enum:
-      - LOCAL
-      - GOOGLE
+    $ref: "./UserStatus.yaml"
   roles:
     type: array
     items:

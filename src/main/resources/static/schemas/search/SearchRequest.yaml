@@ -9,38 +9,13 @@ properties:
     type: object
     properties:
       sortBy:
-        type: string
-        example: CREATED_AT
-        enum: [PRICE, CREATED_AT]
+        $ref: "./SortBy.yaml"
       direction:
-        type: string
-        example: ASC
-        enum: [ASC, DESC]
+        $ref: "./Direction.yaml"
   attributeFilter:
-    type: object
-    properties:
-      attributes:
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: string
-              required: true
-            values:
-              type: array
-              items:
-                required: true
-                type: string
+    $ref: "./AttributeFilter.yaml"
   priceRangeFilter:
-    type: object
-    properties:
-      minPrice:
-        minimum: 0
-        type: number
-      maxPrice:
-        example: 1000
-        type: number
+    $ref: "./PriceRangeFilter.yaml"
   size:
     type: integer
     example: 10

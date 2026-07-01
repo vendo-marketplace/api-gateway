@@ -1,0 +1,8 @@
+type: object
+properties:
+  minPrice:
+    minimum: 0
+    type: number
+  maxPrice:
+    example: 1000
+    type: number

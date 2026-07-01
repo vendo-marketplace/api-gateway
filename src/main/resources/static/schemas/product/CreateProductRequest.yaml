@@ -14,6 +14,7 @@ properties:
   price:
     type: number
     minimum: 0
+    example: 100
   quantity:
     type: integer
     example: 1
