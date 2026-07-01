@@ -3,11 +3,13 @@ required: [type, files]
 properties:
   type:
     type: string
+    required: true
     enum: [PRODUCT]
   files:
     type: array
     items:
       type: object
+      required: true
       properties:
         id:
           type: string

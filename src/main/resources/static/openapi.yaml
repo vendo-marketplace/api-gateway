@@ -63,7 +63,7 @@ components:
     CreateCategoryRequest:
       $ref: "./schemas/product/CreateCategoryRequest.yaml"
     ProductRequest:
-      $ref: "./schemas/product/ProductRequest.yaml"
+      $ref: "./schemas/product/CreateProductRequest.yaml"
     ProductResponse:
       $ref: "./schemas/product/ProductResponse.yaml"
     FavoriteResponse:

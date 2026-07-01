@@ -5,10 +5,8 @@ properties:
     example: 6a2ab30529631760e0d3588a
   title:
     type: string
-    example: Electronics
   slug:
     type: string
-    example: electronics
   attributes:
     type: array
     items:
@@ -17,6 +15,8 @@ properties:
     type: array
     items:
       type: string
+      example:
+        - 6a2ab30529631760e0d3588a
   children:
     type: object
     properties:
@@ -25,10 +25,8 @@ properties:
         example: 6a2ab54b29631760e0d3588c
       title:
         type: string
-        example: Videocards
       slug:
         type: string
-        example: videocards
       attributes:
         type: array
         items:

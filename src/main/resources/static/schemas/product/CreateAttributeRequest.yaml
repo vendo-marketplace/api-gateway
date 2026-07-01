@@ -12,9 +12,7 @@ properties:
     example: laptop_memory
   required:
     type: boolean
-    example: true
   allowedValues:
     type: array
     items:
       type: string
-      example: DDR4, DDR5

@@ -4,14 +4,17 @@ properties:
     type: string
   active:
     type: boolean
+    example: true
   sort:
     type: object
     properties:
       sortBy:
         type: string
-        enum: [PRICE, TITLE]
+        example: CREATED_AT
+        enum: [PRICE, CREATED_AT]
       direction:
         type: string
+        example: ASC
         enum: [ASC, DESC]
   attributeFilter:
     type: object
@@ -23,16 +26,20 @@ properties:
           properties:
             id:
               type: string
+              required: true
             values:
               type: array
               items:
+                required: true
                 type: string
   priceRangeFilter:
     type: object
     properties:
       minPrice:
+        minimum: 0
         type: number
       maxPrice:
+        example: 1000
         type: number
   size:
     type: integer
