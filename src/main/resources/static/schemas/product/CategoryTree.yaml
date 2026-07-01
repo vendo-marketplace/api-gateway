@@ -6,7 +6,7 @@ properties:
   title:
     type: string
     example: Electronics
-  code:
+  slug:
     type: string
     example: electronics
   attributes:
@@ -26,7 +26,7 @@ properties:
       title:
         type: string
         example: Videocards
-      code:
+      slug:
         type: string
         example: videocards
       attributes:
