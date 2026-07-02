@@ -9,9 +9,8 @@ properties:
     example:
       email: Invalid email
       password: Invalid password
-  slug:
+  code:
     type: integer
-    example: 400
   path:
     type: string
   timestamp:
