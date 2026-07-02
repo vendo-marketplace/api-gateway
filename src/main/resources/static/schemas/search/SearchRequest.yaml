@@ -4,36 +4,18 @@ properties:
     type: string
   active:
     type: boolean
+    example: true
   sort:
     type: object
     properties:
       sortBy:
-        type: string
-        enum: [PRICE, TITLE]
+        $ref: "./SortBy.yaml"
       direction:
-        type: string
-        enum: [ASC, DESC]
+        $ref: "./Direction.yaml"
   attributeFilter:
-    type: object
-    properties:
-      attributes:
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: string
-            values:
-              type: array
-              items:
-                type: string
+    $ref: "./AttributeFilter.yaml"
   priceRangeFilter:
-    type: object
-    properties:
-      minPrice:
-        type: number
-      maxPrice:
-        type: number
+    $ref: "./PriceRangeFilter.yaml"
   size:
     type: integer
     example: 10

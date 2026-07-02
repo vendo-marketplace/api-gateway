@@ -3,17 +3,24 @@ required: [title, price, quantity, categoryId]
 properties:
   title:
     type: string
-    example: Аерогриль Cecotec Q8
+    minLength: 2
+    maxLength: 100
+    required: true
   description:
     type: string
+    minLength: 5
+    maxLength: 250
+    required: true
   price:
     type: number
+    minimum: 0
     example: 100
   quantity:
     type: integer
     example: 1
   categoryId:
     type: string
+    required: true
   attributes:
     type: array
     items:

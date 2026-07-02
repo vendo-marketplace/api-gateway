@@ -11,7 +11,6 @@ properties:
       password: Invalid password
   code:
     type: integer
-    example: 400
   path:
     type: string
   timestamp:

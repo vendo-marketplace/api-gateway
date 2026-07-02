@@ -17,4 +17,4 @@ properties:
     type: array
     items:
       type: string
-      example: DDR4, DDR5
+      example: DDR5

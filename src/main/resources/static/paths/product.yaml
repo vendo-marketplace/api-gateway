@@ -7,7 +7,7 @@ products:
       content:
         application/json:
           schema:
-            $ref: '../schemas/product/ProductRequest.yaml'
+            $ref: '../schemas/product/CreateProductRequest.yaml'
     responses:
       '200':
         description: Created

@@ -4,15 +4,10 @@ properties:
     type: string
   email:
     type: string
-    example: example@mail.com
   emailVerified:
     type: boolean
-    example: true
   status:
-    type: string
-    enum:
-      - LOCAL
-      - GOOGLE
+    $ref: "./UserStatus.yaml"
   roles:
     type: array
     items:
@@ -22,10 +17,8 @@ properties:
   birthDate:
     type: string
     format: date
-    example: 2000-06-17
   fullName:
     type: string
-    example: Jon Doe
   createdAt:
     type: string
     format: date-time

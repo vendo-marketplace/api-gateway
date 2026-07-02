@@ -1,20 +1,18 @@
 type: object
-required: [title, code]
+required: [title, slug]
 properties:
-  id:
-    type: string
   title:
     type: string
+    pattern: ^[A-ZА-ЯІЇЄ][A-Za-zА-ЯІЇЄа-яіїє]*(?:[ -][A-Za-zА-ЯІЇЄа-яіїє]+)*$
     example: Electronics
+  slug:
+    type: string
+    pattern: ^[a-z0-9]+(?:_[a-z0-9]+)*$
+    example: electronics
   parentId:
     type: string
-  type:
-    $ref: "./CategoryType.yaml"
   attributes:
     type: array
     items:
       type: string
-  path:
-    type: array
-    items:
-      type: string
+      example: Cecotec

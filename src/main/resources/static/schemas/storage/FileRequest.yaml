@@ -1,0 +1,16 @@
+type: object
+required: true
+properties:
+  id:
+    type: string
+    required: true
+    example: 1
+  size:
+    type: integer
+    minimum: 1
+    maximum: 8388608
+    example: 1048
+    required: true
+  contentType:
+    type: string
+    example: image/png
