@@ -3,7 +3,7 @@ required: [email, password]
 properties:
   email:
     type: string
-    example: user@gmail.com
+    example: vendo.marketplace.real@gmail.com
   password:
     type: string
     example: Qwerty1234@

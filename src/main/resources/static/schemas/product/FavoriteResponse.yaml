@@ -4,13 +4,10 @@ properties:
     type: string
   title:
     type: string
-    example: Iphone 13
   price:
     type: string
     format: decimal
-    example: 12313,1313
   quantity:
     type: integer
   active:
     type: boolean
-    example: true

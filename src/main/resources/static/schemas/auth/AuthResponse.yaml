@@ -2,7 +2,5 @@ type: object
 properties:
   access-token:
     type: string
-    example: eyJhbGciOiJIUzI1NiJ9...
   refresh-token:
     type: string
-    example: eyJhbGciOiJIUzI1NiJ9...

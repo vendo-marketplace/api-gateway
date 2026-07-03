@@ -36,6 +36,8 @@ components:
       $ref: "./schemas/auth/UserResponse.yaml"
     UserRole:
       $ref: "./schemas/auth/UserRole.yaml"
+    UserStatus:
+      $ref: "./schemas/auth/UserStatus.yaml"
 
     # ─── EXCEPTION ─────
 
@@ -63,7 +65,7 @@ components:
     CreateCategoryRequest:
       $ref: "./schemas/product/CreateCategoryRequest.yaml"
     ProductRequest:
-      $ref: "./schemas/product/ProductRequest.yaml"
+      $ref: "./schemas/product/CreateProductRequest.yaml"
     ProductResponse:
       $ref: "./schemas/product/ProductResponse.yaml"
     FavoriteResponse:
@@ -75,11 +77,21 @@ components:
 
     SearchRequest:
       $ref: "./schemas/search/SearchRequest.yaml"
+    SortBy:
+      $ref: "./schemas/search/SortBy.yaml"
+    PriceRangeFilter:
+      $ref: "./schemas/search/PriceRangeFilter.yaml"
+    AttributeFilter:
+      $ref: "./schemas/search/AttributeFilter.yaml"
+    Direction:
+      $ref: "./schemas/search/Direction.yaml"
 
     # ─── STORAGE ─────
 
     PresignedRequest:
       $ref: "./schemas/storage/PresignedRequest.yaml"
+    FileRequest:
+      $ref: "./schemas/storage/FileRequest.yaml"
 
 paths:
 

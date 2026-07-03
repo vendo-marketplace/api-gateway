@@ -4,16 +4,13 @@ properties:
     type: string
   title:
     type: string
-    example: Airgrill
   description:
     type: string
   quantity:
     type: number
-    example: 2
   price:
     type: number
     format: double
-    example: 1999.99
   ownerId:
     type: string
   categoryId:
@@ -24,7 +21,6 @@ properties:
       $ref: "./AttributeValue.yaml"
   active:
     type: boolean
-    example: true
   createdAt:
     type: string
     format: date-time

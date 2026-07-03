@@ -2,7 +2,8 @@ type: object
 properties:
   fullName:
     type: string
-    example: Альберт Эйнштейн
+    pattern: ^[A-ZА-ЯІЇЄҐ][a-zа-яіїєґ]+ [A-ZА-ЯІЇЄҐ][a-zа-яіїєґ]+$
+    example: John Doe
   birthDate:
     type: string
     format: date
