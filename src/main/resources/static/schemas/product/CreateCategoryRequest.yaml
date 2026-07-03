@@ -15,4 +15,7 @@ properties:
     type: array
     items:
       type: string
-      example: Cecotec
+      example:
+        - id1
+        - id2
+        - id3
