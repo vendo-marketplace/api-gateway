@@ -15,7 +15,7 @@ properties:
     type: array
     items:
       type: string
-      example:
-        - id1
-        - id2
-        - id3
+    example:
+      - id1
+      - id2
+      - id3
