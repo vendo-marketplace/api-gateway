@@ -18,16 +18,12 @@ public class Router {
                         .uri("lb://%s".formatted(AUTH_SERVICE.getServiceName())))
 
                 .route(PRODUCT_SERVICE.getServiceName(), r -> r
-                        .path("/categories/**", "/products/**", "/attributes/**", "/favorites/**")
+                        .path("/categories/**", "/products/**", "/attributes/**", "/favorites/**", "/images/**")
                         .uri("lb://%s".formatted(PRODUCT_SERVICE.getServiceName())))
 
                 .route(SEARCH_SERVICE.getServiceName(), r -> r
                         .path("/search/**")
                         .uri("lb://%s".formatted(SEARCH_SERVICE.getServiceName())))
-
-                .route(AWS_SERVICE.getServiceName(), r -> r
-                        .path("/storage/**")
-                        .uri("lb://%s".formatted(AWS_SERVICE.getServiceName())))
 
                 .route(INDEXER_SERVICE.getServiceName(), r -> r
                         .path("/indices/**")
