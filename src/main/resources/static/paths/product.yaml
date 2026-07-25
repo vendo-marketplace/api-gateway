@@ -160,7 +160,7 @@ favorites:
       '401':
         description: Unauthorized
 
-upload:
+images:
   post:
     tags:
       - Images
@@ -193,3 +193,32 @@ upload:
         description: Unauthorized
       '404':
         description: Product not found
+
+  delete:
+    tags:
+      - Images
+    summary: Delete product image
+    parameters:
+      - name: productId
+        in: query
+        required: true
+        description: Product ID
+        schema:
+          type: string
+
+      - name: imageKey
+        in: query
+        required: true
+        description: Image key
+        schema:
+          type: string
+
+    responses:
+      '204':
+        description: Deleted successfully
+      '400':
+        description: Validation failed
+      '401':
+        description: Unauthorized
+      '404':
+        description: Product or image not found

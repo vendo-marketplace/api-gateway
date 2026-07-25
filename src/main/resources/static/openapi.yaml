@@ -157,8 +157,8 @@ paths:
   /favorites:
     $ref: "./paths/product.yaml#/favorites"
 
-  /images/upload:
-    $ref: "./paths/product.yaml#/upload"
+  /images:
+    $ref: "./paths/product.yaml#/images"
 
   # ─── INDEXER ───
 
