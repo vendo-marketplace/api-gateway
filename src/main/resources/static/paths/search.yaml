@@ -17,3 +17,29 @@ search:
     responses:
       '200':
         description: Search results
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              data:
+                - id: "6a4a5767e2cddd1c42ab9c7d"
+                  title: "Iphone 17 Pro"
+                  description: "У чудовому стані."
+                  quantity: 1
+                  price: 1300
+                  ownerId: "6a43dd602ea3c0b566428733"
+                  categoryId: "6a4a55cee2cddd1c42ab9c7c"
+                  attributes:
+                    - id: "6a4a4ef6e2cddd1c42ab9c74"
+                      values:
+                        - "Apple"
+                    - id: "6a4a4f8ce2cddd1c42ab9c75"
+                      values:
+                        - "128 GB"
+                    - id: "6a4a4fb1e2cddd1c42ab9c76"
+                      values:
+                  images:
+                    - "https://image.jpg"
+                  active: true
+                  createdAt: "2026-07-05T13:00:00.000"
