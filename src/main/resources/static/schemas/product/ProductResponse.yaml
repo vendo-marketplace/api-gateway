@@ -8,6 +8,9 @@ properties:
     type: string
   quantity:
     type: number
+  isNew:
+    type: boolean
+    example: true
   price:
     type: number
     format: double
