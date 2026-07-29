@@ -64,6 +64,8 @@ components:
       $ref: "./schemas/product/CategoryType.yaml"
     CreateCategoryRequest:
       $ref: "./schemas/product/CreateCategoryRequest.yaml"
+    UpdateProductRequest:
+      $ref: "./schemas/product/UpdateProductRequest.yaml"
     ProductRequest:
       $ref: "./schemas/product/CreateProductRequest.yaml"
     ProductResponse:

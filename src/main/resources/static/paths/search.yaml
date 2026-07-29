@@ -27,6 +27,7 @@ search:
                   title: "Iphone 17 Pro"
                   description: "У чудовому стані."
                   quantity: 1
+                  isNew: false
                   price: 1300
                   ownerId: "6a43dd602ea3c0b566428733"
                   categoryId: "6a4a55cee2cddd1c42ab9c7c"

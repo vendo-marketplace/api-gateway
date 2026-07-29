@@ -1,5 +1,5 @@
 type: object
-required: [title, price, quantity, categoryId]
+required: [title, price, quantity, isNew, categoryId]
 properties:
   title:
     type: string
@@ -18,6 +18,9 @@ properties:
   quantity:
     type: integer
     example: 1
+  isNew:
+    type: boolean
+    example: true
   categoryId:
     type: string
     required: true

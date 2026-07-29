@@ -1,29 +1,28 @@
 type: object
 properties:
-  id:
-    type: string
   title:
     type: string
+    example: iPhone 16 Pro 256GB
   description:
     type: string
+    example: Brand new iPhone in perfect condition.
   quantity:
-    type: number
+    type: integer
+    example: 10
   isNew:
     type: boolean
     example: true
   price:
     type: number
-    format: double
-  ownerId:
-    type: string
+    format: decimal
+    example: 1299.99
   categoryId:
     type: string
+    example: 6893a4d6d0b4c52d9f67e321
   attributes:
     type: array
     items:
       $ref: "./AttributeValue.yaml"
   active:
     type: boolean
-  createdAt:
-    type: string
-    format: date-time
+    example: true

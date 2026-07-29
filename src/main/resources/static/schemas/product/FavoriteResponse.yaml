@@ -9,5 +9,8 @@ properties:
     format: decimal
   quantity:
     type: integer
+  isNew:
+    type: boolean
+    example: true
   active:
     type: boolean
