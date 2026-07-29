@@ -37,6 +37,30 @@ product:
               $ref: '../schemas/product/ProductResponse.yaml'
       '404':
         description: Not found
+  put:
+    tags: [ Products ]
+    summary: Update product
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: Product ID
+        schema:
+          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/product/UpdateProductRequest.yaml'
+    responses:
+      '204':
+        description: Product updated successfully
+      '400':
+        description: Validation failed
+      '404':
+        description: Product not found
+
 
 attributes:
   post:
