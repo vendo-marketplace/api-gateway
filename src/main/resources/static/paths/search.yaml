@@ -31,6 +31,12 @@ search:
                   price: 1300
                   ownerId: "6a43dd602ea3c0b566428733"
                   categoryId: "6a4a55cee2cddd1c42ab9c7c"
+                  address:
+                    city: "Lviv"
+                    region: "Lviv region"
+                    location:
+                      lat: 49.8397
+                      lon: 24.0297
                   attributes:
                     - id: "6a4a4ef6e2cddd1c42ab9c74"
                       values:
