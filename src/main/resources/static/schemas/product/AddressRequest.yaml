@@ -1,0 +1,36 @@
+type: object
+required:
+  - city
+  - region
+  - location
+
+properties:
+  city:
+    type: string
+    minLength: 2
+    maxLength: 100
+    example: Lviv
+
+  region:
+    type: string
+    minLength: 2
+    maxLength: 100
+    example: Lviv region
+
+  location:
+    type: object
+    required:
+      - lat
+      - lon
+    properties:
+      lat:
+        type: number
+        minimum: -90
+        maximum: 90
+        example: 49.8397
+
+      lon:
+        type: number
+        minimum: -180
+        maximum: 180
+        example: 24.0297
