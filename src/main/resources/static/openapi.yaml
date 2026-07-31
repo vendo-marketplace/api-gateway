@@ -83,6 +83,8 @@ components:
       $ref: "./schemas/search/SearchRequest.yaml"
     SortBy:
       $ref: "./schemas/search/SortBy.yaml"
+    AddressFilter:
+      $ref: "./schemas/search/AddressFilter.yaml"
     PriceRangeFilter:
       $ref: "./schemas/search/PriceRangeFilter.yaml"
     AttributeFilter:
