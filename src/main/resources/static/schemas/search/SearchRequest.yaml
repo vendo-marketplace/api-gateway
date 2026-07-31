@@ -12,6 +12,8 @@ properties:
         $ref: "./SortBy.yaml"
       direction:
         $ref: "./Direction.yaml"
+  addressFilter:
+    $ref: "./AddressFilter.yaml"
   attributeFilter:
     $ref: "./AttributeFilter.yaml"
   priceRangeFilter:
