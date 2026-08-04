@@ -187,7 +187,7 @@ favorites:
 images:
   post:
     tags:
-      - Images
+      - Products
     summary: Upload product images
     requestBody:
       required: true
@@ -196,10 +196,10 @@ images:
           schema:
             type: object
             required:
-              - productId
+              - id
               - images
             properties:
-              productId:
+              id:
                 type: string
                 description: Product ID
               images:
@@ -220,10 +220,10 @@ images:
 
   delete:
     tags:
-      - Images
+      - Products
     summary: Delete product image
     parameters:
-      - name: productId
+      - name: id
         in: query
         required: true
         description: Product ID
