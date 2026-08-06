@@ -61,7 +61,6 @@ product:
       '404':
         description: Product not found
 
-
 attributes:
   post:
     tags: [ Attributes ]
@@ -99,6 +98,83 @@ categories:
         description: Unauthorized
       '404':
         description: Attribute not found
+
+  put:
+    tags: [ Categories ]
+    summary: Update category
+    parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: string
+        description: Category identifier
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/product/UpdateCategoryRequest.yaml'
+    responses:
+      '200':
+        description: Updated successfully
+      '400':
+        description: Validation failed
+      '401':
+        description: Unauthorized
+      '404':
+        description: Category or attribute not found
+
+categories-image:
+  put:
+    tags: [ Categories ]
+    summary: Upload category image
+    parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: string
+        description: Category identifier
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - image
+            properties:
+              image:
+                type: string
+                format: binary
+    responses:
+      '200':
+        description: Image uploaded successfully
+      '400':
+        description: Validation failed
+      '401':
+        description: Unauthorized
+      '404':
+        description: Category not found
+
+  delete:
+    tags: [ Categories ]
+    summary: Remove category image
+    parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: string
+        description: Category identifier
+    responses:
+      '200':
+        description: Image removed successfully
+      '401':
+        description: Unauthorized
+      '404':
+        description: Category not found
 
 categories-tree:
   get:
