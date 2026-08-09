@@ -6,13 +6,3 @@ properties:
   slug:
     type: string
     example: electronics
-  parentId:
-    type: string
-    example: 686bc8a9f4a1b96cb0b48d12
-  attributes:
-    type: array
-    items:
-      type: string
-    example:
-      - 686bc8a9f4a1b96cb0b48d20
-      - 686bc8a9f4a1b96cb0b48d21

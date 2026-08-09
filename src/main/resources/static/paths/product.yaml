@@ -126,7 +126,7 @@ categories:
         description: Category or attribute not found
 
 categories-image:
-  put:
+  post:
     tags: [ Categories ]
     summary: Upload category image
     parameters:
