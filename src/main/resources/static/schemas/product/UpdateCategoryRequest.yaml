@@ -1,0 +1,8 @@
+type: object
+properties:
+  title:
+    type: string
+    example: Electronics
+  slug:
+    type: string
+    example: electronics
