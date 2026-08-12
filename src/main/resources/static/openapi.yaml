@@ -122,17 +122,17 @@ paths:
   /password/reset:
     $ref: "./paths/auth.yaml#/password-reset"
 
-  /password/resend-otp:
-    $ref: "./paths/auth.yaml#/password-resend-otp"
+  /password/resend:
+    $ref: "./paths/auth.yaml#/password-resend"
 
-  /verification/send-otp:
-    $ref: "./paths/auth.yaml#/verification-send-otp"
+  /verification/send:
+    $ref: "./paths/auth.yaml#/verification-send"
 
   /verification/validate:
     $ref: "./paths/auth.yaml#/verification-validate"
 
-  /verification/resend-otp:
-    $ref: "./paths/auth.yaml#/verification-resent-otp"
+  /verification/resend:
+    $ref: "./paths/auth.yaml#/verification-resent"
 
   # ─── SEARCH ───
 
