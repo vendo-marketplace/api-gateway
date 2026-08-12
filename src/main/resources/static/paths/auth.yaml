@@ -35,7 +35,11 @@ auth-signUp:
             $ref: '../schemas/auth/AuthRequest.yaml'
     responses:
       '200':
-        description: Create user
+        description: Returns pair of tokens
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/auth/AuthResponse.yaml'
       '409':
         description: User already exists
       '400':
