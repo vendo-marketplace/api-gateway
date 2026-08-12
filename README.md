@@ -109,6 +109,16 @@ java -jar target/api-gateway.jar
 
 ---
 
+# API Documentation
+
+Swagger UI:
+
+```
+http://194.163.130.14:8030/swagger-ui/index.html
+```
+
+---
+
 # Code Style
 
 The project follows standard **Java code conventions**.
