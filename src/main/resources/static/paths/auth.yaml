@@ -116,7 +116,7 @@ auth-complete:
 password-forgot:
   post:
     tags: [ Password ]
-    summary: Forgot password — send OTP to email
+    summary: Forgot password — send reset url to email
     security: [ ]
     parameters:
       - in: query
@@ -126,18 +126,18 @@ password-forgot:
           type: string
     responses:
       '200':
-        description: OTP sent
+        description: Code sent
       '409':
-        description: Otp already sent
+        description: Code already sent
 
 password-reset:
   put:
     tags: [ Password ]
-    summary: Reset password using OTP
+    summary: Reset password using code
     security: [ ]
     parameters:
       - in: query
-        name: otp
+        name: code
         required: true
         schema:
           type: string
@@ -151,12 +151,12 @@ password-reset:
       '200':
         description: Password reset
       '410':
-        description: Otp session expired
+        description: Code session expired
 
-password-resend-otp:
+password-resend:
   put:
     tags: [ Password ]
-    summary: Resend password reset OTP
+    summary: Resend password reset url
     security: [ ]
     parameters:
       - in: query
@@ -166,14 +166,14 @@ password-resend-otp:
           type: string
     responses:
       '200':
-        description: OTP resent
+        description: Code resent
       '429':
         description: Reached maximum attempts
 
-verification-send-otp:
+verification-send:
   post:
     tags: [ Verification ]
-    summary: Send verification OTP
+    summary: Send verification code
     security: [ ]
     parameters:
       - in: query
@@ -183,17 +183,17 @@ verification-send-otp:
           type: string
     responses:
       '200':
-        description: OTP sent
+        description: Code sent
       '409':
-        description: Otp already sent
+        description: Code already sent
 
 verification-validate:
   post:
     tags: [ Verification ]
-    summary: Validate OTP
+    summary: Validate code
     parameters:
       - in: query
-        name: otp
+        name: code
         required: true
         schema:
           type: string
@@ -203,12 +203,12 @@ verification-validate:
       '401':
         description: Unauthorized
       '410':
-        description: Otp session expired
+        description: Code session expired
 
-verification-resent-otp:
+verification-resent:
   post:
     tags: [ Verification ]
-    summary: Resend verification OTP
+    summary: Resend verification code
     security: [ ]
     parameters:
       - in: query
@@ -218,6 +218,6 @@ verification-resent-otp:
           type: string
     responses:
       '200':
-        description: OTP resent
+        description: Code resent
       '429':
         description: Reached maximum attempts
