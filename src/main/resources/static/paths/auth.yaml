@@ -71,12 +71,12 @@ auth-google:
     tags: [ Auth ]
     summary: Google OAuth
     security: [ ]
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/auth/GoogleAuthRequest.yaml'
+    parameters:
+      - name: authCode
+        in: query
+        required: true
+        schema:
+          type: string
     responses:
       '200':
         description: Returns pair of tokens
