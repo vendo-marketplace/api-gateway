@@ -4,13 +4,30 @@ properties:
     type: string
   title:
     type: string
-  price:
+  description:
     type: string
-    format: decimal
   quantity:
-    type: integer
+    type: number
   isNew:
     type: boolean
     example: true
+  price:
+    type: number
+    format: double
+  images:
+    type: array
+    items:
+      type: string
+  ownerId:
+    type: string
+  categoryId:
+    type: string
+  attributes:
+    type: array
+    items:
+      $ref: "./AttributeValue.yaml"
   active:
     type: boolean
+  createdAt:
+    type: string
+    format: date-time

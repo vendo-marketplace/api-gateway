@@ -24,8 +24,6 @@ components:
       $ref: "./schemas/auth/AuthResponse.yaml"
     CompleteRequest:
       $ref: "./schemas/auth/CompleteRequest.yaml"
-    GoogleAuthRequest:
-      $ref: "./schemas/auth/GoogleAuthRequest.yaml"
     ProviderType:
       $ref: "./schemas/auth/ProviderType.yaml"
     RefreshRequest:
@@ -72,6 +70,8 @@ components:
       $ref: "./schemas/product/CreateProductRequest.yaml"
     ProductResponse:
       $ref: "./schemas/product/ProductResponse.yaml"
+    ProductsResponse:
+      $ref: "./schemas/product/ProductsResponse.yaml"
     FavoriteResponse:
       $ref: "./schemas/product/FavoriteResponse.yaml"
     FavoritesResponse:
