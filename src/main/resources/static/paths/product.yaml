@@ -256,7 +256,7 @@ favorites:
         content:
           application/json:
             schema:
-              $ref: '../schemas/product/ProductsResponse.yaml'
+              $ref: '../schemas/product/FavoritesResponse.yaml'
       '401':
         description: Unauthorized
 
