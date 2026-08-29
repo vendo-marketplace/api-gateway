@@ -1,0 +1,93 @@
+auto-search:
+  post:
+    tags: [ Auto Search ]
+    summary: Create an auto search
+    description: Creates a new auto search request for the authenticated user.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/auto-search/CreateAutoSearchRequest.yaml'
+    responses:
+      '201':
+        description: Auto search created successfully
+      '400':
+        description: Invalid request
+      '401':
+        description: Unauthorized — authentication is required
+
+  put:
+    tags: [ Auto Search ]
+    summary: Update an auto search
+    description: Updates the specified auto search request. The auto search must belong to the authenticated user.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Auto Search ID
+        schema:
+          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/auto-search/UpdateAutoSearchRequest.yaml'
+    responses:
+      '200':
+        description: Auto search updated successfully
+      '400':
+        description: Invalid request
+      '401':
+        description: Unauthorized — authentication is required
+      '403':
+        description: Forbidden — the auto search request does not belong to the authenticated user
+      '404':
+        description: Auto search request not found
+
+  delete:
+    tags: [ Auto Search ]
+    summary: Delete an auto search
+    description: Deletes the specified auto search request. The auto search must belong to the authenticated user.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Auto Search ID
+        schema:
+          type: string
+    responses:
+      '204':
+        description: Auto search deleted successfully
+      '401':
+        description: Unauthorized — authentication is required
+      '403':
+        description: Forbidden — the auto search request does not belong to the authenticated user
+      '404':
+        description: Auto search request not found
+
+  get:
+    tags: [ Auto Search ]
+    summary: Get products matched by an auto search
+    description: Returns products matched for the specified auto search request. The auto search must belong to the authenticated user.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Auto Search ID
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Products matched by the auto search request
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/auto-search/AutoSearchProductsResponse.yaml'
+      '401':
+        description: Unauthorized — authentication is required
+      '403':
+        description: Forbidden — the auto search request does not belong to the authenticated user
+      '404':
+        description: Auto search request not found

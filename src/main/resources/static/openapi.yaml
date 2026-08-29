@@ -94,6 +94,15 @@ components:
     Direction:
       $ref: "./schemas/search/Direction.yaml"
 
+    # ─── AUTO SEARCH ─────
+
+    AutoSearchProductsResponse:
+      $ref: "./schemas/auto-search/AutoSearchProductsResponse.yaml"
+    CreateAutoSearchRequest:
+      $ref: "./schemas/auto-search/CreateAutoSearchRequest.yaml"
+    UpdateAutoSearchRequest:
+      $ref: "./schemas/auto-search/UpdateAutoSearchRequest.yaml"
+
 paths:
 
   # ─── AUTH ────
@@ -169,6 +178,10 @@ paths:
 
   /favorites:
     $ref: "./paths/product.yaml#/favorites"
+
+  # ─── AUTO SEARCH ───
+  /auto-search:
+    $ref: "./paths/auto-search.yaml#/auto-search"
 
   # ─── INDEXER ───
 
