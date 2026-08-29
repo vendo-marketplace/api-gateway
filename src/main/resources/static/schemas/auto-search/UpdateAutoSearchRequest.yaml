@@ -18,8 +18,7 @@ properties:
     description: Auto search status
     enum:
       - ACTIVE
-      - INACTIVE
-      - EXPIRED
+      - CANCELLED
     example: ACTIVE
 
   expirationDate:
