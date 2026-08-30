@@ -91,3 +91,29 @@ auto-search:
         description: Forbidden — the auto search request does not belong to the authenticated user
       '404':
         description: Auto search request not found
+
+auto-search-products:
+  get:
+    tags: [ Auto Search ]
+    summary: Get products matched by an auto search
+    description: Returns products matched for the specified auto search request. The auto search must belong to the authenticated user.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Auto Search ID
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Products matched by the auto search request
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/auto-search/AutoSearchProductsResponse.yaml'
+      '401':
+        description: Unauthorized — authentication is required
+      '403':
+        description: Forbidden — the auto search request does not belong to the authenticated user
+      '404':
+        description: Auto search request not found

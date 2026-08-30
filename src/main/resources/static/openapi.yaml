@@ -183,6 +183,10 @@ paths:
   /auto-search:
     $ref: "./paths/auto-search.yaml#/auto-search"
 
+  /auto-search/{id}/products:
+    $ref: "./paths/auto-search.yaml#/auto-search-products"
+
+
   # ─── INDEXER ───
 
   /indices/reindex:

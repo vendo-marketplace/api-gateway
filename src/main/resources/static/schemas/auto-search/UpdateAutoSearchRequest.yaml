@@ -25,4 +25,4 @@ properties:
     type: string
     format: date-time
     description: Date and time when the auto search expires
-    example: "2026-09-30T23:59:59"
+    example: "2026-09-30T23:59:59Z"
