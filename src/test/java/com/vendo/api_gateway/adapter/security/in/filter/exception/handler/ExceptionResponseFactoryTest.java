@@ -3,7 +3,7 @@ package com.vendo.api_gateway.adapter.security.in.filter.exception.handler;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentialsException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.handler.strategy.AuthenticationExceptionResponseStrategy;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.handler.strategy.BadCredentialsExceptionResponseStrategy;
-import com.vendo.security_lib.exception.response.ExceptionResponse;
+import com.vendo.security_lib.exception.ExceptionResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
