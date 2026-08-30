@@ -2,7 +2,7 @@ package com.vendo.api_gateway.adapter.security.in.filter.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vendo.api_gateway.adapter.security.out.filter.FilterUtils;
-import com.vendo.security_lib.exception.response.ExceptionResponse;
+import com.vendo.security_lib.exception.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;

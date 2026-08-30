@@ -2,7 +2,7 @@ package com.vendo.api_gateway.adapter.security.in.filter.exception.handler;
 
 import com.vendo.api_gateway.adapter.security.in.filter.exception.handler.strategy.ExceptionResponseStrategy;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.handler.strategy.InternalExceptionResponseStrategy;
-import com.vendo.security_lib.exception.response.ExceptionResponse;
+import com.vendo.security_lib.exception.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

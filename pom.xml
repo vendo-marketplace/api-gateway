@@ -124,17 +124,17 @@
         <dependency>
             <groupId>io.github.vendo-marketplace-be</groupId>
             <artifactId>user-lib</artifactId>
-            <version>4.2.5</version>
+            <version>5.0.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.vendo-marketplace-be</groupId>
             <artifactId>core-lib</artifactId>
-            <version>4.7.4</version>
+            <version>5.13.2</version>
         </dependency>
 		<dependency>
 			<groupId>io.github.vendo-marketplace-be</groupId>
 			<artifactId>security-lib</artifactId>
-			<version>8.3.2</version>
+			<version>8.6.2</version>
 		</dependency>
 
 	</dependencies>
