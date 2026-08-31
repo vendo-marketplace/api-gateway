@@ -69,8 +69,8 @@ auto-search:
 
   get:
     tags: [ Auto Search ]
-    summary: Get products matched by an auto search
-    description: Returns products matched for the specified auto search request. The auto search must belong to the authenticated user.
+    summary: Get an auto search
+    description: Returns the specified auto search request belonging to the authenticated user.
     parameters:
       - name: id
         in: path
@@ -80,7 +80,7 @@ auto-search:
           type: string
     responses:
       '200':
-        description: Products matched by the auto search request
+        description: Auto search request retrieved successfully
         content:
           application/json:
             schema:
