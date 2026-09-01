@@ -17,6 +17,25 @@ auto-search:
       '401':
         description: Unauthorized — authentication is required
 
+  get:
+    tags: [ Auto Search ]
+    summary: Get an auto search
+    description: Returns the specified auto search request belonging to the authenticated user.
+    responses:
+      '200':
+        description: Auto search request retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/auto-search/AutoSearchProductsResponse.yaml'
+      '401':
+        description: Unauthorized — authentication is required
+      '403':
+        description: Forbidden — the auto search request does not belong to the authenticated user
+      '404':
+        description: Auto search request not found
+
+auto-search-id:
   put:
     tags: [ Auto Search ]
     summary: Update an auto search
@@ -60,31 +79,6 @@ auto-search:
     responses:
       '204':
         description: Auto search deleted successfully
-      '401':
-        description: Unauthorized — authentication is required
-      '403':
-        description: Forbidden — the auto search request does not belong to the authenticated user
-      '404':
-        description: Auto search request not found
-
-  get:
-    tags: [ Auto Search ]
-    summary: Get an auto search
-    description: Returns the specified auto search request belonging to the authenticated user.
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: Auto Search ID
-        schema:
-          type: string
-    responses:
-      '200':
-        description: Auto search request retrieved successfully
-        content:
-          application/json:
-            schema:
-              $ref: '../schemas/auto-search/AutoSearchProductsResponse.yaml'
       '401':
         description: Unauthorized — authentication is required
       '403':
