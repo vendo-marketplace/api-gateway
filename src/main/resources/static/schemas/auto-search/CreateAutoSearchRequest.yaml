@@ -1,0 +1,22 @@
+type: object
+required:
+  - categoryId
+properties:
+  categoryId:
+    type: string
+    description: Category ID to search for
+    example: "65f1a2b3c4d5e6f789012345"
+
+  priceRange:
+    $ref: '../search/PriceRangeFilter.yaml'
+
+  address:
+    type: string
+    description: Address to search for
+    example: "Kyiv"
+
+  expirationDate:
+    type: string
+    format: date-time
+    description: Date and time when the auto search expires
+    example: "2026-09-30T23:59:59"

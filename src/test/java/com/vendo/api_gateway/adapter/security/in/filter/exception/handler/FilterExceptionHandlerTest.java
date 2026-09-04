@@ -7,7 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthenticationServiceException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.BadCredentialsException;
-import com.vendo.security_lib.exception.response.ExceptionResponse;
+import com.vendo.security_lib.exception.ExceptionResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

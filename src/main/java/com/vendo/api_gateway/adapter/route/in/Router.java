@@ -5,7 +5,8 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static com.vendo.core_lib.type.ServiceName.*;
+import static com.vendo.core_lib.types.ServiceName.*;
+
 
 @Configuration
 public class Router {
@@ -28,6 +29,10 @@ public class Router {
                 .route(INDEXER_SERVICE.getServiceName(), r -> r
                         .path("/indices/**")
                         .uri("lb://%s".formatted(INDEXER_SERVICE.getServiceName())))
+
+                .route(AUTO_SEARCH_SERVICE.getServiceName(), r -> r
+                        .path("/auto-search/**")
+                        .uri("lb://%s".formatted(AUTO_SEARCH_SERVICE.getServiceName())))
                 .build();
     }
 }
