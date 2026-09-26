@@ -9,9 +9,7 @@ properties:
     $ref: '../search/PriceRangeFilter.yaml'
 
   address:
-    type: string
-    description: Address to search for
-    example: "Kyiv"
+    $ref: "./Address.yaml"
 
   status:
     type: string
