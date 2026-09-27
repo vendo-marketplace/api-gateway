@@ -25,7 +25,7 @@ properties:
     type: string
     required: true
   address:
-    $ref: "./AddressRequest.yaml"
+    $ref: "./Address.yaml"
   attributes:
     type: array
     items:

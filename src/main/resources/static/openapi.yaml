@@ -77,7 +77,7 @@ components:
     FavoritesResponse:
       $ref: "./schemas/product/FavoritesResponse.yaml"
     AddressRequest:
-      $ref: "./schemas/product/AddressRequest.yaml"
+      $ref: "./schemas/product/Address.yaml"
 
     # ─── SEARCH ─────
 

@@ -20,7 +20,7 @@ properties:
     type: string
     example: 6893a4d6d0b4c52d9f67e321
   address:
-    $ref: "./AddressRequest.yaml"
+    $ref: "./Address.yaml"
   attributes:
     type: array
     items:

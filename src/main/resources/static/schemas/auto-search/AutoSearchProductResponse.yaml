@@ -27,7 +27,7 @@ properties:
   attributes:
     type: array
     items:
-      $ref: "./AttributeValue.yaml"
+      $ref: "../product/AttributeValue.yaml"
   active:
     type: boolean
   createdAt:

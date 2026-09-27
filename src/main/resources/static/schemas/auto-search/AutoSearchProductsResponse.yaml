@@ -3,4 +3,4 @@ properties:
   data:
     type: array
     items:
-      $ref: "../product/ProductResponse.yaml"
+      $ref: "./AutoSearchProductResponse.yaml"
