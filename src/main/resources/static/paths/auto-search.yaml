@@ -27,7 +27,7 @@ auto-search:
         content:
           application/json:
             schema:
-              $ref: '../schemas/auto-search/AutoSearchProductsResponse.yaml'
+              $ref: '../schemas/auto-search/AutoSearchResponses.yaml'
       '401':
         description: Unauthorized — authentication is required
       '403':

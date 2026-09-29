@@ -96,6 +96,8 @@ components:
 
     # ─── AUTO SEARCH ─────
 
+    AutoSearchResponses:
+      $ref: "./schemas/auto-search/AutoSearchResponses.yaml"
     AutoSearchProductsResponse:
       $ref: "./schemas/auto-search/AutoSearchProductsResponse.yaml"
     CreateAutoSearchRequest:

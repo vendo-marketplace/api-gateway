@@ -1,0 +1,29 @@
+type: object
+properties:
+  id:
+    type: string
+  owner:
+    $ref: "./Owner.yaml"
+  categoryId:
+    type: string
+  minPrice:
+    type: number
+    format: double
+  maxPrice:
+    type: number
+    format: double
+  status:
+    $ref: "./SearchStatus.yaml"
+  expirationDate:
+    type: string
+    format: date-time
+  products:
+    type: array
+    items:
+      type: object
+  createdAt:
+    type: string
+    format: date-time
+  updatedAt:
+    type: string
+    format: date-time
