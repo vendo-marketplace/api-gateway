@@ -20,6 +20,13 @@ products:
                   type: string
                   format: binary
                 description: Product images
+
+          encoding:
+            request:
+              contentType: application/json
+            images:
+              contentType: image/*
+
     responses:
       '200':
         description: Created
