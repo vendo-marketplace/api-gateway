@@ -5,9 +5,21 @@ products:
     requestBody:
       required: true
       content:
-        application/json:
+        multipart/form-data:
           schema:
-            $ref: '../schemas/product/CreateProductRequest.yaml'
+            type: object
+            required:
+              - request
+              - images
+            properties:
+              request:
+                $ref: '../schemas/product/CreateProductRequest.yaml'
+              images:
+                type: array
+                items:
+                  type: string
+                  format: binary
+                description: Product images
     responses:
       '200':
         description: Created
