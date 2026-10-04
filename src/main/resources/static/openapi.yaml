@@ -163,6 +163,9 @@ paths:
   /categories/{id}:
     $ref: "./paths/product.yaml#/category"
 
+  /categories/{id}/attributes:
+    $ref: "./paths/product.yaml#/category-attributes"
+
   /products:
     $ref: "./paths/product.yaml#/products"
 

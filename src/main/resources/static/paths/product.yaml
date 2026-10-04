@@ -228,6 +228,30 @@ category:
       '404':
         description: Not found
 
+category-attributes:
+  get:
+    tags: [ Attributes ]
+    summary: Get attributes for a category
+    description: Returns the attributes assigned to the specified category.
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: Category identifier
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Category attributes
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/product/Attribute.yaml'
+      '404':
+        description: Category not found
+
 favorite:
   post:
     tags: [ Favorites ]
