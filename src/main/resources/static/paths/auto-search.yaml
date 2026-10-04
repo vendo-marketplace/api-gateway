@@ -19,11 +19,11 @@ auto-search:
 
   get:
     tags: [ Auto Search ]
-    summary: Get an auto search
-    description: Returns the specified auto search request belonging to the authenticated user.
+    summary: Get the user's auto searches
+    description: Returns the auto search requests belonging to the authenticated user.
     responses:
       '200':
-        description: Auto search request retrieved successfully
+        description: Auto search requests retrieved successfully
         content:
           application/json:
             schema:
