@@ -230,7 +230,7 @@ category:
 
 category-attributes:
   get:
-    tags: [ Attributes ]
+    tags: [ Categories ]
     summary: Get attributes for a category
     description: Returns the attributes assigned to the specified category.
     parameters:
