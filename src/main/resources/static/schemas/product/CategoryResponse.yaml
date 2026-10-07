@@ -12,7 +12,3 @@ properties:
     type: array
     items:
       type: string
-  path:
-    type: array
-    items:
-      type: string

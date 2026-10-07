@@ -1,7 +1,8 @@
 type: object
+required:
+  - city
 properties:
   city:
     type: string
-    required: true
   region:
     type: string

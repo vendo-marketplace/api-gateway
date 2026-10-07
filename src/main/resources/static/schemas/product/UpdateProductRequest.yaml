@@ -14,7 +14,7 @@ properties:
     example: true
   price:
     type: number
-    format: decimal
+    format: double
     example: 1299.99
   categoryId:
     type: string

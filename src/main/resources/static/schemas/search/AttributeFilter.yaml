@@ -4,12 +4,12 @@ properties:
     type: array
     items:
       type: object
+      required:
+        - id
       properties:
         id:
           type: string
-          required: true
         values:
           type: array
           items:
-            required: true
             type: string

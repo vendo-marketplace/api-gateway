@@ -13,12 +13,6 @@ properties:
     type: array
     items:
       $ref: "./Attribute.yaml"
-  path:
-    type: array
-    items:
-      type: string
-      example:
-        - 6a2ab30529631760e0d3588a
   children:
     type: object
     properties:
@@ -35,10 +29,3 @@ properties:
         type: array
         items:
           $ref: "./Attribute.yaml"
-      path:
-        type: array
-        items:
-          type: string
-          example:
-            - 6a2ab30529631760e0d3588a
-            - 6a2ab54b29631760e0d3588c

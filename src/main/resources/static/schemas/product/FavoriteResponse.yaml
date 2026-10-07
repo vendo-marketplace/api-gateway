@@ -7,7 +7,7 @@ properties:
   description:
     type: string
   quantity:
-    type: number
+    type: integer
   isNew:
     type: boolean
     example: true

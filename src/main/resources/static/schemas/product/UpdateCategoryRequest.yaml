@@ -6,3 +6,10 @@ properties:
   slug:
     type: string
     example: electronics
+  attributes:
+    type: array
+    items:
+      type: string
+    example:
+      - attribute-id-1
+      - attribute-id-2
