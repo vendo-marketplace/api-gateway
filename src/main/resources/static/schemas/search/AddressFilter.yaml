@@ -4,5 +4,3 @@ required:
 properties:
   city:
     type: string
-  region:
-    type: string
