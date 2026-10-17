@@ -33,6 +33,7 @@ public class Router {
                 .route(AUTO_SEARCH_SERVICE.getServiceName(), r -> r
                         .path("/auto-search/**")
                         .uri("lb://%s".formatted(AUTO_SEARCH_SERVICE.getServiceName())))
+
                 .route(CHAT_SERVICE.getServiceName(), r -> r
                         .path("/chat-search/**")
                         .uri("lb://%s".formatted(CHAT_SERVICE.getServiceName())))
