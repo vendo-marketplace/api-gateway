@@ -34,8 +34,12 @@ public class Router {
                         .path("/auto-search/**")
                         .uri("lb://%s".formatted(AUTO_SEARCH_SERVICE.getServiceName())))
 
+                .route(CHAT_SERVICE.getServiceName() + "-websocket", r -> r
+                        .path("/ws")
+                        .uri("lb:ws://%s".formatted(CHAT_SERVICE.getServiceName())))
+
                 .route(CHAT_SERVICE.getServiceName(), r -> r
-                        .path("/ws", "/topic/conversations/**", "/conversations/**")
+                        .path("/conversations/**")
                         .uri("lb://%s".formatted(CHAT_SERVICE.getServiceName())))
                 .build();
     }
