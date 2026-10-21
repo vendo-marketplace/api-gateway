@@ -21,6 +21,6 @@ properties:
 
   expirationDate:
     type: string
-    format: date-time
-    description: Date and time when the auto search expires
-    example: "2026-09-30T23:59:59Z"
+    format: date
+    description: Date when the auto search expires
+    example: "2026-09-30"
