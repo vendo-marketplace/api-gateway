@@ -14,9 +14,6 @@ properties:
       $ref: "./UserRole.yaml"
   providerType:
     $ref: "./ProviderType.yaml"
-  birthDate:
-    type: string
-    format: date
   fullName:
     type: string
   createdAt:

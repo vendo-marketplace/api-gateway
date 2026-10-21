@@ -4,7 +4,3 @@ properties:
     type: string
     pattern: ^[A-ZА-ЯІЇЄҐ][a-zа-яіїєґ]+ [A-ZА-ЯІЇЄҐ][a-zа-яіїєґ]+$
     example: John Doe
-  birthDate:
-    type: string
-    format: date
-    example: '1879-03-14'
