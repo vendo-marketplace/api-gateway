@@ -2,8 +2,10 @@ package com.vendo.api_gateway.adapter.security.in.filter.filter;
 
 import com.vendo.api_gateway.adapter.security.in.filter.UserValidationFilter;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;
+import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthNotCompletedException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthNotVerifiedException;
 import com.vendo.api_gateway.adapter.security.in.filter.path.SecuredAntPathResolver;
+import com.vendo.api_gateway.adapter.security.in.filter.path.UserCompletionPathResolver;
 import com.vendo.api_gateway.adapter.security.in.filter.path.UserVerificationPathResolver;
 import com.vendo.api_gateway.domain.user.User;
 import com.vendo.api_gateway.test_utils.builder.UserDataBuilder;
@@ -33,6 +35,8 @@ public class UserValidationTest {
     private SecuredAntPathResolver securedAntPathResolver;
     @Mock
     private UserVerificationPathResolver userVerificationPathResolver;
+    @Mock
+    private UserCompletionPathResolver userCompletionPathResolver;
     @InjectMocks
     private UserValidationFilter filter;
 
@@ -47,14 +51,15 @@ public class UserValidationTest {
 
         when(securedAntPathResolver.isPermittedPath(path)).thenReturn(false);
         when(userVerificationPathResolver.isPermittedPath(path)).thenReturn(false);
+        when(userCompletionPathResolver.isPermittedPath(path)).thenReturn(false);
         when(chain.filter(any())).thenReturn(Mono.empty());
 
         filter.filter(exchange, chain).block();
 
         verify(securedAntPathResolver).isPermittedPath(path);
         verify(userVerificationPathResolver).isPermittedPath(path);
+        verify(userCompletionPathResolver).isPermittedPath(path);
         verify(chain).filter(any());
-
     }
 
     @Test
@@ -73,7 +78,7 @@ public class UserValidationTest {
                 .hasMessage("User is blocked.");
 
         verify(securedAntPathResolver).isPermittedPath(path);
-        verifyNoInteractions(chain, userVerificationPathResolver);
+        verifyNoInteractions(chain, userVerificationPathResolver, userCompletionPathResolver);
     }
 
     @Test
@@ -94,7 +99,7 @@ public class UserValidationTest {
 
         verify(securedAntPathResolver).isPermittedPath(path);
         verify(userVerificationPathResolver).isPermittedPath(path);
-        verifyNoInteractions(chain);
+        verifyNoInteractions(chain, userCompletionPathResolver);
     }
 
     @Test
@@ -108,12 +113,59 @@ public class UserValidationTest {
 
         when(securedAntPathResolver.isPermittedPath(path)).thenReturn(false);
         when(userVerificationPathResolver.isPermittedPath(path)).thenReturn(true);
+        when(userCompletionPathResolver.isPermittedPath(path)).thenReturn(true);
         when(chain.filter(any())).thenReturn(Mono.empty());
 
         filter.filter(exchange, chain).block();
 
         verify(securedAntPathResolver).isPermittedPath(path);
         verify(userVerificationPathResolver).isPermittedPath(path);
+        verify(userCompletionPathResolver).isPermittedPath(path);
+        verify(chain).filter(any());
+    }
+
+    @Test
+    void filter_shouldThrowAuthNotCompleted_whenPathRequiresCompletionAndUserNotCompleted() {
+        User user = UserDataBuilder.withAllFields().completed(false).build();
+        MockServerHttpRequest request = MockServerHttpRequest
+                .get(path)
+                .build();
+        MockServerWebExchange exchange = MockServerWebExchange.from(request);
+        exchange.getAttributes().put(CONTEXT_ATTRIBUTE, user);
+
+        when(securedAntPathResolver.isPermittedPath(path)).thenReturn(false);
+        when(userVerificationPathResolver.isPermittedPath(path)).thenReturn(false);
+        when(userCompletionPathResolver.isPermittedPath(path)).thenReturn(false);
+
+        assertThatThrownBy(() -> filter.filter(exchange, chain).block())
+                .isInstanceOf(AuthNotCompletedException.class)
+                .hasMessage("User profile is not completed.");
+
+        verify(securedAntPathResolver).isPermittedPath(path);
+        verify(userVerificationPathResolver).isPermittedPath(path);
+        verify(userCompletionPathResolver).isPermittedPath(path);
+        verifyNoInteractions(chain);
+    }
+
+    @Test
+    void filter_shouldSuccessfullyFilter_whenPathDoesNotRequireCompletionAndUserNotCompleted() {
+        User user = UserDataBuilder.withAllFields().completed(false).build();
+        MockServerHttpRequest request = MockServerHttpRequest
+                .get(path)
+                .build();
+        MockServerWebExchange exchange = MockServerWebExchange.from(request);
+        exchange.getAttributes().put(CONTEXT_ATTRIBUTE, user);
+
+        when(securedAntPathResolver.isPermittedPath(path)).thenReturn(false);
+        when(userVerificationPathResolver.isPermittedPath(path)).thenReturn(false);
+        when(userCompletionPathResolver.isPermittedPath(path)).thenReturn(true);
+        when(chain.filter(any())).thenReturn(Mono.empty());
+
+        filter.filter(exchange, chain).block();
+
+        verify(securedAntPathResolver).isPermittedPath(path);
+        verify(userVerificationPathResolver).isPermittedPath(path);
+        verify(userCompletionPathResolver).isPermittedPath(path);
         verify(chain).filter(any());
     }
 

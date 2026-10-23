@@ -21,6 +21,8 @@ public class GatewayProps {
 
     private Verified verified;
 
+    private Completed completed;
+
     public record Unauthenticated(
 
             Set<String> general,
@@ -37,6 +39,10 @@ public class GatewayProps {
     }
 
     public record Verified(Set<String> paths, Set<String> excluded) {
+
+    }
+
+    public record Completed(Set<String> paths) {
 
     }
 
