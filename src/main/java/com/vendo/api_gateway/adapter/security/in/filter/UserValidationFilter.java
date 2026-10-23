@@ -1,8 +1,10 @@
 package com.vendo.api_gateway.adapter.security.in.filter;
 
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AccessDeniedException;
+import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthNotCompletedException;
 import com.vendo.api_gateway.adapter.security.in.filter.exception.AuthNotVerifiedException;
 import com.vendo.api_gateway.adapter.security.in.filter.path.SecuredAntPathResolver;
+import com.vendo.api_gateway.adapter.security.in.filter.path.UserCompletionPathResolver;
 import com.vendo.api_gateway.adapter.security.in.filter.path.UserVerificationPathResolver;
 import com.vendo.api_gateway.domain.user.User;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class UserValidationFilter implements GlobalFilter {
 
     private final SecuredAntPathResolver securedAntPathResolver;
     private final UserVerificationPathResolver userVerificationPathResolver;
+    private final UserCompletionPathResolver userCompletionPathResolver;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -38,6 +41,10 @@ public class UserValidationFilter implements GlobalFilter {
 
         if (!userVerificationPathResolver.isPermittedPath(path) && !authUser.emailVerified()) {
             throw new AuthNotVerifiedException("User email is not verified.");
+        }
+
+        if (!userCompletionPathResolver.isPermittedPath(path) && !authUser.completed()) {
+            throw new AuthNotCompletedException("User profile is not completed.");
         }
 
         return chain.filter(exchange);

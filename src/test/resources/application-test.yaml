@@ -15,3 +15,6 @@ endpoints:
       - /aws/**
     excluded:
       - /auth/complete
+  completed:
+    paths:
+      - /products
