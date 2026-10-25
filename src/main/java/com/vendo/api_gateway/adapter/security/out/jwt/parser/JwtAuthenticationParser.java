@@ -37,8 +37,9 @@ public class JwtAuthenticationParser implements AuthenticationParser {
             String email = extractEmail(claims);
             Boolean verified = extractEmailVerified(claims);
             UserStatus status = extractStatus(claims);
+            boolean completed = extractCompleted(claims);
 
-            return new User(id, email, status, roles, verified);
+            return new User(id, email, status, roles, verified, completed);
         } catch (JwtException e) {
             log.error("Token extraction error: {}.", e.getMessage());
             throw new BadCredentialsException("Invalid or expired token.");
@@ -73,6 +74,10 @@ public class JwtAuthenticationParser implements AuthenticationParser {
 
     private Boolean extractEmailVerified(Claims claims) {
         return claims.get(VERIFIED.getClaim(), Boolean.class);
+    }
+
+    private boolean extractCompleted(Claims claims) {
+        return Boolean.TRUE.equals(claims.get(COMPLETED.getClaim(), Boolean.class));
     }
 
     private UserStatus extractStatus(Claims claims) {
