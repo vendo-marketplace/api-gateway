@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 import static com.vendo.security_lib.http.HttpUtils.AUTHORIZATION_HEADER;
 
 @Slf4j
-@Order(1)
+@Order(2)
 @Component
 @RequiredArgsConstructor
 public class UserAuthFilter implements GlobalFilter {
