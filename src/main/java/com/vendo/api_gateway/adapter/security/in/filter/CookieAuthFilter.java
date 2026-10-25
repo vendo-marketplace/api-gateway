@@ -30,8 +30,6 @@ public class CookieAuthFilter implements GlobalFilter {
         ServerHttpRequest request = exchange.getRequest();
         MultiValueMap<String, HttpCookie> cookies = request.getCookies();
 
-        System.out.println("Cookies " + cookies);
-
         String path = request.getURI().getPath();
         if (antPathResolver.isPermittedPath(path)) return chain.filter(exchange);
 
