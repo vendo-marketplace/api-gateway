@@ -16,7 +16,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@Order(3)
+@Order(2)
 @Component
 @RequiredArgsConstructor
 public class UserValidationFilter implements GlobalFilter {
