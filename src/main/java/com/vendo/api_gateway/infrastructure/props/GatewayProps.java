@@ -27,12 +27,11 @@ public class GatewayProps {
             Set<String> internal,
             Set<String> product,
             Set<String> auth,
-            Set<String> search,
-            Set<String> chat
+            Set<String> search
 
     ) {
         public Set<String> allPaths() {
-            return flatLists(List.of(general, internal, product, auth, search, chat));
+            return flatLists(List.of(general, internal, product, auth, search));
         }
     }
 
