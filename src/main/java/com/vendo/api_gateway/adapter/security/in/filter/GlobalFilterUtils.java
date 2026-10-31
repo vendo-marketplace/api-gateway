@@ -46,13 +46,6 @@ public final class GlobalFilterUtils {
         attributes.put(GlobalFilterUtils.CONTEXT_ATTRIBUTE, user);
     }
 
-    static String parseBearerToken(String authorization) {
-        if (authorization == null || !authorization.startsWith(BEARER_PREFIX)) {
-            throw new BadCredentialsException("Invalid or expired token.");
-        }
-        return authorization.substring(BEARER_PREFIX.length());
-    }
-
     static String getValueFromCookies(@NonNull String name, MultiValueMap<String, HttpCookie> cookies) {
         if (ObjectUtils.isNull(cookies) || cookies.isEmpty() ) {
             log.error("Cookies are empty.");
