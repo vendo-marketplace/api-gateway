@@ -47,6 +47,7 @@ public final class GlobalFilterUtils {
     }
 
     static String getValueFromCookies(@NonNull String name, MultiValueMap<String, HttpCookie> cookies) {
+        System.out.println("cookies " + cookies);
         if (ObjectUtils.isNull(cookies) || cookies.isEmpty() ) {
             log.error("Cookies are empty.");
             throw new BadCredentialsException("Invalid or expired token.");

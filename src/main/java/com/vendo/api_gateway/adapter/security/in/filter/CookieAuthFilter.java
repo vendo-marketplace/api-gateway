@@ -33,6 +33,7 @@ public class CookieAuthFilter implements GlobalFilter {
         if (antPathResolver.isPermittedPath(path)) return chain.filter(exchange);
 
         String authorization = GlobalFilterUtils.getValueFromCookies(ACCESS_PREFIX, request.getCookies());
+        System.out.println("auth " + authorization);
         User authUser = claimsParser.extract(authorization);
         GlobalFilterUtils.addUserToContext(authUser, exchange.getAttributes());
 
