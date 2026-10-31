@@ -8,10 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -29,12 +27,13 @@ public class CookieAuthFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        MultiValueMap<String, HttpCookie> cookies = request.getCookies();
-
         String path = request.getURI().getPath();
+
+        System.out.println(path);
+        antPathResolver.isPermittedPath(path);
         if (antPathResolver.isPermittedPath(path)) return chain.filter(exchange);
 
-        String authorization = GlobalFilterUtils.getValueFromCookies(ACCESS_PREFIX, cookies);
+        String authorization = GlobalFilterUtils.getValueFromCookies(ACCESS_PREFIX, request.getCookies());
         User authUser = claimsParser.extract(GlobalFilterUtils.parseBearerToken(authorization));
         GlobalFilterUtils.addUserToContext(authUser, exchange.getAttributes());
 

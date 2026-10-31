@@ -18,6 +18,7 @@ public class SecuredAntPathResolver implements AntPathResolver {
     @Override
     public boolean isPermittedPath(String path) {
         String[] paths = props.getUnauthenticated().allPaths().toArray(String[]::new);
+        System.out.println("paths " + Arrays.toString(paths));
         return Arrays.stream(paths).anyMatch(pr -> antPathMatcher.match(pr, path));
     }
 }
