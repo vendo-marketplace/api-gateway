@@ -1,5 +1,6 @@
 package com.vendo.api_gateway.adapter.security.in.filter;
 
+import com.vendo.api_gateway.adapter.security.in.filter.header.UserHeadersExtractor;
 import com.vendo.api_gateway.adapter.security.in.filter.path.SecuredAntPathResolver;
 import com.vendo.api_gateway.adapter.security.out.jwt.parser.AuthenticationParser;
 import com.vendo.api_gateway.domain.user.User;
@@ -33,12 +34,10 @@ public class CookieAuthFilter implements GlobalFilter {
         if (antPathResolver.isPermittedPath(path)) return chain.filter(exchange);
 
         String authorization = GlobalFilterUtils.getValueFromCookies(ACCESS_PREFIX, request.getCookies());
-        System.out.println("AUTH " + authorization);
         User authUser = claimsParser.extract(authorization);
-        System.out.println("USER " + authUser);
         GlobalFilterUtils.addUserToContext(authUser, exchange.getAttributes());
 
-        ServerHttpRequest requestWithHeader = applyHeader(authorization, request);
+        ServerHttpRequest requestWithHeader = applyHeaders(authUser, request);
         return chain.filter(exchange
                 .mutate()
                 .request(requestWithHeader)
@@ -46,9 +45,9 @@ public class CookieAuthFilter implements GlobalFilter {
         );
     }
 
-    private ServerHttpRequest applyHeader(String authorization, ServerHttpRequest request) {
+    private ServerHttpRequest applyHeaders(User user, ServerHttpRequest request) {
         return request.mutate()
-                .header(AUTHORIZATION_HEADER, BEARER_PREFIX.concat(authorization))
+                .headers(headers -> headers.addAll(UserHeadersExtractor.from(user)))
                 .build();
     }
 }
