@@ -3,7 +3,6 @@ package com.vendo.api_gateway.adapter.security.in.filter;
 import com.vendo.api_gateway.adapter.security.in.filter.path.SecuredAntPathResolver;
 import com.vendo.api_gateway.adapter.security.out.jwt.parser.AuthenticationParser;
 import com.vendo.api_gateway.domain.user.User;
-import com.vendo.core_lib.utils.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -16,8 +15,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import static com.vendo.security_lib.http.HttpUtils.AUTHORIZATION_HEADER;
-import static com.vendo.security_lib.http.HttpUtils.BEARER_PREFIX;
+import static com.vendo.security_lib.http.HttpUtils.*;
 
 @Slf4j
 @Order(1)
@@ -36,11 +34,8 @@ public class CookieAuthFilter implements GlobalFilter {
         String path = request.getURI().getPath();
         if (antPathResolver.isPermittedPath(path)) return chain.filter(exchange);
 
-        HttpCookie authCookie = cookies.getFirst(AUTHORIZATION_HEADER);
-        if (ObjectUtils.isNull(authCookie)) return chain.filter(exchange);
-
-        String authorization = GlobalFilterUtils.getTokenFromRequest(authCookie.getValue());
-        User authUser = claimsParser.extract(authorization);
+        String authorization = GlobalFilterUtils.getValueFromCookies(ACCESS_PREFIX, cookies);
+        User authUser = claimsParser.extract(GlobalFilterUtils.parseBearerToken(authorization));
         GlobalFilterUtils.addUserToContext(authUser, exchange.getAttributes());
 
         ServerHttpRequest requestWithHeader = applyHeader(authorization, request);

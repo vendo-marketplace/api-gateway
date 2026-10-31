@@ -9,25 +9,21 @@ servers:
     description: Vendo server
 
 security:
-  - bearerAuth: []
+  - cookieAuth: []
 
 components:
   securitySchemes:
-    bearerAuth:
+    cookieAuth:
       $ref: "./components/security.yaml"
   schemas:
     # ─── AUTH ────
 
     AuthRequest:
       $ref: "./schemas/auth/AuthRequest.yaml"
-    AuthResponse:
-      $ref: "./schemas/auth/AuthResponse.yaml"
     CompleteRequest:
       $ref: "./schemas/auth/CompleteRequest.yaml"
     ProviderType:
       $ref: "./schemas/auth/ProviderType.yaml"
-    RefreshRequest:
-      $ref: "./schemas/auth/RefreshRequest.yaml"
     ResetPasswordRequest:
       $ref: "./schemas/auth/ResetPasswordRequest.yaml"
     UserResponse:

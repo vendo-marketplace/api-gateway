@@ -11,11 +11,12 @@ auth-signIn:
             $ref: '../schemas/auth/AuthRequest.yaml'
     responses:
       '200':
-        description: Returns pair of tokens
-        content:
-          application/json:
+        description: Signed in. Access and refresh tokens are set in cookies; response body is empty.
+        headers:
+          Set-Cookie:
+            description: Sets the accessToken and refreshToken cookies.
             schema:
-              $ref: '../schemas/auth/AuthResponse.yaml'
+              type: string
       '400':
         description: Validation failed
       '401':
@@ -35,11 +36,12 @@ auth-signUp:
             $ref: '../schemas/auth/AuthRequest.yaml'
     responses:
       '200':
-        description: Returns pair of tokens
-        content:
-          application/json:
+        description: Signed up. Access and refresh tokens are set in cookies; response body is empty.
+        headers:
+          Set-Cookie:
+            description: Sets the accessToken and refreshToken cookies.
             schema:
-              $ref: '../schemas/auth/AuthResponse.yaml'
+              type: string
       '409':
         description: User already exists
       '400':
@@ -50,19 +52,21 @@ auth-refresh:
     tags: [ Auth ]
     summary: Refresh token
     security: [ ]
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/auth/RefreshRequest.yaml'
+    parameters:
+      - name: refreshToken
+        in: cookie
+        required: true
+        description: Refresh token cookie issued by sign-in, sign-up, or Google OAuth. Its value uses the `Bearer <token>` format.
+        schema:
+          type: string
     responses:
       '200':
-        description: Returns pair of tokens
-        content:
-          application/json:
+        description: Tokens refreshed. New accessToken and refreshToken cookies are set; response body is empty.
+        headers:
+          Set-Cookie:
+            description: Sets the updated accessToken and refreshToken cookies.
             schema:
-              $ref: '../schemas/auth/AuthResponse.yaml'
+              type: string
       '401':
         description: Unauthorized
 
@@ -79,11 +83,12 @@ auth-google:
           type: string
     responses:
       '200':
-        description: Returns pair of tokens
-        content:
-          application/json:
+        description: Google authentication completed. Access and refresh tokens are set in cookies; response body is empty.
+        headers:
+          Set-Cookie:
+            description: Sets the accessToken and refreshToken cookies.
             schema:
-              $ref: '../schemas/auth/AuthResponse.yaml'
+              type: string
 
 auth-me:
   get:
