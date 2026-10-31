@@ -13,8 +13,6 @@ import org.springframework.util.MultiValueMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.vendo.security_lib.http.HttpUtils.BEARER_PREFIX;
-
 @Slf4j
 public final class GlobalFilterUtils {
 
@@ -47,7 +45,6 @@ public final class GlobalFilterUtils {
     }
 
     static String getValueFromCookies(@NonNull String name, MultiValueMap<String, HttpCookie> cookies) {
-        System.out.println("cookies " + cookies);
         if (ObjectUtils.isNull(cookies) || cookies.isEmpty() ) {
             log.error("Cookies are empty.");
             throw new BadCredentialsException("Invalid or expired token.");
@@ -65,14 +62,10 @@ public final class GlobalFilterUtils {
 
     private static String findFirstValidTokenCookie(List<HttpCookie> cookies) {
         return cookies.stream()
-                .filter(httpCookie -> ObjectUtils.isNotNull(httpCookie) && isValidToken(httpCookie.getValue()))
+                .filter(httpCookie -> ObjectUtils.isNotNull(httpCookie) && StringUtils.isNotEmpty(httpCookie.getValue()))
                 .map(HttpCookie::getValue)
                 .findFirst()
                 .orElse(null);
-    }
-
-    private static boolean isValidToken(String authorization) {
-        return StringUtils.isNotEmpty(authorization) && authorization.startsWith(BEARER_PREFIX);
     }
 
 }
