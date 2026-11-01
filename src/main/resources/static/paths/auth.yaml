@@ -104,6 +104,15 @@ auth-me:
       '401':
         description: Unauthorized
 
+auth-logOut:
+  post:
+    tags: [ Auth ]
+    summary: Log out
+    description: Logs out the current user.
+    responses:
+      '200':
+        description: Logged out successfully. The response body is empty.
+
 auth-complete:
   patch:
     tags: [ Auth ]

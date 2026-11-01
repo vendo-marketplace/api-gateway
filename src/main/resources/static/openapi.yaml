@@ -123,6 +123,9 @@ paths:
   /auth/me:
     $ref: "./paths/auth.yaml#/auth-me"
 
+  /auth/log-out:
+    $ref: "./paths/auth.yaml#/auth-logOut"
+
   /password/forgot:
     $ref: "./paths/auth.yaml#/password-forgot"
 
