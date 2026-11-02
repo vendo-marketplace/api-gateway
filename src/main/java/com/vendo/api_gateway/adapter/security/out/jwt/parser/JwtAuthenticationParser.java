@@ -5,6 +5,7 @@ import com.vendo.api_gateway.adapter.security.out.jwt.JwtService;
 import com.vendo.api_gateway.adapter.security.out.props.JwtProperties;
 import com.vendo.api_gateway.domain.user.User;
 import com.vendo.core_lib.utils.StringUtils;
+import com.vendo.security_lib.type.TokenClaim;
 import com.vendo.user_lib.type.UserRole;
 import com.vendo.user_lib.type.UserStatus;
 import io.jsonwebtoken.Claims;
@@ -35,9 +36,9 @@ public class JwtAuthenticationParser implements AuthenticationParser {
             String id = extractId(claims);
             Set<UserRole> roles = extractRoles(claims);
             String email = extractEmail(claims);
-            Boolean verified = extractEmailVerified(claims);
+            boolean verified = extractBool(VERIFIED, claims);
             UserStatus status = extractStatus(claims);
-            boolean completed = extractCompleted(claims);
+            boolean completed = extractBool(COMPLETED, claims);
 
             return new User(id, email, status, roles, verified, completed);
         } catch (JwtException e) {
@@ -72,16 +73,12 @@ public class JwtAuthenticationParser implements AuthenticationParser {
                 .collect(Collectors.toSet());
     }
 
-    private Boolean extractEmailVerified(Claims claims) {
-        return claims.get(VERIFIED.getClaim(), Boolean.class);
-    }
-
-    private boolean extractCompleted(Claims claims) {
-        return Boolean.TRUE.equals(claims.get(COMPLETED.getClaim(), Boolean.class));
-    }
-
     private UserStatus extractStatus(Claims claims) {
         String status = claims.get(STATUS.getClaim(), String.class);
         return UserStatus.valueOf(status);
+    }
+
+    private boolean extractBool(TokenClaim claim, Claims claims) {
+        return claims.get(claim.getClaim(), Boolean.class);
     }
 }

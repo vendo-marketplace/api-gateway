@@ -15,6 +15,9 @@ public class UserCompletionPathResolver implements AntPathResolver {
 
     @Override
     public boolean isPermittedPath(String path) {
-        return props.getCompleted().paths().stream().noneMatch(pr -> antPathMatcher.match(pr, path));
+        return props.getCompleted()
+                .paths()
+                .stream()
+                .noneMatch(pr -> antPathMatcher.match(pr, path));
     }
 }
