@@ -13,7 +13,8 @@ public record User(
         String email,
         UserStatus status,
         Set<UserRole> roles,
-        boolean emailVerified
+        boolean emailVerified,
+        boolean completed
 ) {
 
     public boolean isBlocked() {

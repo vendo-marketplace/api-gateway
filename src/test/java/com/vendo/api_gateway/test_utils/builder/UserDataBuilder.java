@@ -13,6 +13,7 @@ public class UserDataBuilder {
                 .id("id")
                 .email("email")
                 .emailVerified(true)
+                .completed(true)
                 .roles(Set.of(UserRole.USER))
                 .status(UserStatus.ACTIVE);
     }
