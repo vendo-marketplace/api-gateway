@@ -1,3 +1,4 @@
-type: http
-scheme: bearer
-bearerFormat: JWT
+type: apiKey
+in: cookie
+name: accessToken
+description: Access token cookie set by sign-in, sign-up, or Google OAuth. Its value uses the `Bearer <token>` format.

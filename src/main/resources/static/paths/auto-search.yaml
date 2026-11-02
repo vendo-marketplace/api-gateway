@@ -98,6 +98,32 @@ auto-search-products:
         description: Auto Search ID
         schema:
           type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number (must be at least 1).
+        schema:
+          type: integer
+          minimum: 1
+      - name: size
+        in: query
+        required: false
+        description: Number of products per page (must be at least 1).
+        schema:
+          type: integer
+          minimum: 1
+      - name: sortBy
+        in: query
+        required: false
+        description: Product field to sort by.
+        schema:
+          $ref: '../schemas/search/SortBy.yaml'
+      - name: direction
+        in: query
+        required: false
+        description: Sort direction. Used together with sortBy.
+        schema:
+          $ref: '../schemas/search/Direction.yaml'
     responses:
       '200':
         description: Products matched by the auto search request
