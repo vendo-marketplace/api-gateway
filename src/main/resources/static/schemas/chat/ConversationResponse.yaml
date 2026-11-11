@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    type: string
+  productId:
+    type: string
+  seller:
+    $ref: './UserProfileResponse.yaml'
+  buyer:
+    $ref: './UserProfileResponse.yaml'
+  lastMessage:
+    type: string
+  readStates:
+    type: object
+    description: Read state per participant, keyed by user ID. A participant who hasn't read anything yet has no entry.
+    additionalProperties:
+      $ref: './ReadState.yaml'
+    example:
+      user-id-1:
+        lastReadMessageId: message-id-42
+        lastReadAt: '2026-11-11T10:15:30Z'
+  createdAt:
+    type: string
+    format: date-time

@@ -1,0 +1,7 @@
+type: object
+properties:
+  lastReadMessageId:
+    type: string
+  lastReadAt:
+    type: string
+    format: date-time

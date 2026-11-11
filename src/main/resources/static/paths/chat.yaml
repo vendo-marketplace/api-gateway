@@ -1,0 +1,164 @@
+conversations:
+  post:
+    tags: [ Chat ]
+    summary: Start a conversation about a product
+    description: Returns the existing conversation if the current user already has one for this product.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/chat/CreateConversationRequest.yaml'
+    responses:
+      '200':
+        description: Conversation created or found
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/chat/ConversationCreatedResponse.yaml'
+      '400':
+        description: Validation failed
+      '401':
+        description: Unauthorized
+      '404':
+        description: Product not found
+  get:
+    tags: [ Chat ]
+    summary: Get current user's conversations
+    responses:
+      '200':
+        description: Conversations
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/chat/ConversationsResponse.yaml'
+      '401':
+        description: Unauthorized
+
+conversation:
+  parameters:
+    - in: path
+      name: conversationId
+      required: true
+      schema:
+        type: string
+  get:
+    tags: [ Chat ]
+    summary: Get conversation by ID
+    responses:
+      '200':
+        description: Conversation
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/chat/ConversationResponse.yaml'
+      '401':
+        description: Unauthorized
+      '403':
+        description: Not a participant of this conversation
+      '404':
+        description: Conversation not found
+  delete:
+    tags: [ Chat ]
+    summary: Delete conversation
+    responses:
+      '200':
+        description: Deleted
+      '401':
+        description: Unauthorized
+      '403':
+        description: Not a participant of this conversation
+      '404':
+        description: Conversation not found
+
+conversation-read:
+  parameters:
+    - in: path
+      name: conversationId
+      required: true
+      schema:
+        type: string
+  patch:
+    tags: [ Chat ]
+    summary: Mark conversation as read
+    description: >
+      Moves the current user's read pointer to the given message. Ignored if that message is
+      not newer than the one already marked as read.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/chat/MarkAsReadRequest.yaml'
+    responses:
+      '200':
+        description: Marked as read (or ignored because it was already read)
+      '400':
+        description: Validation failed
+      '401':
+        description: Unauthorized
+      '403':
+        description: Not a participant of this conversation
+      '404':
+        description: Conversation or message not found
+
+conversation-messages:
+  parameters:
+    - in: path
+      name: conversationId
+      required: true
+      schema:
+        type: string
+  post:
+    tags: [ Chat ]
+    summary: Send message
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/chat/SendMessageRequest.yaml'
+    responses:
+      '200':
+        description: Sent
+      '400':
+        description: Validation failed
+      '401':
+        description: Unauthorized
+      '403':
+        description: Not a participant of this conversation
+      '404':
+        description: Conversation not found
+  get:
+    tags: [ Chat ]
+    summary: Get messages (newest first)
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 0
+      - in: query
+        name: size
+        schema:
+          type: integer
+          default: 30
+      - in: query
+        name: sort
+        description: Sort as `field,direction`.
+        schema:
+          type: string
+          default: createdAt,desc
+    responses:
+      '200':
+        description: Page of messages
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/chat/MessagesPage.yaml'
+      '401':
+        description: Unauthorized
+      '403':
+        description: Not a participant of this conversation
+      '404':
+        description: Conversation not found

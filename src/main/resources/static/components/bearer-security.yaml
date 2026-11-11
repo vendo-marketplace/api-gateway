@@ -1,0 +1,4 @@
+type: http
+scheme: bearer
+bearerFormat: JWT
+description: "Access token sent as `Authorization: Bearer <token>`. Use this in Swagger UI: browsers don't let Swagger set the accessToken cookie."

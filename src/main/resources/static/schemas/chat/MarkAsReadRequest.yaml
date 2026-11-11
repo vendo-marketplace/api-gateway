@@ -1,0 +1,7 @@
+type: object
+required:
+  - lastReadMessageId
+properties:
+  lastReadMessageId:
+    type: string
+    description: ID of the latest message the current user has read. Must belong to this conversation.

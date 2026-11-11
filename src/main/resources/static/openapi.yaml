@@ -101,6 +101,29 @@ components:
     UpdateAutoSearchRequest:
       $ref: "./schemas/auto-search/UpdateAutoSearchRequest.yaml"
 
+    # ─── CHAT ─────
+
+    CreateConversationRequest:
+      $ref: "./schemas/chat/CreateConversationRequest.yaml"
+    ConversationCreatedResponse:
+      $ref: "./schemas/chat/ConversationCreatedResponse.yaml"
+    ConversationResponse:
+      $ref: "./schemas/chat/ConversationResponse.yaml"
+    ConversationsResponse:
+      $ref: "./schemas/chat/ConversationsResponse.yaml"
+    UserProfileResponse:
+      $ref: "./schemas/chat/UserProfileResponse.yaml"
+    ReadState:
+      $ref: "./schemas/chat/ReadState.yaml"
+    MarkAsReadRequest:
+      $ref: "./schemas/chat/MarkAsReadRequest.yaml"
+    SendMessageRequest:
+      $ref: "./schemas/chat/SendMessageRequest.yaml"
+    Message:
+      $ref: "./schemas/chat/Message.yaml"
+    MessagesPage:
+      $ref: "./schemas/chat/MessagesPage.yaml"
+
 paths:
 
   # ─── AUTH ────
@@ -198,3 +221,17 @@ paths:
 
   /indices/reindex:
     $ref: "./paths/indexer.yaml#/reindex"
+
+  # ─── CHAT ───
+
+  /conversations:
+    $ref: "./paths/chat.yaml#/conversations"
+
+  /conversations/{conversationId}:
+    $ref: "./paths/chat.yaml#/conversation"
+
+  /conversations/{conversationId}/read:
+    $ref: "./paths/chat.yaml#/conversation-read"
+
+  /conversations/{conversationId}/messages:
+    $ref: "./paths/chat.yaml#/conversation-messages"

@@ -1,0 +1,7 @@
+type: object
+properties:
+  conversationId:
+    type: string
+  created:
+    type: boolean
+    description: true if a new conversation was created, false if one already existed for this product and buyer.

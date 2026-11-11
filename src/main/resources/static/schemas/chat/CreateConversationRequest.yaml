@@ -1,0 +1,11 @@
+type: object
+required:
+  - firstMessage
+  - productId
+properties:
+  firstMessage:
+    type: string
+    maxLength: 4000
+    example: Hi! Is this still available?
+  productId:
+    type: string
