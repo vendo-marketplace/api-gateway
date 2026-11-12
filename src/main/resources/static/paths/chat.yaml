@@ -35,6 +35,21 @@ conversations:
       '401':
         description: Unauthorized
 
+conversations-unread:
+  get:
+    tags: [ Chat ]
+    summary: Get unread conversations count
+    description: Counts conversations where the last message is from the other participant and the current user hasn't read it yet.
+    responses:
+      '200':
+        description: Unread count
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/chat/UnreadResponse.yaml'
+      '401':
+        description: Unauthorized
+
 conversation:
   parameters:
     - in: path

@@ -123,6 +123,8 @@ components:
       $ref: "./schemas/chat/Message.yaml"
     MessagesPage:
       $ref: "./schemas/chat/MessagesPage.yaml"
+    UnreadResponse:
+      $ref: "./schemas/chat/UnreadResponse.yaml"
 
 paths:
 
@@ -226,6 +228,9 @@ paths:
 
   /conversations:
     $ref: "./paths/chat.yaml#/conversations"
+
+  /conversations/unread:
+    $ref: "./paths/chat.yaml#/conversations-unread"
 
   /conversations/{conversationId}:
     $ref: "./paths/chat.yaml#/conversation"
