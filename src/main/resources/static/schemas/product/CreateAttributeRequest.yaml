@@ -1,4 +1,5 @@
 type: object
+required: [title, slug, type]
 properties:
   title:
     type: string
@@ -15,6 +16,7 @@ properties:
     example: true
   allowedValues:
     type: array
+    description: Required for `ENUM` and `SELECT` — at least one value, all unique and non-blank.
     items:
       type: string
       example: DDR5

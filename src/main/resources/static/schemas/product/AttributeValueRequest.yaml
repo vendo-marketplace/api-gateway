@@ -1,0 +1,15 @@
+type: object
+required: [id, values]
+properties:
+  id:
+    type: string
+    minLength: 1
+    description: Attribute ID.
+  values:
+    type: array
+    description: For `SELECT` attributes — one or more unique values from the attribute's `allowedValues`.
+    items:
+      type: string
+      nullable: false
+    example:
+      - DDR5

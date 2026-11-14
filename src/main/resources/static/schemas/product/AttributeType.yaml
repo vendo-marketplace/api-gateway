@@ -1,7 +1,12 @@
 type: string
+description: >
+  `ENUM` — product picks exactly one of `allowedValues`.
+  `SELECT` — product picks one or more unique values from `allowedValues`.
+  Both require non-empty, unique, non-blank `allowedValues` when the attribute is created.
 enum:
   - STRING
   - NUMBER
   - BOOLEAN
   - ENUM
+  - SELECT
   - RANGE

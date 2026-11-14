@@ -1,0 +1,6 @@
+type: object
+properties:
+  count:
+    type: integer
+    description: Number of the current user's conversations whose last message came from the other participant and hasn't been read yet.
+    example: 3

@@ -1,0 +1,13 @@
+type: object
+nullable: true
+description: Latest message in the conversation, or null if there are no messages yet.
+properties:
+  id:
+    type: string
+  senderId:
+    type: string
+  content:
+    type: string
+  createdAt:
+    type: string
+    format: date-time

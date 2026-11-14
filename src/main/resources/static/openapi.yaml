@@ -48,6 +48,8 @@ components:
       $ref: "./schemas/product/AttributeValue.yaml"
     CreateAttributeRequest:
       $ref: "./schemas/product/CreateAttributeRequest.yaml"
+    AttributeValueRequest:
+      $ref: "./schemas/product/AttributeValueRequest.yaml"
     CategoryResponse:
       $ref: "./schemas/product/CategoryResponse.yaml"
     CategoryTree:
@@ -121,6 +123,8 @@ components:
       $ref: "./schemas/chat/SendMessageRequest.yaml"
     Message:
       $ref: "./schemas/chat/Message.yaml"
+    LastMessage:
+      $ref: "./schemas/chat/LastMessage.yaml"
     MessagesPage:
       $ref: "./schemas/chat/MessagesPage.yaml"
     UnreadResponse:

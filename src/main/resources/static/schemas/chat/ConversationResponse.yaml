@@ -9,7 +9,7 @@ properties:
   buyer:
     $ref: './UserProfileResponse.yaml'
   lastMessage:
-    type: string
+    $ref: './LastMessage.yaml'
   readStates:
     type: object
     description: Read state per participant, keyed by user ID. A participant who hasn't read anything yet has no entry.

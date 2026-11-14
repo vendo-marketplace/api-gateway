@@ -1,6 +1,10 @@
 type: object
+required: [fullName]
 properties:
   fullName:
     type: string
-    pattern: ^[A-ZА-ЯІЇЄҐ][a-zа-яіїєґ]+ [A-ZА-ЯІЇЄҐ][a-zа-яіїєґ]+$
-    example: John Doe
+    description: >
+      First and last name in Ukrainian (Cyrillic), each starting with an uppercase letter.
+      Apostrophes (', ’, ʼ) are allowed. Saved shortened to `First L.` — e.g. `Тарас Шевченко` becomes `Тарас Ш.`.
+    pattern: "^[А-ЩЮЯҐЄІЇ][а-щьюяґєії'’ʼ]+ [А-ЩЮЯҐЄІЇ][а-щьюяґєії'’ʼ]+$"
+    example: Тарас Шевченко

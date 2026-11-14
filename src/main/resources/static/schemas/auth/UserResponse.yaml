@@ -16,6 +16,9 @@ properties:
     $ref: "./ProviderType.yaml"
   fullName:
     type: string
+    nullable: true
+    description: Shortened to `First L.` format. Null until the profile is completed (or if the Google name is not a valid Ukrainian full name).
+    example: Тарас Ш.
   createdAt:
     type: string
     format: date-time

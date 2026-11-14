@@ -13,8 +13,11 @@ properties:
     type: string
   attributes:
     type: array
+    description: Attribute IDs. If sent, must contain at least one non-blank ID.
+    minItems: 1
     items:
       type: string
+      minLength: 1
     example:
       - id1
       - id2

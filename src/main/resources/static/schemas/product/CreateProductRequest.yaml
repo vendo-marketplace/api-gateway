@@ -26,11 +26,4 @@ properties:
   attributes:
     type: array
     items:
-      type: object
-      properties:
-        id:
-          type: string
-        values:
-          type: array
-          items:
-            type: string
+      $ref: "./AttributeValueRequest.yaml"
