@@ -1,0 +1,21 @@
+type: object
+required: [title, slug]
+description: Attribute `type` is immutable and is not part of the update.
+properties:
+  title:
+    type: string
+    example: Memory
+    pattern: ^[A-ZА-ЯІЇЄ][a-zа-яіїє]*(?:(?:[ -][A-Za-zА-ЯІЇЄа\-zа-яіїє]+)|(?:, [A-Za-zА-ЯІЇЄa-zа-яіїє]+))*$
+  slug:
+    type: string
+    pattern: ^[a-z0-9]+(?:_[a-z0-9]+)*$
+    example: laptop_memory
+  required:
+    type: boolean
+    example: true
+  allowedValues:
+    type: array
+    description: Required for `ENUM` and `SELECT` — at least one value, all unique and non-blank. Replaces the current list.
+    items:
+      type: string
+      example: DDR5

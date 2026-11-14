@@ -81,9 +81,50 @@ product:
         description: Product not found
 
 attributes:
+  get:
+    tags: [ Attributes ]
+    summary: Search attributes
+    description: >
+      Returns all attributes sorted by title (ascending). Admin only.
+      Optional filters are combined with AND.
+    parameters:
+      - in: query
+        name: search
+        required: false
+        description: Case-insensitive substring match on `title` or `slug`.
+        schema:
+          type: string
+          example: memo
+      - in: query
+        name: type
+        required: false
+        description: Return only attributes of this type.
+        schema:
+          $ref: '../schemas/product/AttributeType.yaml'
+    responses:
+      '200':
+        description: Attributes
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/product/Attribute.yaml'
+      '400':
+        description: Invalid `type` value
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/exception/ExceptionResponse.yaml'
+      '401':
+        description: Unauthorized
+      '403':
+        description: Forbidden — admin only
+
   post:
     tags: [ Attributes ]
     summary: Save attribute
+    description: Admin only.
     requestBody:
       required: true
       content:
@@ -92,11 +133,78 @@ attributes:
             $ref: '../schemas/product/CreateAttributeRequest.yaml'
     responses:
       '200':
-        description: Saved
+        description: Saved attribute
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/Attribute.yaml'
       '400':
         description: Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/exception/ExceptionResponse.yaml'
+      '401':
+        description: Unauthorized
+      '403':
+        description: Forbidden — admin only
       '409':
-        description: Attribute is already exists
+        description: Attribute already exists
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/exception/ExceptionResponse.yaml'
+
+attribute:
+  put:
+    tags: [ Attributes ]
+    summary: Update attribute
+    description: >
+      Replaces `title`, `slug`, `required` and `allowedValues` of an existing attribute. Admin only.
+      `type` cannot be changed. For `ENUM` and `SELECT` the resulting `allowedValues`
+      must stay non-empty, unique and non-blank.
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: Attribute ID
+        schema:
+          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/product/UpdateAttributeRequest.yaml'
+    responses:
+      '200':
+        description: Updated attribute
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/Attribute.yaml'
+      '400':
+        description: Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/exception/ExceptionResponse.yaml'
+      '401':
+        description: Unauthorized
+      '403':
+        description: Forbidden — admin only
+      '404':
+        description: Attribute not found
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/exception/ExceptionResponse.yaml'
+      '409':
+        description: Slug is already taken by another attribute
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/exception/ExceptionResponse.yaml'
 
 categories:
   post:
@@ -110,7 +218,11 @@ categories:
             $ref: '../schemas/product/CreateCategoryRequest.yaml'
     responses:
       '200':
-        description: Created
+        description: Created category
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/product/CategoryResponse.yaml'
       '400':
         description: Validation failed
       '401':

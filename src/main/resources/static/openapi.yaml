@@ -48,6 +48,8 @@ components:
       $ref: "./schemas/product/AttributeValue.yaml"
     CreateAttributeRequest:
       $ref: "./schemas/product/CreateAttributeRequest.yaml"
+    UpdateAttributeRequest:
+      $ref: "./schemas/product/UpdateAttributeRequest.yaml"
     AttributeValueRequest:
       $ref: "./schemas/product/AttributeValueRequest.yaml"
     CategoryResponse:
@@ -205,6 +207,9 @@ paths:
 
   /attributes:
     $ref: "./paths/product.yaml#/attributes"
+
+  /attributes/{id}:
+    $ref: "./paths/product.yaml#/attribute"
 
   /favorites/{productId}:
     $ref: "./paths/product.yaml#/favorite"

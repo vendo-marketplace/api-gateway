@@ -4,6 +4,8 @@ properties:
     type: string
   title:
     type: string
+  slug:
+    type: string
   type:
     $ref: "./AttributeType.yaml"
   required:
